@@ -1,4 +1,4 @@
-# BACKEND
+# 🚙 TRPC 🚗 TypeScript remote procedure call
 
 ```
 📦server
@@ -11,13 +11,37 @@
  ┣ 📜package.json
  ┣ 📜pnpm-lock.yaml
  ┗ 📜trpc.ts
+
 ```
 
 # 📙 Summary
 
 TRPC connects with Express as the adapter.
 
-# 🧠 Setup TRPC
+There is a context object being added to the trpc init
+
+websocket listening for when a route is called
+
+# FUNDAMENTALS
+
+### What is TRPC?
+
+A replacement for the fetch API so you can make HTTP request in a type safe way
+
+### How to use?
+
+Backend
+
+1. Initialize TRPC with a trpc.ts file in the root dir
+2. Connect with an adapter
+3. Set up Routes!!
+
+Frontend
+
+1. Create proxy client
+2. Use client to make HTTP requests
+
+# 🧠 Setup backend
 
 > Step 1:
 >
@@ -136,6 +160,43 @@ document.addEventListener('click', async () => {
 
 ```
 
+# 🧠 Setup frontend
+
+> Step 1:
+>
+> Below is an example of how to create proxy and connect to trpc
+
+```json
+
+import {
+	createTRPCProxyClient,
+	httpBatchLink,
+} from '@trpc/client';
+import { AppRouter } from '../../server/index';
+
+const client = createTRPCProxyClient<AppRouter>({
+	links: [
+		 httpBatchLink({
+				url: 'http://localhost:3000/trpc',
+			}),
+	],
+});
+
+```
+
+> Step 2:
+>
+> Below is an example of how to make a request
+
+```json
+
+document.addEventListener('click', async () => {
+	const res = await client.logToServer.mutate('hello from the frontend ❤️');
+	console.log(res);
+});
+
+```
+
 # EXAMPLES
 
 ### QUERY DETAILS
@@ -187,5 +248,157 @@ export const appRouter = t.router({
 });
 
 ```
+
+### NESTED ROUTES
+
+Creating nested endpoints
+
+Example of routers > index.ts
+
+```json
+
+import { adminProcedure, t } from '../trpc';
+import { userRouter } from './users';
+
+export const appRouter = t.router({
+  // GET request http://localhost:3000/trpc/sayHi
+	sayHi: t.procedure.query(() => {
+		return 'Waddup dawg!!!!🐶';
+	}),
+	//NESTED endpoint http://localhost:3000/trpc/users/...
+	users: userRouter,
+});
+
+```
+
+Example of routers > users.ts
+
+```json
+
+import { t } from '../trpc';
+import { z } from 'zod';
+
+//build input with zod
+const userProcedure = t.procedure.input(z.object({ userId: z.string() }));
+
+export const userRouter = t.router({
+  //GET REQUEST http://localhost:3000/trpc/users/get
+	get: userProcedure.query(({ input }) => {
+		return { id: input.userId };
+	}),
+  //POST REQUEST http://localhost:3000/trpc/users/update
+  //can combine input schemas
+	update: userProcedure
+		.input(z.object({ name: z.string() }))
+		.mutation((req) => {
+			console.log(
+				'update name for user ID ' +
+					req.input.userId +
+					' to the new name ' +
+					req.input.name
+			);
+
+			return {
+				id: req.input.userId,
+				name: req.input.name,
+
+			};
+		}),
+});
+
+
+```
+
+### Output ROUTES
+
+Restrict user from passing non specified keys
+
+```json
+
+import { t } from '../trpc';
+import { z } from 'zod';
+
+export const userRouter = t.router({
+  //POST REQUEST http://localhost:3000/trpc/users/update
+  //can chain inputs
+	update: t.procedure
+		.input(z.object({ name: z.string(), id: z.string() }))
+    // will only send name and id to frontend
+		.output(z.object({ name: z.string() }))
+		.mutation((req) => {
+			console.log(
+				'update name for user ID ' +
+					req.input.userId +
+					' to the new name ' +
+					req.input.name
+			);
+
+			return {
+				id: req.input.userId,
+				name: req.input.name,
+				password: 'this is not included in output',
+			};
+		}),
+});
+
+
+```
+
+# zod
+
+Creating schema for input with zod
+
+### GET Example
+
+```json
+import { t } from '../trpc';
+import { z } from 'zod';
+
+export const appRouter = t.router({
+	sayHi: t.procedure
+		.input(
+			z.object({
+				name: z.string(),
+			})
+		)
+		.query((req) => {
+			const { name } = req.input;
+			return 'Waddup ' + name + '!!!!🐶';
+		}),
+});
+
+// Calling from frontend example
+// const res = await client.sayHi.query({ name: 'Jeffrey' });
+
+```
+
+### POST Example
+
+```json
+import { t } from '../trpc';
+import { z } from 'zod';
+
+export const appRouter = t.router({
+		logToServer: t.procedure
+		.input(
+    z.object({
+				name: z.string(),
+			})
+    )
+		.mutation((req) => {
+			console.log('Client says: ' + req.input);
+			return true;
+		}),
+});
+
+
+// Calling from frontend example
+// client.logToServer.mutate({ name: 'Lord QueeQuee' });
+
+```
+
+# Web Socket
+
+...
 
 You can visit the documentation by clicking [here](https://trpc.io)
