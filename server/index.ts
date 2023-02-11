@@ -9,7 +9,11 @@ import ws from 'ws';
 
 const app = express();
 //MIDDLEWARE
-app.use(cors());
+app.use(
+	cors({
+		origin: ['https://future.website', 'http://localhost:5173'],
+	})
+);
 app.use(morgan('tiny'));
 app.use(
 	'/trpc',
@@ -18,7 +22,6 @@ app.use(
 		createContext,
 	})
 );
-
 //404 ERROR
 app.get('*', (req, res) => {
 	res.status(404).json({

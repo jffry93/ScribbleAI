@@ -1,10 +1,19 @@
 import { adminProcedure, t } from '../trpc';
 import { userRouter } from './users';
+import { z } from 'zod';
+import { prisma } from '../db';
 
 export const appRouter = t.router({
-	sayHi: t.procedure.query(() => {
-		return 'Waddup dawg!!!!🐶';
-	}),
+	sayHi: t.procedure
+		.input(
+			z.object({
+				name: z.string(),
+			})
+		)
+		.query((req) => {
+			const { name } = req.input;
+			return 'Waddup ' + name + '!!!!🐶';
+		}),
 	logToServer: t.procedure
 		//check schema
 		.input((v) => {
@@ -21,4 +30,12 @@ export const appRouter = t.router({
 		return 'Shhhhhhhh secret 🤫...';
 	}),
 	users: userRouter,
+	test: t.procedure
+		.input(z.object({ name: z.string(), email: z.string() }))
+		.mutation(async (req) => {
+			console.log(req.input);
+			const result = await prisma.user.findMany();
+			console.log(result);
+			return 'true';
+		}),
 });

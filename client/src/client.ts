@@ -26,12 +26,13 @@ const client = createTRPCProxyClient<AppRouter>({
 		}),
 	],
 });
+
 document.addEventListener('click', async () => {
-	// client.users.update.mutate({
-	// 	userId: '123',
-	// 	name: 'Jeffrey',
-	// });
-	const res = await client.logToServer.mutate('hello my bff ❤️');
+	// client.users.update.mutate({ userId: '123i76123', name: 'Lord QueeQuee' });
+	const res = await client.test.mutate({
+		email: 'jay@some.thing',
+		name: 'Jay',
+	});
 	console.log(res);
 });
 
