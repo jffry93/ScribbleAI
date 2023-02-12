@@ -2,6 +2,7 @@ import { t } from '../trpc';
 import { z } from 'zod';
 import { observable } from '@trpc/server/observable';
 import { EventEmitter } from 'stream';
+import { prisma } from '../db';
 
 const userProcedure = t.procedure.input(z.object({ userId: z.string() }));
 const eventEmitter = new EventEmitter();
@@ -9,6 +10,13 @@ const eventEmitter = new EventEmitter();
 export const userRouter = t.router({
 	get: userProcedure.query(({ input }) => {
 		return { id: input.userId };
+	}),
+	signUp: userProcedure.mutation(async (req) => {
+		const res = await prisma.user.findMany();
+		console.log(res);
+		return {
+			id: res,
+		};
 	}),
 	update: userProcedure
 		.input(z.object({ name: z.string() }))

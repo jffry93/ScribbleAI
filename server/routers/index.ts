@@ -29,13 +29,5 @@ export const appRouter = t.router({
 		console.log(ctx.user);
 		return 'Shhhhhhhh secret 🤫...';
 	}),
-	users: userRouter,
-	test: t.procedure
-		.input(z.object({ name: z.string(), email: z.string() }))
-		.mutation(async (req) => {
-			console.log(req.input);
-			const result = await prisma.user.findMany();
-			console.log(result);
-			return 'true';
-		}),
+	user: userRouter,
 });
