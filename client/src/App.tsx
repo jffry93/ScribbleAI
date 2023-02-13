@@ -1,54 +1,106 @@
-import { useEffect, useState } from 'react';
-
 import reactLogo from './assets/react.svg';
+import prismaLogo from './assets/prisma.svg';
+import typescriptLogo from './assets/typescript.svg';
 import './App.css';
+import styled from 'styled-components';
+import { useAsyncMutate } from './trpc/example/useAsyncMutate';
+import { useAsyncQuery } from './trpc/example/useAsyncQuery';
 import { trpc } from './trpc/trpc';
-type SignUpInput = {
-	userId: string;
-};
-function App() {
-	const [count, setCount] = useState(0);
-	const [name, setName] = useState('');
-	const [toggle, setToggle] = useState(true);
-	const test = trpc.user.signUp.useMutation();
-	const onAdd = () => {
-		test.mutate({ userId: '123' });
-	};
+import React, { useState } from 'react';
 
-	useEffect(() => {
-		if (name.length > 0) {
-			onAdd();
-		}
-	}, [toggle]);
+function App() {
+	const [currentIndex, setCurrentIndex] = useState<null | number>(null);
+	const email = 'JeffreyZalischi';
+	const name = 'Jeffrey 🎉';
+	const handleQuery = trpc.queryExample.useQuery({ name });
+	const handleMutate = trpc.mutateExample.useMutation();
+	const handleSecret = trpc.secretData.useQuery();
+	const handleAsyncMutate = useAsyncMutate(email);
+	const handleAsyncQuery = useAsyncQuery(email);
+
+	const buttonArray = [
+		{
+			title: 'Query',
+			handleEvent: () => {
+				console.log(handleQuery.data);
+			},
+			description:
+				'This will send a name to the backend and respond with a greeting in the frontend',
+		},
+		{
+			title: 'Mutate',
+			handleEvent: async () => {
+				const data = await handleMutate.mutate('something');
+				console.log(data); //must use mutateAsync if returning something
+			},
+			description:
+				'Send a string to the backend but will NOT return a response. In order to receive a response in the frontend you need mutateAsync() ',
+		},
+		{
+			title: 'Async Query',
+			handleEvent: handleAsyncQuery,
+			description:
+				'This will GET user info from the postgres database that matches the specified email.',
+		},
+		{
+			title: 'Async Mutate',
+			handleEvent: handleAsyncMutate,
+			description:
+				'POST request that will create user info in the postgres database matching the specified email.',
+		},
+		{
+			title: 'Secret',
+			handleEvent: () => {
+				console.log(handleSecret.data);
+			},
+			description:
+				'Uses adminProcedure and checks context to see if the user is an admin. If admin is true then get message',
+		},
+	];
 
 	return (
 		<div className='App'>
 			<div>
-				<a href='https://vitejs.dev' target='_blank'>
+				<a>
 					<img src='/vite.svg' className='logo' alt='Vite logo' />
 				</a>
-				<a href='https://reactjs.org' target='_blank'>
+				<a>
 					<img src={reactLogo} className='logo react' alt='React logo' />
 				</a>
+				<a>
+					<img
+						src={typescriptLogo}
+						className='logo typescript'
+						alt='React logo'
+					/>
+				</a>
 			</div>
-			<h1>Vite + React</h1>
-			<div className='card'>
-				<button onClick={() => setToggle((prev) => !prev)}>
-					current {toggle ? 'true' : 'false'}
-				</button>
-				<button onClick={() => setName(() => 'Jeffrey')}>Name is{name}</button>
-				<button onClick={() => setCount((count) => count + 1)}>
-					count is {count}
-				</button>
-				<p>
-					Edit <code>src/App.tsx</code> and save to test HMR
-				</p>
-			</div>
-			<p className='read-the-docs'>
-				Click on the Vite and React logos to learn more
-			</p>
+			<h1>Examples</h1>
+			<StyledMain className='card'>
+				{buttonArray.map((data, index) => {
+					const { title, handleEvent, description } = data;
+					return (
+						<React.Fragment key={title}>
+							{currentIndex === index && <p>{description}</p>}
+							<button
+								key={title}
+								onClick={handleEvent}
+								onMouseOver={() => setCurrentIndex(index)}
+							>
+								{title}
+							</button>
+						</React.Fragment>
+					);
+				})}
+			</StyledMain>
+			<p className='read-the-docs'>Hover over button for description</p>
 		</div>
 	);
 }
 
 export default App;
+
+const StyledMain = styled.div`
+	display: flex;
+	flex-direction: column;
+`;

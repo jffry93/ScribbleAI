@@ -11,13 +11,22 @@ export const userRouter = t.router({
 	get: userProcedure.query(({ input }) => {
 		return { id: input.userId };
 	}),
-	signUp: userProcedure.mutation(async (req) => {
-		const res = await prisma.user.findMany();
-		console.log(res);
-		return {
-			id: res,
-		};
-	}),
+	//localhost:3000/trpc/user/signUp
+	signUp: t.procedure
+		.input(z.object({ email: z.string() }))
+		.mutation(async (req) => {
+			const { email } = req.input; // ===req.body
+			const res = await prisma.user.create({
+				data: {
+					email,
+					name: 'this is an optional string',
+				},
+			});
+			console.log(res);
+			return {
+				res,
+			};
+		}),
 	update: userProcedure
 		.input(z.object({ name: z.string() }))
 		.output(z.object({ name: z.string(), id: z.string() }))
