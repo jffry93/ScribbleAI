@@ -5,13 +5,17 @@ import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { applyWSSHandler } from '@trpc/server/adapters/ws';
 import { appRouter } from './routers';
 import { createContext } from './context';
-import ws from 'ws';
 
 const app = express();
 //MIDDLEWARE
 app.use(
 	cors({
-		origin: ['https://future.website', 'http://localhost:5173'],
+		origin: [
+			'https://future.website',
+			'http://localhost:5173',
+			'http://127.0.0.1:5173',
+		],
+		// credentials: true,
 	})
 );
 app.use(morgan('tiny'));
@@ -30,12 +34,6 @@ app.get('*', (req, res) => {
 	});
 });
 
-const server = app.listen(3000);
-
-applyWSSHandler({
-	wss: new ws.Server({ server }),
-	router: appRouter,
-	createContext,
-});
+app.listen(3000);
 
 export type AppRouter = typeof appRouter;
