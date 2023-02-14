@@ -7,6 +7,7 @@ import Form from '../components/Form';
 import { ThemeContext } from '../context/TestContext';
 import { StyledFlexCenter } from '../GlobalStyles';
 import DescriptionModal from './DescriptionModal';
+import OnUpdateSubscription from '../trpc/OnUpdateSubscription';
 
 const Example = () => {
 	const [email, setEmail] = useState('');
@@ -210,13 +211,8 @@ const Example = () => {
 			<p className='read-the-docs'>
 				Click on the <span>i</span> for description and requirements
 			</p>
-			<button
-				onClick={() =>
-					handleUserUpdate.mutate({ name: 'Jeffrey Zaluisc', userId: '123' })
-				}
-			>
-				Test Websocket
-			</button>
+			<OnUpdateSubscription />
+
 			{details && display && (
 				<DescriptionModal details={details} setDisplay={setDisplay} />
 			)}
