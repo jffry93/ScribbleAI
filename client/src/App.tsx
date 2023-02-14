@@ -5,6 +5,7 @@ import Layout from './layout';
 import GlobalStyle, { StyledFlexCenter } from './GlobalStyles';
 import styled from 'styled-components';
 import useWebSocket from './trpc/useWebSocket';
+import OnUpdateSubscription from './trpc/OnUpdateSubscription';
 
 function App() {
 	useWebSocket();
