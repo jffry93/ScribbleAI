@@ -18,14 +18,15 @@ const Example = () => {
 		email: string;
 		name: string;
 	}>({ email, name });
-
+	// SYNC
 	const handleQuery = trpc.queryExample.useQuery({ name: formData.name });
 	const handleMutate = trpc.mutateExample.useMutation();
 	const handleSecret = trpc.secretData.useQuery();
-
+	// ASYNC
 	const handleAsyncMutate = useAsyncMutate(formData.email);
 	const handleAsyncQuery = useAsyncQuery(formData.email);
-
+	// WEBSOCKET TEST
+	const handleUserUpdate = trpc.user.update.useMutation();
 	const buttonArray = [
 		{
 			title: 'Query Server',
@@ -209,6 +210,13 @@ const Example = () => {
 			<p className='read-the-docs'>
 				Click on the <span>i</span> for description and requirements
 			</p>
+			<button
+				onClick={() =>
+					handleUserUpdate.mutate({ name: 'Jeffrey Zaluisc', userId: '123' })
+				}
+			>
+				Test Websocket
+			</button>
 			{details && display && (
 				<DescriptionModal details={details} setDisplay={setDisplay} />
 			)}

@@ -4,8 +4,10 @@ import Home from './pages/Home';
 import Layout from './layout';
 import GlobalStyle, { StyledFlexCenter } from './GlobalStyles';
 import styled from 'styled-components';
+import useWebSocket from './trpc/useWebSocket';
 
 function App() {
+	useWebSocket();
 	return (
 		<>
 			<GlobalStyle />
