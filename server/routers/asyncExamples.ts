@@ -11,7 +11,7 @@ export const asyncExampleRouter = t.router({
 		.input(z.object({ email: z.string() }))
 		.query(async ({ input }) => {
 			try {
-				console.log(input.email);
+				console.log(input);
 				const data = await prisma.user.findFirst({
 					where: {
 						email: input.email,
@@ -34,14 +34,13 @@ export const asyncExampleRouter = t.router({
 		.mutation(async (req) => {
 			try {
 				const { email } = req.input;
-				console.log(email);
 				const data = await prisma.user.create({
 					data: {
 						email,
 						name: 'this is an optional string',
 					},
 				});
-				console.log(data);
+				// console.log(data);
 				return {
 					data,
 					msg: '✅✅✅ --- User Created --- ✅✅✅',

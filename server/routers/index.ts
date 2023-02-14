@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { adminProcedure, t } from '../trpc';
 import { asyncExampleRouter } from './asyncExamples';
+import { userRouter } from './users';
 
 export const appRouter = t.router({
 	queryExample: t.procedure
@@ -24,7 +25,8 @@ export const appRouter = t.router({
 		}),
 	asyncExample: asyncExampleRouter,
 	secretData: adminProcedure.query(({ ctx }) => {
-		console.log(ctx.user);
+		// console.log(ctx.user);
 		return 'Shhhhhhhh secret 🤫...';
 	}),
+	user: userRouter,
 });

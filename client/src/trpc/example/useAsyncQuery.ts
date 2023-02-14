@@ -1,6 +1,7 @@
 import { trpc } from '../trpc';
 
 export const useAsyncQuery = (email: string) => {
+	console.log(email);
 	// Async Query Example
 	const handleAsyncQuery = trpc.asyncExample.queryExample.useQuery({
 		email,
