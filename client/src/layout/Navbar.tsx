@@ -1,18 +1,14 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import SignUp from '../components/SignUp';
 
 const Navbar = () => {
 	return (
 		<StyledNav>
 			<Link to={`/`}>
-				<h2>Logo</h2>
+				<h2>DailyRoutine</h2>
 			</Link>
-			<ul>
-				<li>
-					<Link to={`/examples`}>Examples</Link>
-				</li>
-			</ul>
+			<SignUp />
 		</StyledNav>
 	);
 };

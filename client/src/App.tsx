@@ -1,21 +1,36 @@
-import Example from './pages/Example';
 import { Route, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Layout from './layout';
-import GlobalStyle, { StyledFlexCenter } from './GlobalStyles';
-import styled from 'styled-components';
-import useWebSocket from './trpc/useWebSocket';
-import OnUpdateSubscription from './trpc/OnUpdateSubscription';
+import GlobalStyle from './GlobalStyles';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import { useAuthContext } from './hooks/useAuthContext';
+import Landing from './pages/Landing';
+import NSFW from './pages/NSFW';
+import FAQ from './pages/FAQ';
+import CoverLetter from './pages/CoverLetter';
 
 function App() {
-	useWebSocket();
+	const {
+		state: { user },
+	} = useAuthContext();
+
 	return (
 		<>
 			<GlobalStyle />
 			<Layout>
 				<Routes>
-					<Route path='/' element={<Home />} />
-					<Route path='/examples' element={<Example />} />
+					<Route path='/' element={user ? <Home /> : <Landing />} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/signup' element={<Signup />} />
+					<Route path='*' element={<p>404 error</p>} />
+					{user && (
+						<>
+							<Route path='/faq' element={<FAQ />} />
+							<Route path='/nsfw' element={<NSFW />} />
+							<Route path='/coverletter' element={<CoverLetter />} />
+						</>
+					)}
 				</Routes>
 			</Layout>
 		</>

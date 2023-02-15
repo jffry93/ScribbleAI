@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
-import { ThemeContext } from '../context/TestContext';
+import { ThemeContext } from '../context/ThemeContext';
 import FormInput from './FormInput';
 interface User {
 	name?: string;

@@ -124,3 +124,11 @@ export const StyledFlexCenter = styled.div`
 	align-items: center;
 	justify-content: center;
 `;
+
+export const StyledIconContainer = styled(StyledFlexCenter)`
+	padding: 10px;
+	border: 0.1px solid #888;
+	width: 40px;
+	height: 40px;
+	border-radius: 4px;
+`;
