@@ -29,7 +29,7 @@ ${({ theme }) => css`
 			--md-padding: 16px;
 			--lg-padding: 24px;
 			--layout-padding: 32px 24px 40px;
-			--container-width-limit: 300px;
+			--container-width-limit: 400px;
 		}
 	}
 `}
@@ -95,26 +95,26 @@ button:focus-visible {
 `;
 
 const size = {
-	mobileS: '320px',
-	mobileM: '375px',
-	mobileL: '425px',
-	mobile: '500px',
-	tablet: '768px',
-	laptop: '1024px',
-	laptopL: '1440px',
-	desktop: '2560px',
+	// mobileS: '320px',
+	// mobileM: '375px',
+	// mobileL: '425px',
+	mobile: '576px',
+	// tablet: '768px',
+	// laptop: '1024px',
+	// laptopL: '1440px',
+	// desktop: '2560px',
 };
 
 export const device = {
-	mobileS: `(min-width: ${size.mobileS})`,
-	mobileM: `(min-width: ${size.mobileM})`,
-	mobileL: `(min-width: ${size.mobileL})`,
-	mobile: `(min-width: ${size.mobile})`,
-	tablet: `(min-width: ${size.tablet})`,
-	laptop: `(min-width: ${size.laptop})`,
-	laptopL: `(min-width: ${size.laptopL})`,
-	desktop: `(min-width: ${size.desktop})`,
-	desktopL: `(min-width: ${size.desktop})`,
+	// mobileS: `(min-width: ${size.mobileS})`,
+	// mobileM: `(min-width: ${size.mobileM})`,
+	// mobileL: `(min-width: ${size.mobileL})`,
+	mobile: `(max-width: ${size.mobile})`,
+	// tablet: `(min-width: ${size.tablet})`,
+	// laptop: `(min-width: ${size.laptop})`,
+	// laptopL: `(min-width: ${size.laptopL})`,
+	// desktop: `(min-width: ${size.desktop})`,
+	// desktopL: `(min-width: ${size.desktop})`,
 };
 
 export default GlobalStyle;
@@ -131,4 +131,35 @@ export const StyledIconContainer = styled(StyledFlexCenter)`
 	width: 40px;
 	height: 40px;
 	border-radius: 4px;
+`;
+export const StyledForm = styled.form`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	input {
+		border-radius: 4px;
+		width: 100%;
+		padding: 8px;
+		font-size: 20px;
+	}
+	button {
+		margin: var(--sm-padding);
+		padding: var(--sm-padding);
+	}
+`;
+
+export const StyledPage = styled.div`
+	min-height: var(--container-height);
+	padding: var(--layout-padding);
+	display: flex;
+	flex-direction: column;
+	max-width: var(--width-limit);
+	margin: auto;
+`;
+
+export const StyledButtonContainer = styled.div`
+	margin-top: var(--lg-padding);
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
 `;

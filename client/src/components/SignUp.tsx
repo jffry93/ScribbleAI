@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
 
@@ -6,21 +8,24 @@ const SignUp = () => {
 		state: { user },
 	} = useAuthContext();
 	const { logout } = useLogout();
-
+	const navigate = useNavigate();
 	return (
-		<div>
-			<p
-				onClick={() => {
-					if (user?.token) {
-						return logout();
-					}
-					console.log('first');
-				}}
-			>
-				{user?.token ? 'Logout' : 'SIGN UP'}
-			</p>
-		</div>
+		<StyledText
+			onClick={() => {
+				if (user?.token) {
+					return logout();
+				} else {
+					navigate('/login');
+				}
+			}}
+		>
+			{user?.token ? 'LOGOUT' : 'LOGIN'}
+		</StyledText>
 	);
 };
 
 export default SignUp;
+
+const StyledText = styled.a`
+	cursor: pointer;
+`;
