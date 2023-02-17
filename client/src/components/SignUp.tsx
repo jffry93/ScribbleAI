@@ -11,6 +11,7 @@ const SignUp = () => {
 	const navigate = useNavigate();
 	return (
 		<StyledText
+			className='title'
 			onClick={() => {
 				if (user?.token) {
 					return logout();

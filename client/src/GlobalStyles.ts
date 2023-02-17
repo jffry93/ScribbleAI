@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
   --container-width-limit: 500px;
   --width-limit: 1280px;
 	--navbar-height: 60px;
-	--container-height: calc(100vh - var(--navbar-height));
+	--container-height: calc(100vh - var(--navbar-height) - 25.59px );
 }
 //MOBILE
 ${({ theme }) => css`
@@ -136,6 +136,7 @@ export const StyledForm = styled.form`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	gap: 4px;
 	input {
 		border-radius: 4px;
 		width: 100%;
@@ -143,7 +144,7 @@ export const StyledForm = styled.form`
 		font-size: 20px;
 	}
 	button {
-		margin: var(--sm-padding);
+		margin: 8px 0 12px;
 		padding: var(--sm-padding);
 	}
 `;
@@ -155,11 +156,4 @@ export const StyledPage = styled.div`
 	flex-direction: column;
 	max-width: var(--width-limit);
 	margin: auto;
-`;
-
-export const StyledButtonContainer = styled.div`
-	margin-top: var(--lg-padding);
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
 `;

@@ -41,7 +41,7 @@ const Login = () => {
 						type='submit'
 						disabled={isLoading === null ? false : isLoading}
 					>
-						Log in
+						LOG IN
 					</button>
 					<p>
 						Unlock your access. Click here to{' '}

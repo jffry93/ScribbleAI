@@ -9,6 +9,7 @@ import Landing from './pages/Landing';
 import NSFW from './pages/NSFW';
 import FAQ from './pages/FAQ';
 import CoverLetter from './pages/CoverLetter';
+import Profile from './pages/Profile';
 
 function App() {
 	const {
@@ -29,6 +30,7 @@ function App() {
 							<Route path='/faq' element={<FAQ />} />
 							<Route path='/nsfw' element={<NSFW />} />
 							<Route path='/coverletter' element={<CoverLetter />} />
+							<Route path='/profile' element={<Profile />} />
 						</>
 					)}
 				</Routes>

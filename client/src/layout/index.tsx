@@ -1,11 +1,13 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
+import Banner from './Banner';
 import Footer from './Footer';
 import Navbar from './Navbar';
 
 const Layout = ({ children }: { children: ReactNode }) => {
 	return (
 		<StyledLayout>
+			<Banner />
 			<Navbar />
 			<StyledMain>{children}</StyledMain>
 			<Footer />

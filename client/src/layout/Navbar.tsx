@@ -1,17 +1,43 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Logo from '../components/Logo';
 import SignUp from '../components/SignUp';
-import { device } from '../GlobalStyles';
+import { device, StyledFlexCenter } from '../GlobalStyles';
+import { useAuthContext } from '../hooks/useAuthContext';
 
 const Navbar = () => {
+	const navigate = useNavigate();
+	const {
+		state: { user },
+	} = useAuthContext();
 	return (
 		<div>
 			<StyledNav>
-				<StyledLogo to={`/`}>
-					<h2>ProfessionalPen</h2>
-					<img src='../../public/feather.png' />
-				</StyledLogo>
-				<SignUp />
+				<Logo size={50} font={24} />
+				<StyledLinkContainer>
+					{user && (
+						<>
+							<StyledDropDown>
+								<p className='title'>HELPER</p>
+								<ul>
+									<li onClick={() => navigate('/nsfw')}>
+										<span>To Professional</span>
+									</li>
+									<li onClick={() => navigate('/coverletter')}>
+										<span>Cover Letter</span>
+									</li>
+									<li onClick={() => navigate('/faq')}>
+										<span>Q&A</span>
+									</li>
+								</ul>
+							</StyledDropDown>
+							<Link to='profile' className='title'>
+								PROFILE
+							</Link>
+						</>
+					)}
+					<SignUp />
+				</StyledLinkContainer>
 			</StyledNav>
 		</div>
 	);
@@ -31,19 +57,70 @@ const StyledNav = styled.nav`
 	ul {
 		list-style: none;
 	}
+	a,
+	.title {
+		color: rgba(255, 255, 255, 0.87);
+		&:active {
+			color: var(--primary);
+		}
+	}
+`;
+const StyledLinkContainer = styled(StyledFlexCenter)`
+	gap: 24px;
+	> * {
+		border-radius: 4px;
+		padding: 8px 12px;
+		cursor: pointer;
+
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.2);
+			ul {
+				display: block;
+			}
+			li:hover {
+				position: relative;
+				background-color: var(--primary);
+				span {
+					position: relative;
+					z-index: 2;
+				}
+				cursor: pointer;
+				&:active::before {
+					content: '';
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background-color: rgba(0, 0, 0, 0.2);
+					z-index: 1;
+					border-radius: inherit;
+				}
+			}
+		}
+	}
 `;
 
-const StyledLogo = styled(Link)`
-	display: flex;
-	align-items: center;
-	img {
-		width: 50px;
-		filter: invert(35%) sepia(85%) saturate(561%) hue-rotate(201deg)
-			brightness(113%) contrast(108%);
+const StyledDropDown = styled.div`
+	position: relative;
+	border-radius: 4px;
+
+	li {
+		padding: 8px 12px;
+		cursor: pointer;
 	}
-	@media ${device.mobile} {
-		h2 {
-			display: none;
-		}
+	ul {
+		display: none;
+		width: 150px;
+		position: absolute;
+		left: 0;
+		top: 100%;
+		overflow: hidden;
+
+		background-color: rgba(0, 0, 0, 0.2);
+		border-radius: 4px;
+	}
+	a {
+		border: 1px solid yellow;
 	}
 `;

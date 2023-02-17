@@ -9,16 +9,12 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
-		"@emotion/react": "^11.10.6",
-		"@emotion/styled": "^11.10.6",
-		"@material-ui/core": "^4.12.4",
-		"@mui/material": "^5.11.9",
 		"@tanstack/react-query": "^4.24.4",
 		"@trpc/client": "^10.11.0",
 		"@trpc/react-query": "^10.11.0",
 		"@trpc/server": "^10.11.0",
-		"@types/material-ui": "^0.21.12",
 		"@types/react-router-dom": "^5.3.3",
+		"framer-motion": "^9.0.4",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-icons": "^4.7.1",
