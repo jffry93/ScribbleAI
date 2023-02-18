@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { StyledPage } from '../GlobalStyles';
 import Banner from './Banner';
+import ClipBoard from './ClipBoard';
 import Footer from './Footer';
 import Navbar from './Navbar';
 
@@ -13,6 +14,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 				<Navbar />
 				<StyledMain>{children}</StyledMain>
 			</StyledLayout>
+			<ClipBoard />
 			<Footer />
 		</StyledReset>
 	);

@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FaCopy } from 'react-icons/fa';
 import { trpc } from '../../trpc/trpc';
-import { StyledIconContainer } from '../../GlobalStyles';
-import { copyClipboard } from '../../util/copyClipboard';
 import { StyledContainer, StyledConverter } from '../NSFW/ConvertNsfw';
 import { useDebounceCallback } from '../../hooks/useDebounce';
 import ErrorMsg from '../../components/ErrorMsg';
