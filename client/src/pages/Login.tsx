@@ -18,7 +18,9 @@ const Login = () => {
 		<StyledContent>
 			<StyledMain>
 				<h1>Login</h1>
-				<h2>Sign in and stay connected to all your account information</h2>
+				<p>
+					Let's pick up where we left off. Log in and let's make some magic.
+				</p>
 				<StyledForm onSubmit={handleSubmit}>
 					{error && <p>{errorMsg}</p>}
 					<label>Email:</label>
@@ -57,11 +59,19 @@ export default Login;
 export const StyledMain = styled.div`
 	display: flex;
 	flex-direction: column;
-	max-width: var(--container-width-limit);
+	width: 100%;
+	max-width: 420px;
 	gap: var(--sm-padding);
+	padding-bottom: var(--shift-padding);
+	p {
+		color: var(--secondary-text-color);
+	}
 `;
 
-export const StyledContent = styled(StyledPage)`
+export const StyledContent = styled.div`
+	padding: var(--layout-padding);
+	display: flex;
+	min-height: var(--container-height);
 	align-items: center;
 	justify-content: center;
 `;

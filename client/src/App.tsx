@@ -27,8 +27,8 @@ function App() {
 					<Route path='*' element={<p>404 error</p>} />
 					{user && (
 						<>
-							<Route path='/faq' element={<FAQ />} />
 							<Route path='/nsfw' element={<NSFW />} />
+							<Route path='/faq' element={<FAQ />} />
 							<Route path='/coverletter' element={<CoverLetter />} />
 							<Route path='/profile' element={<Profile />} />
 						</>

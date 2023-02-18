@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FaCopy } from 'react-icons/fa';
-import FormInput from '../../components/FormInput';
 import { trpc } from '../../trpc/trpc';
-import { StyledFlexCenter, StyledIconContainer } from '../../GlobalStyles';
-import { copyClipboard } from '../../util/copyClipboard';
 
 interface NSFWResType {
 	status: number;
 	msg: string;
 	data?: string;
 }
-const ConvertNsfw = () => {
+interface NSFWProps {
+	appropriateMsg: string | undefined;
+	setAppropriateMsg: (value: string | undefined) => void;
+}
+const ConvertNsfw = ({ appropriateMsg, setAppropriateMsg }: NSFWProps) => {
 	const [nsfw, setNsfw] = useState('');
-	const [appropriateMsg, setAppropriateMsg] = useState<string | undefined>(
-		undefined
-	);
 	const handleMutate = trpc.jarvis.makeFancy.useMutation();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,81 +26,77 @@ const ConvertNsfw = () => {
 		}
 	};
 
-	// const clipboardHandler = (
-	// 	element: React.MouseEvent<HTMLDivElement>,
-	// 	text: string
-	// ) => {
-	// 	console.log('testing handler');
-	// 	let clipboard = element.currentTarget.children[0];
-	// 	console.log(clipboard);
-	// 	// clipboard.children[0].style.display = ' block';
-	// 	navigator.clipboard.writeText(text);
-	// 	setTimeout(() => {
-	// 		console.log('clg in timeout');
-	// 		// clipboard.children[0].style.display = ' none';
-	// 	}, 2000);
-	// };
-
 	return (
-		<div>
-			<h1>Convert to Formal</h1>
-			<h3>
-				Whatever you type will return a response you can send in the workplace.
-			</h3>
-			<p>Instructions:</p>
-			<ul>
-				<li>Type whatever you want in the field below</li>
-				<li>click submit when done</li>
-				<li>Copy text generated below</li>
-			</ul>
-			<form onSubmit={handleSubmit}>
-				<StyledTextarea
-					name='convertNsfw'
-					placeholder='Type whatever you want'
-					onChange={(e) => {
-						setNsfw(e.target.value);
-					}}
-				/>
-				<button type='submit'>Submit</button>
-			</form>
-			{appropriateMsg && (
-				<StyledCopy
-					onClick={() => {
-						if (appropriateMsg) {
-							copyClipboard(appropriateMsg);
-						} else {
-							console.log('nothing to copy');
-						}
-					}}
-				>
-					<StyledCopyButton>
-						<FaCopy />
-					</StyledCopyButton>
-					<h4>{appropriateMsg}</h4>
-				</StyledCopy>
-			)}
-		</div>
+		<StyledContainer>
+			<StyledConverter>
+				<h2>Sophisticated Generator</h2>
+				<p>
+					Elevate your writing to a confident and professional level with our
+					innovative tool.
+				</p>
+				<h3>Instructions:</h3>
+				<ul>
+					<li>Type anything in the field below</li>
+					<li>Click submit when done</li>
+					<li>Copy professional text generated</li>
+				</ul>
+				<form onSubmit={handleSubmit}>
+					<label>Original text:</label>
+					<StyledTextarea
+						name='convertNsfw'
+						placeholder='Please enter the text you want converted'
+						onChange={(e) => {
+							setNsfw(e.target.value);
+						}}
+					/>
+					<button type='submit'>Refine Text</button>
+				</form>
+			</StyledConverter>
+		</StyledContainer>
 	);
 };
 
 export default ConvertNsfw;
-const StyledCopy = styled.div`
-	padding: var(--lg-padding);
-	border: 1px solid green;
-	position: relative;
-	h4 {
-		border: 1px solid yellow;
-		margin-right: 28px;
+export const StyledContainer = styled.div`
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	max-width: 500px;
+	margin: auto;
+`;
+export const StyledConverter = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+	padding-bottom: var(--shift-padding);
+	h3,
+	ul {
+		display: none;
+	}
+	p,
+	li {
+		/* padding-left: var(--sm-padding); */
+		color: var(--secondary-text-color);
+	}
+	h3 {
+		margin-top: 24px;
+	}
+	ul {
+		padding-left: var(--md-padding);
+	}
+	form {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		padding: 12px 0;
+	}
+	button {
 	}
 `;
 
 const StyledTextarea = styled.textarea`
 	width: 100%;
-	min-height: 60px;
-`;
-
-const StyledCopyButton = styled(StyledIconContainer)`
-	position: absolute;
-	top: var(--sm-padding);
-	right: var(--sm-padding);
+	min-height: 100px;
+	padding: 12px;
 `;

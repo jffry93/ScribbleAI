@@ -19,7 +19,10 @@ const Signup = () => {
 		<StyledContent>
 			<StyledMain>
 				<h1>Sign Up</h1>
-				<h2>Sign in and stay connected to all your account information</h2>
+				<p>
+					Find your dream job faster, sign up and become part of our awesome
+					community.
+				</p>
 				<StyledForm onSubmit={handleSubmit}>
 					{error && <p>{errorMsg}</p>}
 					<label>Email:</label>

@@ -12,11 +12,15 @@ const GlobalStyle = createGlobalStyle`
   --primary: #646cff;
   --secondary:  #535bf2;
   --error: #e7195a;
+  --bg-color:  #242424;;
+  --text-color: rgba(255, 255, 255, 0.87);
+  --secondary-text-color: #888;
   --sm-padding: 12px;
   --md-padding: 24px;
   --lg-padding: 32px;
+  --shift-padding: 63px;
   --layout-padding: 48px 32px 64px;
-  --container-width-limit: 500px;
+  --container-width-limit: 470px;
   --width-limit: 1280px;
 	--navbar-height: 60px;
 	--container-height: calc(100vh - var(--navbar-height) - 25.59px );
@@ -30,14 +34,29 @@ ${({ theme }) => css`
 			--lg-padding: 24px;
 			--layout-padding: 32px 24px 40px;
 			--container-width-limit: 400px;
+			--shift-padding: 43px;
 		}
 	}
 `}
 
 h1 {
-	font-size: 3.2em;
+	font-size: 3.8em;
 	line-height: 1.1;
 }
+h2{
+  font-size: 2.8em;
+	line-height: 1.1;
+}
+h3{
+  font-size: 2.2em;
+	line-height: 1.1;
+}
+li,p{
+	letter-spacing: 0.5px;
+	line-height: 1.5;
+	font-size: 20px;
+}
+
 ul {
 	list-style-type: circle;
 }
@@ -46,14 +65,15 @@ a {
 	color: var(--primary);
 	text-decoration: var(--secondary);
 }
+
 a:hover {
 	color: #535bf2;
 }
 
 body{
   color-scheme: light dark;
-	color: rgba(255, 255, 255, 0.87);
-	background-color: #242424;
+	color: var(--text-color);
+	background-color: var(--bg-color)
 }
 img{
   width: 100%;
@@ -125,7 +145,7 @@ export const StyledFlexCenter = styled.div`
 	justify-content: center;
 `;
 
-export const StyledIconContainer = styled(StyledFlexCenter)`
+export const StyledIconContainer = styled.button`
 	padding: 10px;
 	border: 0.1px solid #888;
 	width: 40px;
@@ -151,9 +171,14 @@ export const StyledForm = styled.form`
 
 export const StyledPage = styled.div`
 	min-height: var(--container-height);
-	padding: var(--layout-padding);
 	display: flex;
 	flex-direction: column;
 	max-width: var(--width-limit);
 	margin: auto;
+`;
+
+export const StyledMain = styled.div`
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 `;

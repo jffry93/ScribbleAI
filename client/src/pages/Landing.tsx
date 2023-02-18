@@ -36,9 +36,14 @@ const Landing = () => {
 
 export default Landing;
 
-const StyledContent = styled(StyledPage)`
+const StyledContent = styled.div`
+	min-height: var(--container-height);
+	/* padding: var(--layout-padding); */
+	flex-direction: column;
+	max-width: var(--width-limit);
 	position: relative;
 	flex-direction: row;
+	border: 1px solid blue;
 	h2 {
 		font-size: 40px;
 	}
@@ -50,15 +55,17 @@ const StyledContent = styled(StyledPage)`
 
 const StyledLanding = styled.div`
 	position: absolute;
-	bottom: 0;
-	left: 0;
-	padding: var(--lg-padding);
+	bottom: 55px;
+	left: 32px;
+	/* padding: var(--lg-padding); */
 
 	justify-content: center;
 	max-width: 600px;
 	flex: 1;
 	@media ${device.mobile} {
 		padding: 0;
+		/* left: 24px; */
+		bottom: 32px;
 	}
 `;
 

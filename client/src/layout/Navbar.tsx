@@ -11,7 +11,7 @@ const Navbar = () => {
 		state: { user },
 	} = useAuthContext();
 	return (
-		<div>
+		<StyledSticky>
 			<StyledNav>
 				<Logo size={50} font={24} />
 				<StyledLinkContainer>
@@ -39,13 +39,20 @@ const Navbar = () => {
 					<SignUp />
 				</StyledLinkContainer>
 			</StyledNav>
-		</div>
+		</StyledSticky>
 	);
 };
 
 export default Navbar;
 
-const StyledNav = styled.nav`
+const StyledSticky = styled.nav`
+	position: sticky;
+	top: 0;
+	background-color: var(--bg-color);
+	z-index: 1;
+`;
+
+const StyledNav = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -59,7 +66,8 @@ const StyledNav = styled.nav`
 	}
 	a,
 	.title {
-		color: rgba(255, 255, 255, 0.87);
+		color: var(--text-color);
+		font-size: 12px;
 		&:active {
 			color: var(--primary);
 		}
@@ -71,12 +79,17 @@ const StyledLinkContainer = styled(StyledFlexCenter)`
 		border-radius: 4px;
 		padding: 8px 12px;
 		cursor: pointer;
-
+		li {
+			font-size: 14px;
+			backdrop-filter: blur(5px);
+		}
 		&:hover {
 			background-color: rgba(0, 0, 0, 0.2);
+
 			ul {
 				display: block;
 			}
+
 			li:hover {
 				position: relative;
 				background-color: var(--primary);
