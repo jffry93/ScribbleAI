@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Logo from '../components/Logo';
-import { StyledMain } from '../GlobalStyles';
+import { StyledMain } from '../../GlobalStyles';
+// import Logo from '../components/Logo';
+// import { StyledMain } from '../GlobalStyles';
 
 const Home = () => {
 	const navigate = useNavigate();
@@ -9,7 +10,6 @@ const Home = () => {
 		<StyledContent>
 			<StyledContainer>
 				<h1>Save Time and Apply to More Jobs</h1>
-
 				<p>
 					Searching for the perfect job can be overwhelming, so we designed a
 					platform that not only simplifies the application process.
