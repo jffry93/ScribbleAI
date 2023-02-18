@@ -81,11 +81,10 @@ const StyledLinkContainer = styled(StyledFlexCenter)`
 		cursor: pointer;
 		li {
 			font-size: 14px;
-			backdrop-filter: blur(5px);
+			background-color: #1d1d1e;
 		}
 		&:hover {
-			background-color: rgba(0, 0, 0, 0.2);
-
+			background-color: #1d1d1e;
 			ul {
 				display: block;
 			}

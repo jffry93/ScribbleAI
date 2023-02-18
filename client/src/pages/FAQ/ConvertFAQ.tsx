@@ -6,6 +6,8 @@ import { trpc } from '../../trpc/trpc';
 import { StyledFlexCenter, StyledIconContainer } from '../../GlobalStyles';
 import { copyClipboard } from '../../util/copyClipboard';
 import { StyledContainer, StyledConverter } from '../NSFW/ConvertNsfw';
+import { useDebounceCallback } from '../../hooks/useDebounce';
+import ErrorMsg from '../../components/ErrorMsg';
 
 interface NSFWResType {
 	status: number;
@@ -13,10 +15,12 @@ interface NSFWResType {
 	data?: string;
 }
 interface NSFWProps {
-	appropriateMsg: string | undefined;
+	setIsLoading: (value: boolean) => void;
 	setAppropriateMsg: (value: string | undefined) => void;
 }
-const ConvertFAQ = ({ appropriateMsg, setAppropriateMsg }: NSFWProps) => {
+const ConvertFAQ = ({ setIsLoading, setAppropriateMsg }: NSFWProps) => {
+	const [error, setError] = useState({ value: false, message: '' });
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [question, setQuestion] = useState('Why do you want to work here?');
 	const [experience, setExperience] = useState(
 		'I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb'
@@ -32,24 +36,68 @@ const ConvertFAQ = ({ appropriateMsg, setAppropriateMsg }: NSFWProps) => {
   Do you want to build solutions for the biggest names in the finance industry? Our public and private sites generate over 2 billion hits per week. If you manage your investments online, you may already be using our solutions. 
   Do you want to lead teams that create modern web applications with cutting edge UI/UX designs? Our team of 40+ designers work closely with our engineering teams to design and build the next generation of online of experiences for finance. 
   Are you looking for an exciting and engaging place to work? A place where you can continue to grow your skills, in a stable environment where we put our people first? We’ve been in business for over 25 years and continue to be the premier provider of digital solutions for the financial industry today. `);
-	// const [appropriateMsg, setAppropriateMsg] = useState<string | undefined>(
-	// 	undefined
-	// );
+
 	const handleMutate = trpc.jarvis.questionAnswer.useMutation();
 
+	const debouncedSubmit = useDebounceCallback(
+		async ({
+			question,
+			experience,
+			jobDescription,
+		}: {
+			question: string;
+			experience: string;
+			jobDescription: string;
+		}) => {
+			if (isSubmitting) {
+				return; // don't make multiple requests
+			}
+			//disable multiple requests and open loading modal
+			setIsSubmitting(true);
+			setIsLoading(true);
+			//send data to backend and wait for response
+			const response: NSFWResType = await handleMutate.mutateAsync({
+				question,
+				experience,
+				jobDescription,
+			});
+			if (response.status < 300) {
+				//store data, end loading and remove error message
+				setAppropriateMsg(response.data);
+				setIsLoading(false);
+				setError({ value: false, message: '' });
+			} else {
+				//end loading and display error message
+				setIsLoading(false);
+				setError({ value: true, message: response.msg });
+			}
+			setIsSubmitting(false); // allow for more submissions
+		},
+		250
+	);
+
+	// const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	// 	e.preventDefault();
+	// 	const response: NSFWResType = await handleMutate.mutateAsync({
+	// 		question,
+	// 		experience,
+	// 		jobDescription,
+	// 	});
+	// 	if (response.status < 300) {
+	// 		setAppropriateMsg(response.data);
+	// 		console.log(response);
+	// 	}
+	// };
+
+	//must debounce function called inside submit event
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const response: NSFWResType = await handleMutate.mutateAsync({
+		debouncedSubmit({
 			question,
 			experience,
 			jobDescription,
 		});
-		if (response.status < 300) {
-			setAppropriateMsg(response.data);
-			console.log(response);
-		}
 	};
-
 	return (
 		<StyledContainer>
 			<StyledConverter>
@@ -67,6 +115,7 @@ const ConvertFAQ = ({ appropriateMsg, setAppropriateMsg }: NSFWProps) => {
 					<li>Copy text generated below</li>
 				</ul>
 				<StyledForm onSubmit={handleSubmit}>
+					{error.value && <ErrorMsg msg={error.message} />}
 					<label>Question:</label>
 					<input
 						name='Question'

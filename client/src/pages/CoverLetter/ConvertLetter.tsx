@@ -5,6 +5,8 @@ import { trpc } from '../../trpc/trpc';
 import { StyledIconContainer } from '../../GlobalStyles';
 import { copyClipboard } from '../../util/copyClipboard';
 import { StyledContainer, StyledConverter } from '../NSFW/ConvertNsfw';
+import { useDebounceCallback } from '../../hooks/useDebounce';
+import ErrorMsg from '../../components/ErrorMsg';
 
 interface NSFWResType {
 	status: number;
@@ -12,14 +14,12 @@ interface NSFWResType {
 	data?: string;
 }
 interface NSFWProps {
-	appropriateMsg: string | undefined;
+	setIsLoading: (value: boolean) => void;
 	setAppropriateMsg: (value: string | undefined) => void;
 }
-
-const ConvertCoverLetter = ({
-	appropriateMsg,
-	setAppropriateMsg,
-}: NSFWProps) => {
+const ConvertCoverLetter = ({ setIsLoading, setAppropriateMsg }: NSFWProps) => {
+	const [error, setError] = useState({ value: false, message: '' });
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [experience, setExperience] = useState(
 		'I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb'
 	);
@@ -36,17 +36,46 @@ const ConvertCoverLetter = ({
   Are you looking for an exciting and engaging place to work? A place where you can continue to grow your skills, in a stable environment where we put our people first? We’ve been in business for over 25 years and continue to be the premier provider of digital solutions for the financial industry today. `);
 
 	const handleMutate = trpc.jarvis.coverLetter.useMutation();
+	const debouncedSubmit = useDebounceCallback(
+		async ({
+			experience,
+			jobDescription,
+		}: {
+			experience: string;
+			jobDescription: string;
+		}) => {
+			if (isSubmitting) {
+				return; // don't make multiple requests
+			}
+			//disable multiple requests and open loading modal
+			setIsSubmitting(true);
+			setIsLoading(true);
+			//send data to backend and wait for response
+			const response: NSFWResType = await handleMutate.mutateAsync({
+				experience,
+				jobDescription,
+			});
+			if (response.status < 300) {
+				//store data, end loading and remove error message
+				setAppropriateMsg(response.data);
+				setIsLoading(false);
+				setError({ value: false, message: '' });
+			} else {
+				//end loading and display error message
+				setIsLoading(false);
+				setError({ value: true, message: response.msg });
+			}
+			setIsSubmitting(false); // allow for more submissions
+		},
+		250
+	);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const response: NSFWResType = await handleMutate.mutateAsync({
+		debouncedSubmit({
 			experience,
 			jobDescription,
 		});
-		if (response.status < 300) {
-			setAppropriateMsg(response.data);
-			console.log(response);
-		}
 	};
 
 	return (
@@ -65,6 +94,7 @@ const ConvertCoverLetter = ({
 					<li>Copy text generated below</li>
 				</ul>
 				<StyledForm onSubmit={handleSubmit}>
+					{error.value && <ErrorMsg msg={error.message} />}
 					<label>Past Experience:</label>
 					<input
 						name='Experience'
@@ -91,21 +121,6 @@ const ConvertCoverLetter = ({
 };
 
 export default ConvertCoverLetter;
-const StyledCopy = styled.div`
-	padding: var(--lg-padding);
-	border: 1px solid green;
-	position: relative;
-	h4 {
-		border: 1px solid yellow;
-		margin-right: 28px;
-	}
-`;
-
-const StyledCopyButton = styled(StyledIconContainer)`
-	position: absolute;
-	top: var(--sm-padding);
-	right: var(--sm-padding);
-`;
 
 const StyledForm = styled.form`
 	display: flex;

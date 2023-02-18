@@ -3,19 +3,25 @@ import styled from 'styled-components';
 import { StyledMain } from '../../GlobalStyles';
 import ConvertNsfw from './ConvertNsfw';
 import CopyContainer from '../../components/CopyContainer';
+import LoadingModal from '../../components/LoadingModal';
 
 const NSFW = () => {
 	const [appropriateMsg, setAppropriateMsg] = useState<string | undefined>(
 		undefined
 	);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	return (
-		<StyledHelper>
-			<ConvertNsfw
-				appropriateMsg={appropriateMsg}
-				setAppropriateMsg={setAppropriateMsg}
-			/>
-			<CopyContainer appropriateMsg={appropriateMsg} />
-		</StyledHelper>
+		<>
+			<StyledHelper>
+				<ConvertNsfw
+					setAppropriateMsg={setAppropriateMsg}
+					setIsLoading={setIsLoading}
+				/>
+				<CopyContainer appropriateMsg={appropriateMsg} />
+			</StyledHelper>
+			{isLoading && <LoadingModal />}
+		</>
 	);
 };
 

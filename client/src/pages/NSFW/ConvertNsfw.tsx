@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import ErrorMsg from '../../components/ErrorMsg';
+import { useDebounceCallback } from '../../hooks/useDebounce';
 import { trpc } from '../../trpc/trpc';
 
 interface NSFWResType {
@@ -8,29 +10,48 @@ interface NSFWResType {
 	data?: string;
 }
 interface NSFWProps {
-	appropriateMsg: string | undefined;
+	setIsLoading: (value: boolean) => void;
 	setAppropriateMsg: (value: string | undefined) => void;
 }
-const ConvertNsfw = ({ appropriateMsg, setAppropriateMsg }: NSFWProps) => {
+const ConvertNsfw = ({ setAppropriateMsg, setIsLoading }: NSFWProps) => {
 	const [nsfw, setNsfw] = useState('');
+	const [error, setError] = useState({ value: false, message: '' });
 	const handleMutate = trpc.jarvis.makeFancy.useMutation();
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
+	const debouncedSubmit = useDebounceCallback(async (text: string) => {
+		if (isSubmitting) {
+			return; // don't make multiple requests
+		}
+		//disable multiple requests and open loading modal
+		setIsSubmitting(true);
+		setIsLoading(true);
+		//send data to backend and wait for response
+		const response: NSFWResType = await handleMutate.mutateAsync({ text });
+		if (response.status < 300) {
+			//store data, end loading and remove error message
+			setAppropriateMsg(response.data);
+			setIsLoading(false);
+			setError({ value: false, message: '' });
+		} else {
+			//end loading and display error message
+			setIsLoading(false);
+			setError({ value: true, message: response.msg });
+		}
+		setIsSubmitting(false); // allow for more submissions
+	}, 250);
+
+	//must debounce function called inside submit event
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		const response: NSFWResType = await handleMutate.mutateAsync({
-			text: nsfw,
-		});
-		if (response.status < 300) {
-			setAppropriateMsg(response.data);
-			console.log(response.data);
-		}
+		debouncedSubmit(nsfw);
 	};
 
 	return (
 		<StyledContainer>
 			<StyledConverter>
 				<h2>Sophisticated Generator</h2>
-				<p>
+				<p className='description'>
 					Elevate your writing to a confident and professional level with our
 					innovative tool.
 				</p>
@@ -41,6 +62,7 @@ const ConvertNsfw = ({ appropriateMsg, setAppropriateMsg }: NSFWProps) => {
 					<li>Copy professional text generated</li>
 				</ul>
 				<form onSubmit={handleSubmit}>
+					{error.value && <ErrorMsg msg={error.message} />}
 					<label>Original text:</label>
 					<StyledTextarea
 						name='convertNsfw'
@@ -74,7 +96,7 @@ export const StyledConverter = styled.div`
 	ul {
 		display: none;
 	}
-	p,
+	.description,
 	li {
 		/* padding-left: var(--sm-padding); */
 		color: var(--secondary-text-color);

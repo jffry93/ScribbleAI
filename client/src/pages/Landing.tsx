@@ -43,7 +43,7 @@ const StyledContent = styled.div`
 	max-width: var(--width-limit);
 	position: relative;
 	flex-direction: row;
-	border: 1px solid blue;
+	/* border: 1px solid blue; */
 	h2 {
 		font-size: 40px;
 	}
@@ -56,7 +56,7 @@ const StyledContent = styled.div`
 const StyledLanding = styled.div`
 	position: absolute;
 	bottom: 55px;
-	left: 32px;
+	margin: 0 32px;
 	/* padding: var(--lg-padding); */
 
 	justify-content: center;
