@@ -3,6 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { trpc } from '../trpc/trpc';
 import { useAuthContext } from './useAuthContext';
 
+interface LoginRes {
+	status: number;
+	email?: string;
+	token?: string;
+	preference?: {} | null;
+	msg: string;
+}
+
 export const useLogin = () => {
 	const [isLoading, setIsLoading] = useState<null | boolean>(null);
 	const [error, setError] = useState<null | boolean>(null);
@@ -14,7 +22,7 @@ export const useLogin = () => {
 		try {
 			setIsLoading(true);
 			setError(null);
-			const data = await handleLogin.mutateAsync({
+			const data: LoginRes = await handleLogin.mutateAsync({
 				email,
 				password,
 			});
@@ -25,7 +33,10 @@ export const useLogin = () => {
 				setErrorMsg(data.msg);
 			} else {
 				// save token to local storage
-				localStorage.setItem('user', JSON.stringify(data));
+				localStorage.setItem(
+					'user',
+					JSON.stringify({ email: data.email, token: data.token })
+				);
 				//update state
 				dispatch({ type: 'LOGIN', payload: data });
 				setIsLoading(false);

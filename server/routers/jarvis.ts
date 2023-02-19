@@ -130,7 +130,7 @@ export const jarvisRouter = t.router({
 
 				if (response.data.choices[0].text) {
 					const answer = response.data.choices[0].text.trim();
-					const createEntry = await prisma.qAndA.create({
+					const createEntry = await prisma.answer.create({
 						data: { question, answer },
 					});
 					console.log(createEntry);
@@ -193,9 +193,9 @@ export const jarvisRouter = t.router({
 				});
 				if (response.data.choices[0].text) {
 					// send to Database
-					const createEntry = await prisma.nsfw.create({
+					const createEntry = await prisma.nSFW.create({
 						data: {
-							msg: jarvisRequest,
+							prompt: jarvisRequest,
 							response: response.data.choices[0].text,
 						},
 					});

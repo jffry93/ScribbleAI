@@ -1,12 +1,16 @@
 import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 import { StyledPage } from '../GlobalStyles';
+import { useAuthContext } from '../hooks/useAuthContext';
 import Banner from './Banner';
 import ClipBoard from './ClipBoard';
 import Footer from './Footer';
 import Navbar from './Navbar';
 
 const Layout = ({ children }: { children: ReactNode }) => {
+	const {
+		state: { user },
+	} = useAuthContext();
 	return (
 		<StyledReset>
 			<StyledLayout>
@@ -14,7 +18,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 				<Navbar />
 				<StyledMain>{children}</StyledMain>
 			</StyledLayout>
-			<ClipBoard />
+			{user && <ClipBoard />}
 			<Footer />
 		</StyledReset>
 	);

@@ -22,7 +22,7 @@ const signUp = {
 		.input(z.object({ email: z.string(), password: z.string() }))
 		.mutation(async ({ input }) => {
 			const { email, password } = input;
-			const name = 'Jeffrey';
+
 			try {
 				console.log(input);
 				// validation
@@ -46,10 +46,23 @@ const signUp = {
 				const salt = await bcrypt.genSalt(10);
 				const hash = await bcrypt.hash(password, salt);
 				const user = await prisma.user.create({
-					data: { email, preferences: {}, name, password: hash },
+					data: {
+						email,
+						password: hash,
+						Preference: { create: {} },
+					},
+					include: { Preference: true },
 				});
 				const token = createToken(user.id);
-				return { status: 200, email, token, msg: '✅ Successful signUp' };
+
+				const preference = user.Preference;
+				return {
+					status: 200,
+					email,
+					token,
+					preference,
+					msg: '✅ Successful signUp',
+				};
 			} catch (err) {
 				console.log((err as Error).message);
 				return {
@@ -65,7 +78,6 @@ const login = {
 		.input(z.object({ email: z.string(), password: z.string() }))
 		.mutation(async ({ input }) => {
 			const { email, password } = input;
-			const name = 'Jeffrey';
 			try {
 				console.log(input);
 				// validation
@@ -76,17 +88,30 @@ const login = {
 					throw Error('😳 email not valid 😭');
 				}
 				// check database
-				const user = await prisma.user.findFirst({ where: { email } });
+				const user = await prisma.user.findFirst({
+					where: { email },
+					include: { Preference: true },
+				});
+
 				if (!user) {
 					throw Error("❌Email already doesn't exist 😑");
 				}
 				// check if password matches hashed password
+
 				const match = await bcrypt.compare(password, user.password);
 				if (!match) {
 					throw Error('❌Incorrect password 😑');
 				}
 				const token = createToken(user.id);
-				return { status: 200, email, token, msg: '✅ Successful signUp' };
+
+				const preference = user.Preference;
+				return {
+					status: 200,
+					email,
+					token,
+					preference,
+					msg: '✅ Successful signUp',
+				};
 			} catch (err) {
 				console.log((err as Error).message);
 				return {
@@ -96,10 +121,53 @@ const login = {
 			}
 		}),
 };
+const deleteUser = {
+	deleteUser: t.procedure
+		.input(z.object({ email: z.string(), token: z.string() }))
+		.mutation(async ({ input }) => {
+			const { email, token } = input;
+			try {
+				// check that correct things are stored in local storage
+				if (!email || !token) {
+					throw Error('😳 all fields must be filled 😭');
+				}
+				//compare userInfo
+				const userInfo = await prisma.user.findFirst({
+					where: { email },
+				});
+
+				const jwtData = jwt.verify(token, SECRET);
+				if (typeof jwtData === 'string') {
+					throw new Error('Invalid token');
+				}
+				const { _id } = jwtData;
+				if (userInfo?.id !== _id) {
+					throw new Error("Token doesn't match userId");
+				}
+				console.log('ITS A MATCH ❤️');
+				// DELETE
+				const user = await prisma.user.delete({
+					where: { email },
+					include: { Preference: true },
+				});
+				return {
+					status: 200,
+					msg: '✅ Successful deleted account',
+				};
+			} catch (err) {
+				console.log((err as Error).message);
+				return {
+					status: 400,
+					msg: '❗️Issue with deleting account...🤕 ' + (err as Error).message,
+				};
+			}
+		}),
+};
 
 export const userRouter = t.router({
 	...signUp,
 	...login,
+	...deleteUser,
 	update: userProcedure
 		.input(z.object({ name: z.string() }))
 		.output(z.object({ name: z.string(), id: z.string() }))

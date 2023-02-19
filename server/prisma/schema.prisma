@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["referentialActions"]
 }
 
 datasource db {
@@ -10,60 +11,59 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Nsfw {
-  id        String   @id @default(uuid())
-  msg       String
-  response  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model QAndA {
-  id        String   @id @default(uuid())
-  question  String
-  answer    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 model User {
-  id          String    @id @default(uuid())
-  email       String    @unique
+  id          String        @id @default(uuid())
+  email       String        @unique
   password    String
-  name        String?
-  role        Role      @default(BASIC)
-  preferences Json?
-  Task        Task[]
-  History     History[]
+  createdAt   DateTime      @default(now())
+  NSFW        NSFW[]
+  Answer      Answer[]
+  CoverLetter CoverLetter[]
+  // Preference   Preference?   @relation(fields: [preferenceId], references: [id])
+  // preferenceId String?       @unique
+  Preference  Preference?
 
   @@index([email])
 }
 
-model Task {
-  id       String  @id @default(uuid())
-  author   User    @relation(fields: [authorId], references: [id])
-  title    String
-  Complete Boolean
-  authorId String  @unique
+model Preference {
+  id          String  @id @default(uuid())
+  name        String?
+  img         String?
+  experience  String?
+  personality String?
+  theme       String  @default("dark")
+  Links       Json?
+  User        User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String? @unique
 }
 
-model History {
-  id     String @id @default(uuid())
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
-  Day    Day[]
-}
-
-model Day {
+model NSFW {
   id        String   @id @default(uuid())
+  prompt    String
+  response  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  history   History  @relation(fields: [historyId], references: [id])
-  historyId String   @unique
-  taskList  Json
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
-enum Role {
-  BASIC
-  ADMIN
+model Answer {
+  id        String   @id @default(uuid())
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model CoverLetter {
+  id        String   @id @default(uuid())
+  prompt    String
+  response  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }

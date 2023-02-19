@@ -18,15 +18,17 @@ const StyledImage = styled(StyledFlexCenter)`
 
 	width: 100%;
 	.image-container {
-		border: 1px solid red;
-		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		/* border: 1px solid red; */
+		background-color: rgba(0, 0, 0, 0.2);
+		/* overflow: hidden; */
 		border-radius: 50%;
 		width: 300px;
 		height: 300px;
 		img {
-			/* width: 100%; */
 			height: 400px;
-			background-color: aqua;
 		}
 	}
 `;
