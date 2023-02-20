@@ -8,7 +8,7 @@ dotenv.config();
 const SECRET = process.env.SECRET || 'default-secret-value';
 
 const legitCheckMiddleware = t.middleware(async ({ ctx, next }) => {
-	console.log('🤦🏽‍♂️', ctx.req.headers);
+	// console.log('🤦🏽‍♂️', ctx.req.headers);
 	const { authorization } = ctx.req.headers;
 	if (!authorization) {
 		throw new TRPCError({ code: 'UNAUTHORIZED' });
@@ -24,19 +24,19 @@ const legitCheckMiddleware = t.middleware(async ({ ctx, next }) => {
 		//select returns object with keys specified
 		const userId = await prisma.user.findFirst({
 			where: { id: _id },
+			include: { Preference: true },
 		});
 
 		if (!userId) {
 			throw new TRPCError({ code: 'FORBIDDEN' });
 		}
 		console.log('ITS A MATCH ❤️');
-
-		next();
+		return next({ ctx: { user: { ...userId, token } } });
 	} catch (err) {
 		console.log(err);
+		return next();
 	}
-
-	return next({ ctx: { user: { id: 1 } } });
+	return next();
 });
 
 export const legitCheckProcedure = t.procedure.use(legitCheckMiddleware);

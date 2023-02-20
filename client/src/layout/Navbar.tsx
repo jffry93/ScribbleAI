@@ -1,15 +1,18 @@
+import { useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../components/Logo';
 import SignUp from '../components/SignUp';
 import { device, StyledFlexCenter } from '../GlobalStyles';
 import { useAuthContext } from '../hooks/useAuthContext';
+import { trpc } from '../trpc/trpc';
 
 const Navbar = () => {
 	const navigate = useNavigate();
 	const {
 		state: { user },
 	} = useAuthContext();
+
 	return (
 		<StyledSticky>
 			<StyledNav>

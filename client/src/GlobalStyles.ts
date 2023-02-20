@@ -51,6 +51,10 @@ h3{
   font-size: 2.2em;
 	line-height: 1.1;
 }
+h4{
+  font-size: 1.6em;
+	line-height: 1.1;
+}
 li,p{
 	letter-spacing: 0.5px;
 	line-height: 1.5;

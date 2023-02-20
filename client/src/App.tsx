@@ -10,6 +10,9 @@ import NSFW from './pages/NSFW';
 import FAQ from './pages/FAQ';
 import CoverLetter from './pages/CoverLetter';
 import Profile from './pages/Profile';
+import { useEffect } from 'react';
+import { trpc } from './trpc/trpc';
+import GetUser from './components/GetUser';
 
 function App() {
 	const {
@@ -18,6 +21,7 @@ function App() {
 
 	return (
 		<>
+			{user && <GetUser />}
 			<GlobalStyle />
 			<Layout>
 				<Routes>

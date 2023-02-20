@@ -53,10 +53,10 @@ export const useDeleteAccount = () => {
 				await new Promise((resolve) => setTimeout(resolve, 1400));
 				setErrorMsg('Byeeeeeee 👋🏽');
 				await new Promise((resolve) => setTimeout(resolve, 1000));
+				dispatch({ type: 'LOGOUT', payload: undefined });
 				// remove token in local storage
 				localStorage.removeItem('user');
 				// remove state from context
-				dispatch({ type: 'LOGOUT', payload: undefined });
 				//RESET
 				setError(false);
 				setIsLoading(false);

@@ -8,8 +8,32 @@ import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-
 dotenv.config();
+
+interface User {
+	id: string;
+	name?: string;
+	email: string;
+	Preference: Preference;
+	token: string;
+	// other properties
+}
+interface Preference {
+	id: string;
+	name?: null | string;
+	img?: null | string;
+	experience?: null | string;
+	personality?: null | string;
+	theme: string;
+	Links?: null | {};
+	userId?: string | null;
+}
+
+interface MyContext {
+	isAdmin: boolean;
+	pokemon: number;
+	user?: User;
+}
 const SECRET = process.env.SECRET || 'default-secret-value';
 
 const createToken = (_id: string) => {
@@ -57,14 +81,21 @@ const signUp = {
 				});
 				const token = createToken(user.id);
 
-				const preference = user.Preference;
-				return {
-					status: 200,
-					email,
-					token,
-					preference,
-					msg: '✅ Successful signUp',
-				};
+				if (user.Preference !== null) {
+					const preference: Preference = user.Preference;
+					const { experience, personality, name, theme, img } = preference;
+
+					return {
+						status: 200,
+						email,
+						token,
+						preference: { experience, personality, name, theme, img },
+						msg: '✅ Successful signUp',
+					};
+					// rest of the code that uses the destructured properties
+				} else {
+					// handle the case when user.Preference is null
+				}
 			} catch (err) {
 				console.log((err as Error).message);
 				return {
@@ -106,14 +137,30 @@ const login = {
 				}
 				const token = createToken(user.id);
 
-				const preference = user.Preference;
-				return {
-					status: 200,
-					email,
-					token,
-					preference,
-					msg: '✅ Successful signUp',
-				};
+				// const preference = user.Preference;
+				// return {
+				// 	status: 200,
+				// 	email,
+				// 	token,
+				// 	preference,
+				// 	msg: '✅ Successful signUp',
+				// };
+
+				if (user.Preference !== null) {
+					const preference: Preference = user.Preference;
+					const { experience, personality, name, theme, img } = preference;
+
+					return {
+						status: 200,
+						email,
+						token,
+						preference: { experience, personality, name, theme, img },
+						msg: '✅ Successful signUp',
+					};
+					// rest of the code that uses the destructured properties
+				} else {
+					// handle the case when user.Preference is null
+				}
 			} catch (err) {
 				console.log((err as Error).message);
 				return {
@@ -130,6 +177,7 @@ const deleteUser = {
 		.mutation(async ({ input }) => {
 			const { email, token } = input;
 			try {
+				console.log('first');
 				// check that correct things are stored in local storage
 				if (!email || !token) {
 					throw Error('😳 all fields must be filled 😭');
@@ -143,16 +191,14 @@ const deleteUser = {
 				if (typeof jwtData === 'string') {
 					throw new Error('Invalid token');
 				}
+				console.log('second');
 				const { _id } = jwtData;
 				if (userInfo?.id !== _id) {
 					throw new Error("Token doesn't match userId");
 				}
 				console.log('ITS A MATCH ❤️');
 				// DELETE
-				const user = await prisma.user.delete({
-					where: { email },
-					include: { Preference: true },
-				});
+				await prisma.user.delete({ where: { email } });
 				return {
 					status: 200,
 					msg: '✅ Successful deleted account',
@@ -167,10 +213,49 @@ const deleteUser = {
 		}),
 };
 
+const findYourself = {
+	findYourself: legitCheckProcedure.query(
+		async ({ ctx }: { ctx: MyContext }) => {
+			try {
+				const { user } = ctx;
+				if (user?.Preference) {
+					const { Preference } = user;
+					const { experience, personality, name, theme, img } = Preference;
+
+					return {
+						status: 200,
+						preference: {
+							experience,
+							personality,
+							name,
+							theme,
+							img,
+						},
+						msg: '✅ Successful signUp',
+					};
+				}
+
+				return {
+					status: 400,
+					msg: 'Successful but nothing to update',
+					preference: {},
+				};
+			} catch (err) {
+				console.log((err as Error).message);
+				return {
+					status: 500,
+					msg: '❗️Issue with login oof...🤕 ' + (err as Error).message,
+				};
+			}
+		}
+	),
+};
+
 export const userRouter = t.router({
 	...signUp,
 	...login,
 	...deleteUser,
+	...findYourself,
 	update: userProcedure
 		.input(z.object({ name: z.string() }))
 		.output(z.object({ name: z.string(), id: z.string() }))

@@ -37,8 +37,20 @@ export const useSignup = () => {
 					'user',
 					JSON.stringify({ email: data.email, token: data.token })
 				);
+				console.log({
+					...data.preference,
+					email: data.email,
+					token: data.token,
+				});
 				//update state
-				dispatch({ type: 'LOGIN', payload: data });
+				dispatch({
+					type: 'LOGIN',
+					payload: {
+						preference: data.preference,
+						email: data.email,
+						token: data.token,
+					},
+				});
 				setIsLoading(false);
 				setErrorMsg('✅ Successful signUp');
 				setError(true);

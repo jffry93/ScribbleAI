@@ -11,6 +11,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 	const {
 		state: { user },
 	} = useAuthContext();
+
 	return (
 		<StyledReset>
 			<StyledLayout>
