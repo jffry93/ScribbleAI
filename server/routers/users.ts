@@ -3,10 +3,12 @@ import { z } from 'zod';
 import { observable } from '@trpc/server/observable';
 import { EventEmitter } from 'stream';
 import { prisma } from '../db';
+import { legitCheckProcedure } from '../middleware/legitCheckMiddleware';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+
 dotenv.config();
 const SECRET = process.env.SECRET || 'default-secret-value';
 
@@ -121,8 +123,9 @@ const login = {
 			}
 		}),
 };
+
 const deleteUser = {
-	deleteUser: t.procedure
+	deleteUser: legitCheckProcedure
 		.input(z.object({ email: z.string(), token: z.string() }))
 		.mutation(async ({ input }) => {
 			const { email, token } = input;

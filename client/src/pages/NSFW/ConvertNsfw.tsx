@@ -20,25 +20,31 @@ const ConvertNsfw = ({ setAppropriateMsg, setIsLoading }: NSFWProps) => {
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const debouncedSubmit = useDebounceCallback(async (text: string) => {
-		if (isSubmitting) {
-			return; // don't make multiple requests
-		}
-		//disable multiple requests and open loading modal
-		setIsSubmitting(true);
-		setIsLoading(true);
-		//send data to backend and wait for response
-		const response: NSFWResType = await handleMutate.mutateAsync({ text });
-		if (response.status < 300) {
-			//store data, end loading and remove error message
-			setAppropriateMsg(response.data);
+		try {
+			if (isSubmitting) {
+				return; // don't make multiple requests
+			}
+			//disable multiple requests and open loading modal
+			setIsSubmitting(true);
+			setIsLoading(true);
+			//send data to backend and wait for response
+			const response: NSFWResType = await handleMutate.mutateAsync({ text });
+			if (response.status < 300) {
+				//store data, end loading and remove error message
+				setAppropriateMsg(response.data);
+				setIsLoading(false);
+				setError({ value: false, message: '' });
+			} else {
+				//end loading and display error message
+				setIsLoading(false);
+				setError({ value: true, message: response.msg });
+			}
+			setIsSubmitting(false); // allow for more submissions
+		} catch (error) {
+			const errorMessage = (error as { message: string }).message;
+			setError({ value: true, message: errorMessage });
 			setIsLoading(false);
-			setError({ value: false, message: '' });
-		} else {
-			//end loading and display error message
-			setIsLoading(false);
-			setError({ value: true, message: response.msg });
 		}
-		setIsSubmitting(false); // allow for more submissions
 	}, 250);
 
 	//must debounce function called inside submit event

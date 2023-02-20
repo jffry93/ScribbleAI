@@ -4,13 +4,14 @@ import dotenv from 'dotenv';
 import { Configuration, OpenAIApi } from 'openai';
 import { prisma } from '../db';
 import { create } from 'domain';
+import { legitCheckProcedure } from '../middleware/legitCheckMiddleware';
 dotenv.config();
 
-interface ResponseType {
-	status: number;
-	msg: string;
-	data?: string; // Make data property optional
-}
+// interface ResponseType {
+// 	status: number;
+// 	msg: string;
+// 	data?: string; // Make data property optional
+// }
 
 const configuration = new Configuration({
 	apiKey: process.env.OPENAI_API_KEY,
@@ -18,7 +19,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 export const jarvisRouter = t.router({
-	coverLetter: t.procedure
+	coverLetter: legitCheckProcedure
 		.input(
 			z.object({
 				experience: z.string(),
@@ -92,7 +93,7 @@ export const jarvisRouter = t.router({
 				};
 			}
 		}),
-	questionAnswer: t.procedure
+	questionAnswer: legitCheckProcedure
 		.input(
 			z.object({
 				question: z.string(),
@@ -168,7 +169,7 @@ export const jarvisRouter = t.router({
 				};
 			}
 		}),
-	makeFancy: t.procedure
+	makeFancy: legitCheckProcedure
 		.input(z.object({ text: z.string() }))
 		.mutation(async ({ input }) => {
 			const { text } = input;

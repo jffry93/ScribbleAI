@@ -11,7 +11,6 @@ const Profile = () => {
 	const {
 		state: { user },
 	} = useAuthContext();
-	console.log(user);
 
 	return (
 		<StyledProfile>
