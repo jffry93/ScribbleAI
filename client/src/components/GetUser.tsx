@@ -16,7 +16,10 @@ const GetUser = () => {
 			} else {
 				dispatch({
 					type: 'LOGIN',
-					payload: { ...user, preference: { ...res.data.preference } },
+					payload: {
+						...user,
+						preference: { ...res.data.preference },
+					},
 				});
 			}
 		} catch (error) {

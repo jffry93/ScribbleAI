@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import { trpc } from '../trpc/trpc';
 
 interface AuthProvProps {
@@ -16,6 +16,7 @@ interface User {
 		personality: null | string;
 		theme: 'dark';
 		createdAt: Date;
+		links: { github: string; linkedin: string; additional: string };
 	};
 }
 interface ReducerState {
@@ -59,6 +60,7 @@ export const authReducer = (state: ReducerState, action: ReducerAction) => {
 
 export const AuthContextProvider = ({ children }: AuthProvProps) => {
 	const [state, dispatch] = useReducer(authReducer, initialValue);
+	console.log(state.user);
 	useEffect(() => {
 		// update context if localStorage has user key
 		const userData = localStorage.getItem('user');

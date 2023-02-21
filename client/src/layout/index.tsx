@@ -19,7 +19,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
 				<Navbar />
 				<StyledMain>{children}</StyledMain>
 			</StyledLayout>
-			{user && <ClipBoard />}
+			{user?.preference && <ClipBoard />}
 			<Footer />
 		</StyledReset>
 	);

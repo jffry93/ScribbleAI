@@ -4,9 +4,16 @@ import styled from 'styled-components';
 import { ImProfile } from 'react-icons/im';
 import { AiOutlineLink } from 'react-icons/ai';
 import { copyClipboard } from '../util/copyClipboard';
+import { useAuthContext } from '../hooks/useAuthContext';
+import { BsPlusLg } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
 
 const ClipBoard = () => {
 	const [isVisible, setIsVisible] = useState(false);
+	const {
+		state: { user },
+	} = useAuthContext();
+	const navigate = useNavigate();
 	const linksArray = [
 		{
 			title: 'Github',
@@ -19,35 +26,52 @@ const ClipBoard = () => {
 			address: 'https://www.linkedin.com/in/jffry93/',
 		},
 		{
-			title: 'Portfolio',
-			icon: () => <ImProfile size={25} />,
-			address: 'https://jffry93.github.io/react-portfolio/',
-		},
-		{
-			title: 'linktree',
+			title: 'additional',
 			icon: () => <AiOutlineLink size={25} />,
-			address: 'https://jffry-linktree.vercel.app/',
+			address: 'https://jffry93.github.io/react-portfolio/',
 		},
 	];
 	return (
 		<StyledClipBoard>
 			{isVisible && (
 				<StyledIconContainer>
-					{linksArray.map((item) => {
-						console.log('first');
-						return (
+					{user?.preference.links.github && (
+						<button
+							onClick={() => {
+								copyClipboard(user?.preference.links.github);
+							}}
+						>
+							<FaGithubAlt size={25} />
+						</button>
+					)}
+					{user?.preference.links.linkedin && (
+						<button
+							onClick={() => {
+								copyClipboard(user?.preference.links.linkedin);
+							}}
+						>
+							<FaLinkedinIn size={25} />
+						</button>
+					)}
+					{user?.preference.links.additional && (
+						<button
+							onClick={() => {
+								copyClipboard(user?.preference.links.additional);
+							}}
+						>
+							<AiOutlineLink size={25} />
+						</button>
+					)}
+					{user?.preference.links &&
+						Object.keys(user?.preference.links).length === 0 && (
 							<button
-								key={item.title}
-								title={item.title}
 								onClick={() => {
-									copyClipboard(item.address);
-									console.log(item.address);
+									navigate('/profile');
 								}}
 							>
-								{item.icon()}
+								<BsPlusLg size={25} />
 							</button>
-						);
-					})}
+						)}
 				</StyledIconContainer>
 			)}
 			<StyledClipButton onClick={() => setIsVisible(!isVisible)}>

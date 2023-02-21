@@ -33,7 +33,7 @@ model Preference {
   experience  String?
   personality String?
   theme       String  @default("dark")
-  Links       Json?
+  links       Json?
   User        User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String? @unique
 }

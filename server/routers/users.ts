@@ -26,7 +26,7 @@ interface Preference {
 	experience?: null | string;
 	personality?: null | string;
 	theme: string;
-	Links?: null | {};
+	links?: null | {};
 	userId?: string | null;
 }
 
@@ -76,7 +76,7 @@ const signUp = {
 					data: {
 						email,
 						password: hash,
-						Preference: { create: {} },
+						Preference: { create: { links: {} } },
 					},
 					include: { Preference: true },
 				});
@@ -84,7 +84,8 @@ const signUp = {
 
 				if (user.Preference !== null) {
 					const { Preference, createdAt } = user;
-					const { experience, personality, name, theme, img } = Preference;
+					const { experience, personality, name, theme, img, links } =
+						Preference;
 
 					return {
 						status: 200,
@@ -97,6 +98,7 @@ const signUp = {
 							theme,
 							img,
 							createdAt,
+							links,
 						},
 						msg: '✅ Successful signUp',
 					};
@@ -157,7 +159,8 @@ const login = {
 				if (user.Preference !== null) {
 					const { Preference, createdAt } = user;
 					// const preference: Preference = user.Preference;
-					const { experience, personality, name, theme, img } = Preference;
+					const { experience, personality, name, theme, img, links } =
+						Preference;
 
 					return {
 						status: 200,
@@ -170,6 +173,7 @@ const login = {
 							theme,
 							img,
 							createdAt,
+							links,
 						},
 						msg: '✅ Successful signUp',
 					};
@@ -195,7 +199,8 @@ const findYourself = {
 				console.log(user);
 				if (user?.Preference) {
 					const { Preference, createdAt } = user;
-					const { experience, personality, name, theme, img } = Preference;
+					const { experience, personality, name, theme, img, links } =
+						Preference;
 
 					return {
 						status: 200,
@@ -206,6 +211,7 @@ const findYourself = {
 							theme,
 							img,
 							createdAt,
+							links,
 						},
 						msg: '✅ Successful signUp',
 					};
@@ -231,10 +237,12 @@ const updateUser = {
 	updateUser: legitCheckProcedure
 		.input(
 			z.object({
-				// email: z.string(),
 				name: z.string().min(1),
 				experience: z.string().min(1),
 				personality: z.string().min(1),
+				github: z.string(),
+				linkedin: z.string(),
+				additional: z.string(),
 			})
 		)
 		.mutation(
@@ -243,28 +251,48 @@ const updateUser = {
 				input,
 			}: {
 				ctx: MyContext;
-				input: { name: string; experience: string; personality: string };
+				input: {
+					name: string;
+					experience: string;
+					personality: string;
+					github: string;
+					linkedin: string;
+					additional: string;
+				};
 			}) => {
 				try {
-					const { name, experience, personality } = input;
+					const {
+						name,
+						experience,
+						personality,
+						github,
+						linkedin,
+						additional,
+					} = input;
 					const { user } = ctx;
-
-					console.log(name.length);
 					if (!name && !experience && !personality) {
 						throw Error('😳 all fields must be filled 😭');
 					}
-					const data = await prisma.preference.update({
-						where: { userId: user?.id },
-						data: { ...input },
+					type Links = Record<string, string>;
+					const links: Links = { github, linkedin, additional };
+
+					Object.keys(links).forEach((key: string) => {
+						if (links[key].trim() === '') {
+							delete links[key];
+						}
 					});
-					console.log(data);
-					// console.log(data);
+
+					await prisma.preference.update({
+						where: { userId: user?.id },
+						data: { name, experience, personality, links },
+					});
 					return {
 						status: 200,
 						preference: {
 							experience,
 							personality,
 							name,
+							links,
 						},
 						msg: '✅ Successful signUp',
 					};

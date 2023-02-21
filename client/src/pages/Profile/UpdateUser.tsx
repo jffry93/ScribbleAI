@@ -4,6 +4,7 @@ import FormInput from '../../components/FormInput';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { trpc } from '../../trpc/trpc';
 import ErrorMsg from '../../components/ErrorMsg';
+import ProfileImage from './ProfileImage';
 
 interface ErrorObject {
 	status: boolean;
@@ -31,22 +32,43 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 	const [personality, setPersonality] = useState(
 		user?.preference.personality || ''
 	);
+	const [github, setGithub] = useState(user?.preference.links.github || '');
+	const [linkedin, setLinkedin] = useState(
+		user?.preference.links.linkedin || ''
+	);
+	const [additional, setAdditional] = useState(
+		user?.preference.links.additional || ''
+	);
 
 	const handleUpdateUser = trpc.user.updateUser.useMutation();
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		try {
 			e.preventDefault();
-			const data = await handleUpdateUser.mutateAsync({
+			const data: {
+				status: number;
+				preference?: {
+					experience: string;
+					personality: string;
+					name: string;
+					links: Record<string, string>;
+				};
+				msg: string;
+			} = await handleUpdateUser.mutateAsync({
 				name,
 				experience,
 				personality,
+				github,
+				linkedin,
+				additional,
 			});
 			console.log(data);
 			if (data.status === 200) {
 				console.log('Success');
+				const { preference } = data;
+
 				dispatch({
 					type: 'UPDATE',
-					payload: { name, experience, personality },
+					payload: preference,
 				});
 				setLockIcon(true);
 			} else {
@@ -82,41 +104,70 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 		<>
 			{user?.preference && (
 				<StyledForm onSubmit={handleSubmit}>
-					{error.status && <ErrorMsg msg={error.msg} />}
-					<StyledField className={handleError('name') ? 'error' : ''}>
-						<label>Name: </label>
+					<StyledDiv>
+						<ProfileImage />
+						<StyledContainer>
+							{error.status && <ErrorMsg msg={error.msg} />}
+							<StyledField className={handleError('name') ? 'error' : ''}>
+								<label>Name: </label>
+								<FormInput
+									state={name}
+									setState={setName}
+									placeholder={'add a name'}
+								/>
+							</StyledField>
+							<StyledFieldTextArea
+								className={handleError('experience') ? 'error' : ''}
+							>
+								<label>Past Experience:</label>
+								<textarea
+									name='Experience'
+									value={experience}
+									placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
+									onChange={(e) => {
+										setExperience(e.target.value);
+									}}
+								/>
+							</StyledFieldTextArea>
+							<StyledFieldTextArea
+								className={handleError('personality') ? 'error' : ''}
+							>
+								<label>Personality:</label>
+								<textarea
+									name='Personality'
+									value={personality}
+									placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
+									onChange={(e) => {
+										setPersonality(e.target.value);
+									}}
+								/>
+							</StyledFieldTextArea>
+						</StyledContainer>
+					</StyledDiv>
+					<StyledLink className={handleError('github') ? 'error' : ''}>
+						<label>Github: </label>
 						<FormInput
-							state={name}
-							setState={setName}
-							placeholder={'add a name'}
+							state={github}
+							setState={setGithub}
+							placeholder={'add github profile'}
 						/>
-					</StyledField>
-					<StyledFieldTextArea
-						className={handleError('experience') ? 'error' : ''}
-					>
-						<label>Past Experience:</label>
-						<textarea
-							name='Experience'
-							value={experience}
-							placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
-							onChange={(e) => {
-								setExperience(e.target.value);
-							}}
+					</StyledLink>
+					<StyledLink className={handleError('linkedin') ? 'error' : ''}>
+						<label>Linkedin: </label>
+						<FormInput
+							state={linkedin}
+							setState={setLinkedin}
+							placeholder={'add linkedin profile'}
 						/>
-					</StyledFieldTextArea>
-					<StyledFieldTextArea
-						className={handleError('personality') ? 'error' : ''}
-					>
-						<label>Personality:</label>
-						<textarea
-							name='Personality'
-							value={personality}
-							placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
-							onChange={(e) => {
-								setPersonality(e.target.value);
-							}}
+					</StyledLink>
+					<StyledLink className={handleError('additional') ? 'error' : ''}>
+						<label>Additional: </label>
+						<FormInput
+							state={additional}
+							setState={setAdditional}
+							placeholder={'include additional site'}
 						/>
-					</StyledFieldTextArea>
+					</StyledLink>
 					<button type='submit'>Update</button>
 				</StyledForm>
 			)}
@@ -125,6 +176,18 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 };
 
 export default UpdateUser;
+
+const StyledContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+`;
+
+const StyledDiv = styled.div`
+	display: flex;
+	width: 100%;
+	border: 1px solid red;
+`;
 
 const StyledForm = styled.form`
 	flex: 1;
@@ -153,6 +216,19 @@ const StyledField = styled.div`
 			border: 1px solid var(--error);
 			border-radius: 4px;
 		}
+	}
+`;
+
+const StyledLink = styled.div`
+	display: flex;
+	align-items: center;
+	gap: var(--sm-padding);
+	padding: var(--sm-padding);
+	label {
+		min-width: 72px;
+	}
+	input {
+		width: 100%;
 	}
 `;
 const StyledFieldTextArea = styled(StyledField)`

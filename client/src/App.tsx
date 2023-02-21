@@ -32,7 +32,7 @@ function App() {
 					{user && (
 						<>
 							<Route path='/nsfw' element={<NSFW />} />
-							{user.preference && (
+							{user && (
 								<>
 									<Route path='/faq' element={<FAQ />} />
 									<Route path='/coverletter' element={<CoverLetter />} />

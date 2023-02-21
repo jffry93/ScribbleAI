@@ -22,7 +22,7 @@ const Profile = () => {
 					<Lock lockIcon={lockIcon} setLockIcon={setLockIcon} />
 					<h2>User Information</h2>
 					<StyledDiv>
-						<ProfileImage />
+						{/* <ProfileImage /> */}
 						{lockIcon ? <UserInfo /> : <UpdateUser setLockIcon={setLockIcon} />}
 					</StyledDiv>
 					<DeleteAccount />
