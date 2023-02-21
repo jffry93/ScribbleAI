@@ -15,13 +15,13 @@ const LoadingModal = () => {
 export default LoadingModal;
 
 const StyledLoadingModal = styled(StyledFlexCenter)`
-	border: 1px solid red;
 	backdrop-filter: blur(5px);
 	background-color: rgba(0, 0, 0, 0.6);
 	height: 100vh;
 	width: 100vw;
 	position: fixed;
 	top: 0;
+	left: 0;
 	z-index: 2;
 `;
 

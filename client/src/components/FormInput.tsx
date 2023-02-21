@@ -3,7 +3,7 @@ const FormInput = ({
 	setState,
 	placeholder,
 }: {
-	state: string;
+	state: string | undefined;
 	setState: Function;
 	placeholder: string;
 }) => {

@@ -32,9 +32,13 @@ function App() {
 					{user && (
 						<>
 							<Route path='/nsfw' element={<NSFW />} />
-							<Route path='/faq' element={<FAQ />} />
-							<Route path='/coverletter' element={<CoverLetter />} />
-							<Route path='/profile' element={<Profile />} />
+							{user.preference && (
+								<>
+									<Route path='/faq' element={<FAQ />} />
+									<Route path='/coverletter' element={<CoverLetter />} />
+									<Route path='/profile' element={<Profile />} />
+								</>
+							)}
 						</>
 					)}
 				</Routes>

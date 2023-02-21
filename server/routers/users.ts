@@ -14,8 +14,9 @@ interface User {
 	id: string;
 	name?: string;
 	email: string;
-	Preference: Preference;
+	Preference: Preference | null;
 	token: string;
+	createdAt: Date;
 	// other properties
 }
 interface Preference {
@@ -82,14 +83,21 @@ const signUp = {
 				const token = createToken(user.id);
 
 				if (user.Preference !== null) {
-					const preference: Preference = user.Preference;
-					const { experience, personality, name, theme, img } = preference;
+					const { Preference, createdAt } = user;
+					const { experience, personality, name, theme, img } = Preference;
 
 					return {
 						status: 200,
 						email,
 						token,
-						preference: { experience, personality, name, theme, img },
+						preference: {
+							experience,
+							personality,
+							name,
+							theme,
+							img,
+							createdAt,
+						},
 						msg: '✅ Successful signUp',
 					};
 					// rest of the code that uses the destructured properties
@@ -147,14 +155,22 @@ const login = {
 				// };
 
 				if (user.Preference !== null) {
-					const preference: Preference = user.Preference;
-					const { experience, personality, name, theme, img } = preference;
+					const { Preference, createdAt } = user;
+					// const preference: Preference = user.Preference;
+					const { experience, personality, name, theme, img } = Preference;
 
 					return {
 						status: 200,
 						email,
 						token,
-						preference: { experience, personality, name, theme, img },
+						preference: {
+							experience,
+							personality,
+							name,
+							theme,
+							img,
+							createdAt,
+						},
 						msg: '✅ Successful signUp',
 					};
 					// rest of the code that uses the destructured properties
@@ -169,6 +185,98 @@ const login = {
 				};
 			}
 		}),
+};
+
+const findYourself = {
+	findYourself: legitCheckProcedure.query(
+		async ({ ctx }: { ctx: MyContext }) => {
+			try {
+				const { user } = ctx;
+				console.log(user);
+				if (user?.Preference) {
+					const { Preference, createdAt } = user;
+					const { experience, personality, name, theme, img } = Preference;
+
+					return {
+						status: 200,
+						preference: {
+							experience,
+							personality,
+							name,
+							theme,
+							img,
+							createdAt,
+						},
+						msg: '✅ Successful signUp',
+					};
+				}
+
+				return {
+					status: 400,
+					msg: 'Successful but nothing to update',
+					preference: {},
+				};
+			} catch (err) {
+				console.log((err as Error).message);
+				return {
+					status: 500,
+					msg: '❗️Issue with login oof...🤕 ' + (err as Error).message,
+				};
+			}
+		}
+	),
+};
+
+const updateUser = {
+	updateUser: legitCheckProcedure
+		.input(
+			z.object({
+				// email: z.string(),
+				name: z.string().min(1),
+				experience: z.string().min(1),
+				personality: z.string().min(1),
+			})
+		)
+		.mutation(
+			async ({
+				ctx,
+				input,
+			}: {
+				ctx: MyContext;
+				input: { name: string; experience: string; personality: string };
+			}) => {
+				try {
+					const { name, experience, personality } = input;
+					const { user } = ctx;
+
+					console.log(name.length);
+					if (!name && !experience && !personality) {
+						throw Error('😳 all fields must be filled 😭');
+					}
+					const data = await prisma.preference.update({
+						where: { userId: user?.id },
+						data: { ...input },
+					});
+					console.log(data);
+					// console.log(data);
+					return {
+						status: 200,
+						preference: {
+							experience,
+							personality,
+							name,
+						},
+						msg: '✅ Successful signUp',
+					};
+				} catch (err) {
+					console.log((err as Error).message);
+					return {
+						status: 500,
+						msg: '❗️Issue with login oof...🤕 ' + (err as Error).message,
+					};
+				}
+			}
+		),
 };
 
 const deleteUser = {
@@ -213,47 +321,10 @@ const deleteUser = {
 		}),
 };
 
-const findYourself = {
-	findYourself: legitCheckProcedure.query(
-		async ({ ctx }: { ctx: MyContext }) => {
-			try {
-				const { user } = ctx;
-				if (user?.Preference) {
-					const { Preference } = user;
-					const { experience, personality, name, theme, img } = Preference;
-
-					return {
-						status: 200,
-						preference: {
-							experience,
-							personality,
-							name,
-							theme,
-							img,
-						},
-						msg: '✅ Successful signUp',
-					};
-				}
-
-				return {
-					status: 400,
-					msg: 'Successful but nothing to update',
-					preference: {},
-				};
-			} catch (err) {
-				console.log((err as Error).message);
-				return {
-					status: 500,
-					msg: '❗️Issue with login oof...🤕 ' + (err as Error).message,
-				};
-			}
-		}
-	),
-};
-
 export const userRouter = t.router({
 	...signUp,
 	...login,
+	...updateUser,
 	...deleteUser,
 	...findYourself,
 	update: userProcedure

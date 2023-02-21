@@ -8,11 +8,10 @@ const GetUser = () => {
 		dispatch,
 	} = useAuthContext();
 	const handleAsyncQuery = trpc.user.findYourself.useQuery();
-	console.log(user);
 	const onAsyncQuery = async () => {
 		try {
 			const res: any = await handleAsyncQuery.refetch();
-			console.log(res.data);
+
 			if (res.data?.status > 200) {
 			} else {
 				dispatch({

@@ -1,11 +1,22 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const LabelTitle = ({ label, text }: { label: string; text: string }) => {
+const LabelTitle = ({
+	label,
+	text,
+}: {
+	label: string;
+	text: string | null | undefined;
+}) => {
 	return (
 		<StyledLabelTitle>
 			<p>{label} :</p>
-			<h4>{text}</h4>
+			{(label.toLowerCase() === 'personality' && text) ||
+			(label.toLowerCase() === 'experience' && text) ? (
+				<p>{text ? text : 'N/A'}</p>
+			) : (
+				<h4>{text ? text : 'N/A'}</h4>
+			)}
 		</StyledLabelTitle>
 	);
 };

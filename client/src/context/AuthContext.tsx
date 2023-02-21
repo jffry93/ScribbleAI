@@ -7,9 +7,16 @@ interface AuthProvProps {
 
 interface User {
 	email: string;
-	msg: string;
+	// msg: string;
 	token: string;
-	preference: {};
+	preference: {
+		experience: null | string;
+		img: null | string;
+		name: null | string;
+		personality: null | string;
+		theme: 'dark';
+		createdAt: Date;
+	};
 }
 interface ReducerState {
 	user: User | null;
@@ -38,6 +45,13 @@ export const authReducer = (state: ReducerState, action: ReducerAction) => {
 			return { user: action.payload };
 		case 'LOGOUT':
 			return { user: null };
+		case 'UPDATE':
+			return {
+				user: {
+					...state.user,
+					preference: { ...state.user?.preference, ...action.payload },
+				},
+			};
 		default:
 			return state;
 	}

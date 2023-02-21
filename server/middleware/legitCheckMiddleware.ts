@@ -36,7 +36,7 @@ const legitCheckMiddleware = t.middleware(async ({ ctx, next }) => {
 		console.log(err);
 		return next();
 	}
-	return next();
+	// return next();
 });
 
 export const legitCheckProcedure = t.procedure.use(legitCheckMiddleware);

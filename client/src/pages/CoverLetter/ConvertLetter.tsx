@@ -4,6 +4,7 @@ import { trpc } from '../../trpc/trpc';
 import { StyledContainer, StyledConverter } from '../NSFW/ConvertNsfw';
 import { useDebounceCallback } from '../../hooks/useDebounce';
 import ErrorMsg from '../../components/ErrorMsg';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 interface NSFWResType {
 	status: number;
@@ -15,10 +16,13 @@ interface NSFWProps {
 	setAppropriateMsg: (value: string | undefined) => void;
 }
 const ConvertCoverLetter = ({ setIsLoading, setAppropriateMsg }: NSFWProps) => {
+	const {
+		state: { user },
+	} = useAuthContext();
 	const [error, setError] = useState({ value: false, message: '' });
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [experience, setExperience] = useState(
-		'I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb'
+		user?.preference.experience || ''
 	);
 	const [jobDescription, setJobDescription] = useState(`The Team: 
   We design, develop, and host data rich, full featured, high traffic web and mobile applications for financial institutions, brokerages, and media clients around the world. We use modern API-driven client-side rendered frameworks and .NET server-side rendered applications to deliver custom user interfaces that complement our clients' existing brand. With access to thousands of in-house data feeds, we utilize highly leveraged service tier applications to create solutions that delight our customers. Working in an agile and highly collaborative environment, our teams join together as one to deliver world class products. 

@@ -6,28 +6,28 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import DeleteAccount from './DeleteAccount';
 import LabelTitle from './LabelTitle';
 import ProfileImage from './ProfileImage';
+import UpdateUser from './UpdateUser';
+import UserInfo from './UserInfo';
 
 const Profile = () => {
 	const [lockIcon, setLockIcon] = useState(true);
 	const {
 		state: { user },
 	} = useAuthContext();
-	console.log(user);
+
 	return (
 		<StyledProfile>
-			<Lock lockIcon={lockIcon} setLockIcon={setLockIcon} />
-			<h2>User Information</h2>
-			<StyledDiv>
-				<ProfileImage />
-				<StyledContainer>
-					<LabelTitle text={'Jeffrey'} label={'Name'} />
-					<p>Email</p>
-					<p>Experience</p>
-					<p>Personality</p>
-					<p>Joined on</p>
-				</StyledContainer>
-			</StyledDiv>
-			<DeleteAccount />
+			{user?.preference && (
+				<>
+					<Lock lockIcon={lockIcon} setLockIcon={setLockIcon} />
+					<h2>User Information</h2>
+					<StyledDiv>
+						<ProfileImage />
+						{lockIcon ? <UserInfo /> : <UpdateUser setLockIcon={setLockIcon} />}
+					</StyledDiv>
+					<DeleteAccount />
+				</>
+			)}
 		</StyledProfile>
 	);
 };
@@ -50,9 +50,4 @@ const StyledDiv = styled.div`
 	display: flex;
 	width: 100%;
 	border: 1px solid red;
-`;
-const StyledContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	flex: 1;
 `;
