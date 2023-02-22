@@ -10,7 +10,7 @@ import NSFW from './pages/NSFW';
 import FAQ from './pages/FAQ';
 import CoverLetter from './pages/CoverLetter';
 import Profile from './pages/Profile';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { trpc } from './trpc/trpc';
 import GetUser from './components/GetUser';
 
@@ -18,6 +18,12 @@ function App() {
 	const {
 		state: { user },
 	} = useAuthContext();
+
+	interface jobDescriptionType {
+		jobDescription: string;
+		setJobDescription: (value: string) => void;
+	}
+	const [jobDescription, setJobDescription] = useState('');
 
 	return (
 		<>
@@ -32,10 +38,26 @@ function App() {
 					{user && (
 						<>
 							<Route path='/nsfw' element={<NSFW />} />
-							{user && (
+							{user.preference && (
 								<>
-									<Route path='/faq' element={<FAQ />} />
-									<Route path='/coverletter' element={<CoverLetter />} />
+									<Route
+										path='/faq'
+										element={
+											<FAQ
+												jobDescription={jobDescription}
+												setJobDescription={setJobDescription}
+											/>
+										}
+									/>
+									<Route
+										path='/coverletter'
+										element={
+											<CoverLetter
+												jobDescription={jobDescription}
+												setJobDescription={setJobDescription}
+											/>
+										}
+									/>
 									<Route path='/profile' element={<Profile />} />
 								</>
 							)}

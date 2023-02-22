@@ -3,8 +3,14 @@ import CopyContainer from '../../components/CopyContainer';
 import LoadingModal from '../../components/LoadingModal';
 import { StyledHelper } from '../NSFW';
 import ConvertCoverLetter from './ConvertLetter';
-
-const CoverLetter = () => {
+interface JobDescriptionType {
+	jobDescription: string;
+	setJobDescription: (value: string) => void;
+}
+const CoverLetter = ({
+	jobDescription,
+	setJobDescription,
+}: JobDescriptionType) => {
 	const [appropriateMsg, setAppropriateMsg] = useState<string | undefined>(
 		undefined
 	);
@@ -13,6 +19,8 @@ const CoverLetter = () => {
 		<>
 			<StyledHelper>
 				<ConvertCoverLetter
+					jobDescription={jobDescription}
+					setJobDescription={setJobDescription}
 					setIsLoading={setIsLoading}
 					setAppropriateMsg={setAppropriateMsg}
 				/>

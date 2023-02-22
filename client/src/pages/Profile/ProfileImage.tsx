@@ -1,10 +1,17 @@
 import styled from 'styled-components';
 import { StyledFlexCenter } from '../../GlobalStyles';
+import { useAuthContext } from '../../hooks/useAuthContext';
 
 const ProfileImage = () => {
+	const {
+		state: { user },
+	} = useAuthContext();
 	return (
 		<StyledImage>
 			<div className='image-container'>
+				<h1>
+					{user?.preference.name && user?.preference.name[0].toUpperCase()}
+				</h1>
 				<img />
 			</div>
 		</StyledImage>
@@ -27,6 +34,10 @@ const StyledImage = styled(StyledFlexCenter)`
 		border-radius: 50%;
 		width: 300px;
 		height: 300px;
+		h1 {
+			position: absolute;
+			font-size: 120px;
+		}
 		img {
 			height: 400px;
 		}
