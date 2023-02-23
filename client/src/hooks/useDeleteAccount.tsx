@@ -12,6 +12,10 @@ export const useDeleteAccount = () => {
 	const [isLoading, setIsLoading] = useState<null | boolean>(null);
 	const [error, setError] = useState<null | boolean>(null);
 	const [errorMsg, setErrorMsg] = useState('');
+	const [complete, setComplete] = useState({
+		title: 'Loading...',
+		subtitle: 'Please be patient while the data is being processed.',
+	});
 	const {
 		dispatch,
 		state: { user },
@@ -19,8 +23,9 @@ export const useDeleteAccount = () => {
 	const navigate = useNavigate();
 
 	const handleDelete = trpc.user.deleteUser.useMutation();
-	const handleLogin = trpc.user.login.useMutation();
-	const deleteAccount = async () => {
+
+	const deleteAccount = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		// const token = localStorage.getItem('token');
 		const { email, token } = JSON.parse(localStorage.getItem('user') || '{}');
 		console.log(user?.email);
@@ -40,26 +45,36 @@ export const useDeleteAccount = () => {
 			});
 			console.log(data);
 			if (data.status > 200) {
+				await new Promise((resolve) => setTimeout(resolve, 1000));
 				setIsLoading(false);
 				setError(true);
 				setErrorMsg(data.msg);
 			} else {
 				await new Promise((resolve) => setTimeout(resolve, 1000));
-				setError(true);
-				setIsLoading(false);
-				setErrorMsg('✅ Successfully deleted account');
-				await new Promise((resolve) => setTimeout(resolve, 1400));
-				setErrorMsg('We hope you come back');
-				await new Promise((resolve) => setTimeout(resolve, 1400));
-				setErrorMsg('Byeeeeeee 👋🏽');
-				await new Promise((resolve) => setTimeout(resolve, 1000));
-				dispatch({ type: 'LOGOUT', payload: undefined });
+				// setError(true);
+				// setIsLoading(false);
+				setComplete({
+					title: '✅ Successfully deleted account',
+					subtitle: 'We hope you come back',
+				});
+				console.log(complete);
+				// setErrorMsg('✅ Successfully deleted account');
+				await new Promise((resolve) => setTimeout(resolve, 2000));
+				setComplete({
+					title: '👋🏽',
+					subtitle: 'Byeeeeeee',
+				});
+				// setErrorMsg('We hope you come back');
+				await new Promise((resolve) => setTimeout(resolve, 2000));
+				// setErrorMsg('Byeeeeeee 👋🏽');
+				// await new Promise((resolve) => setTimeout(resolve, 1000));
 				// remove token in local storage
 				localStorage.removeItem('user');
 				// remove state from context
 				//RESET
 				setError(false);
 				setIsLoading(false);
+				dispatch({ type: 'LOGOUT', payload: undefined });
 				navigate('/');
 			}
 		} catch (error) {
@@ -68,5 +83,5 @@ export const useDeleteAccount = () => {
 			setIsLoading(false);
 		}
 	};
-	return { deleteAccount, status: { isLoading, error, errorMsg } };
+	return { deleteAccount, status: { isLoading, error, errorMsg, complete } };
 };

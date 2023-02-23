@@ -44,10 +44,10 @@ export default LinkTitle;
 
 const StyledLinkTitle = styled.div`
 	display: flex;
-	align-items: flex-start;
+	align-items: center;
 	justify-content: space-between;
 	gap: 8px;
-	padding: var(--sm-padding);
+	padding: var(--sm-padding) var(--sm-padding) var(--sm-padding) 0;
 	width: 100%;
 
 	p {

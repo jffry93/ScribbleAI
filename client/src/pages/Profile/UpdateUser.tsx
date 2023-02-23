@@ -6,6 +6,9 @@ import { trpc } from '../../trpc/trpc';
 import ErrorMsg from '../../components/ErrorMsg';
 import ProfileImage from './ProfileImage';
 import DeleteAccount from './DeleteAccount';
+import { FaGithubAlt, FaLinkedinIn } from 'react-icons/fa';
+import { AiOutlineLink } from 'react-icons/ai';
+import { device } from '../../GlobalStyles';
 
 interface ErrorObject {
 	status: boolean;
@@ -149,27 +152,30 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 						<StyledLinkInfo>
 							<h3>Clipboard Links</h3>
 							<StyledLink className={handleError('github') ? 'error' : ''}>
+								<FaGithubAlt size={25} />
 								<label>Github: </label>
 								<FormInput
 									state={github}
 									setState={setGithub}
-									placeholder={'add github profile'}
+									placeholder={'Add Github URL'}
 								/>
 							</StyledLink>
 							<StyledLink className={handleError('linkedin') ? 'error' : ''}>
-								<label>Linkedin: </label>
+								<FaLinkedinIn size={25} />
+								<label>Linkedin:</label>
 								<FormInput
 									state={linkedin}
 									setState={setLinkedin}
-									placeholder={'add linkedin profile'}
+									placeholder={'Add Linkedin URL'}
 								/>
 							</StyledLink>
 							<StyledLink className={handleError('additional') ? 'error' : ''}>
+								<AiOutlineLink size={25} />
 								<label>Additional: </label>
 								<FormInput
 									state={additional}
 									setState={setAdditional}
-									placeholder={'include additional site'}
+									placeholder={'Include Additional URL'}
 								/>
 							</StyledLink>
 						</StyledLinkInfo>
@@ -187,21 +193,31 @@ export default UpdateUser;
 const StyledContainer = styled.div`
 	display: flex;
 	flex-direction: column;
+	gap: 8px;
 	flex: 1;
+	label {
+		margin: 0 8px 8px;
+	}
 `;
 
 const StyledDiv = styled.div`
 	display: flex;
 	width: 100%;
 	flex-wrap: wrap;
+	gap: 32px;
 `;
 
 const StyledForm = styled.form`
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+
 	label {
+		/* display: flex;
+		align-items: center;
+		gap: 8px; */
 		font-size: 20px;
+		font-weight: 600;
 	}
 	input,
 	textarea {
@@ -235,6 +251,7 @@ const StyledLink = styled.div`
 	align-items: center;
 	gap: var(--sm-padding);
 	padding: 8px 0;
+
 	h4 {
 		padding: var(--sm-padding);
 	}
@@ -243,6 +260,14 @@ const StyledLink = styled.div`
 	}
 	input {
 		width: 100%;
+	}
+	svg {
+		min-width: 25px;
+	}
+	@media ${device.mobile} {
+		label {
+			display: none;
+		}
 	}
 `;
 const StyledLinkInfo = styled.div`

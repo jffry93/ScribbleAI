@@ -1,5 +1,9 @@
+import { AiOutlineLink } from 'react-icons/ai';
+import { BsPlusLg } from 'react-icons/bs';
+import { FaGithubAlt, FaLinkedinIn } from 'react-icons/fa';
 import styled from 'styled-components';
 import ConvertDate from '../../components/ConvertDate';
+import { device } from '../../GlobalStyles';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import LabelTitle from './LabelTitle';
 import LinkTitle from './LinkTitle';
@@ -21,26 +25,29 @@ const UserInfo = () => {
 						text={user?.preference.personality}
 						label={'Personality'}
 					/>
-					<StyledLabelTitle>
-						<h4>Joined on :</h4>
-						<p>
-							{user?.preference.createdAt ? (
-								<ConvertDate text={user?.preference.createdAt} />
-							) : (
-								'N/A'
-							)}
-						</p>
-					</StyledLabelTitle>
 				</StyledContainer>
 			</StyledDiv>
 			<StyledLinkInfo>
 				<h3>Clipboard Links</h3>
-				<LinkTitle text={user?.preference.links.github} label={'Github'} />
-				<LinkTitle text={user?.preference.links.linkedin} label={'Linkedin'} />
-				<LinkTitle
-					text={user?.preference.links.additional}
-					label={'Additional'}
-				/>
+				<div className='row'>
+					<FaGithubAlt size={25} />
+					<LinkTitle text={user?.preference.links.github} label={'Github'} />
+				</div>
+				<div className='row'>
+					<FaLinkedinIn size={25} />
+					<LinkTitle
+						text={user?.preference.links.linkedin}
+						label={'Linkedin'}
+					/>
+				</div>
+				<div className='row'>
+					<AiOutlineLink size={25} />
+
+					<LinkTitle
+						text={user?.preference.links.additional}
+						label={'Additional'}
+					/>
+				</div>
 			</StyledLinkInfo>
 		</StyledContainer>
 	);
@@ -66,16 +73,29 @@ const StyledContainer = styled.div`
 const StyledDiv = styled.div`
 	display: flex;
 	flex-wrap: wrap;
+	gap: 32px;
 	width: 100%;
-
-	/* border: 1px solid red; */
 `;
 const StyledLinkInfo = styled.div`
 	margin-top: var(--lg-padding);
+	.row {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding-left: var(--sm-padding);
+		svg {
+			min-width: 25px;
+		}
+	}
 	h3 {
 		padding: var(--md-padding) var(--sm-padding);
 	}
 	width: 100%;
+	@media ${device.mobile} {
+		h4 {
+			display: none;
+		}
+	}
 `;
 const StyledLabelTitle = styled.div`
 	display: flex;

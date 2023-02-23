@@ -88,9 +88,9 @@ textarea{
 }
 button {
 	border-radius: 4px;
-	border: 1px solid transparent;
+	border: 1px solid #1a1a1a;
 	padding: 0.6em 1.2em;
-	font-size: 1em;
+	font-size: 1.2em;
 	font-weight: 500;
 	font-family: inherit;
 	background-color: #1a1a1a;

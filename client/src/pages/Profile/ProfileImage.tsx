@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ConvertDate from '../../components/ConvertDate';
 import { StyledFlexCenter } from '../../GlobalStyles';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
@@ -14,6 +15,16 @@ const ProfileImage = () => {
 				</h1>
 				<img />
 			</div>
+			<StyledLabelTitle>
+				<h4>Joined:</h4>
+				<p>
+					{user?.preference.createdAt ? (
+						<ConvertDate text={user?.preference.createdAt} />
+					) : (
+						'N/A'
+					)}
+				</p>
+			</StyledLabelTitle>
 		</StyledImage>
 	);
 };
@@ -21,9 +32,10 @@ const ProfileImage = () => {
 export default ProfileImage;
 
 const StyledImage = styled(StyledFlexCenter)`
-	flex: 1;
-
-	width: 100%;
+	margin: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
 
 	.image-container {
 		display: flex;
@@ -42,4 +54,11 @@ const StyledImage = styled(StyledFlexCenter)`
 			height: 400px;
 		} */
 	}
+`;
+const StyledLabelTitle = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: var(--sm-padding);
 `;

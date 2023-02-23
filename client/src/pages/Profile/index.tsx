@@ -41,6 +41,9 @@ const StyledProfile = styled.div`
 	min-height: var(--container-height);
 	padding: var(--layout-padding);
 	position: relative;
+	h2 {
+		margin-bottom: 24px;
+	}
 `;
 
 const StyledDiv = styled.div`

@@ -1,12 +1,18 @@
 import styled from 'styled-components';
 import { StyledFlexCenter } from '../GlobalStyles';
 
-const LoadingModal = () => {
+const LoadingModal = ({
+	title = 'Loading...',
+	subtitle = 'Please be patient while the data is being processed.',
+}: {
+	title?: string;
+	subtitle?: string;
+}) => {
 	return (
 		<StyledLoadingModal>
 			<StyledContent>
-				<h1>Loading...</h1>
-				<p>Please be patient while the data is being processed.</p>
+				<h1>{title}</h1>
+				<p>{subtitle}</p>
 			</StyledContent>
 		</StyledLoadingModal>
 	);
