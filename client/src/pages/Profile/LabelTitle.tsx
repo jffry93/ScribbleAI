@@ -10,12 +10,12 @@ const LabelTitle = ({
 }) => {
 	return (
 		<StyledLabelTitle>
-			<p>{label} :</p>
+			<h4>{label}:</h4>
 			{(label.toLowerCase() === 'personality' && text) ||
 			(label.toLowerCase() === 'experience' && text) ? (
 				<p>{text ? text : 'N/A'}</p>
 			) : (
-				<h4>{text ? text : 'N/A'}</h4>
+				<p>{text ? text : 'N/A'}</p>
 			)}
 		</StyledLabelTitle>
 	);
@@ -25,8 +25,16 @@ export default LabelTitle;
 
 const StyledLabelTitle = styled.div`
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	justify-content: space-between;
-	border: 1px solid yellow;
+	gap: 8px;
 	padding: var(--sm-padding);
+	h4 {
+		font-size: 20px;
+		min-width: 110px;
+	}
+	p {
+		width: 100%;
+		color: var(--secondary-text-color);
+	}
 `;

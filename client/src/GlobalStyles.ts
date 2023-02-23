@@ -83,7 +83,9 @@ img{
   width: 100%;
 }
 
-
+textarea{
+  font-family:unset
+}
 button {
 	border-radius: 4px;
 	border: 1px solid transparent;

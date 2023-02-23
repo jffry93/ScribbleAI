@@ -22,10 +22,8 @@ const Profile = () => {
 					<Lock lockIcon={lockIcon} setLockIcon={setLockIcon} />
 					<h2>User Information</h2>
 					<StyledDiv>
-						{/* <ProfileImage /> */}
 						{lockIcon ? <UserInfo /> : <UpdateUser setLockIcon={setLockIcon} />}
 					</StyledDiv>
-					<DeleteAccount />
 				</>
 			)}
 		</StyledProfile>
@@ -40,7 +38,6 @@ const StyledProfile = styled.div`
 	align-items: center;
 	justify-content: center;
 	gap: 32px;
-	border: 1px solid green;
 	min-height: var(--container-height);
 	padding: var(--layout-padding);
 	position: relative;
@@ -49,5 +46,5 @@ const StyledProfile = styled.div`
 const StyledDiv = styled.div`
 	display: flex;
 	width: 100%;
-	border: 1px solid red;
+	max-width: 800px;
 `;

@@ -24,22 +24,22 @@ const StyledImage = styled(StyledFlexCenter)`
 	flex: 1;
 
 	width: 100%;
+
 	.image-container {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		/* border: 1px solid red; */
 		background-color: rgba(0, 0, 0, 0.2);
-		/* overflow: hidden; */
 		border-radius: 50%;
 		width: 300px;
 		height: 300px;
+
 		h1 {
 			position: absolute;
 			font-size: 120px;
 		}
-		img {
+		/* img {
 			height: 400px;
-		}
+		} */
 	}
 `;

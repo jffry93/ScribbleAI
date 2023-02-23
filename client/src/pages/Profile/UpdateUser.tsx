@@ -5,6 +5,7 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { trpc } from '../../trpc/trpc';
 import ErrorMsg from '../../components/ErrorMsg';
 import ProfileImage from './ProfileImage';
+import DeleteAccount from './DeleteAccount';
 
 interface ErrorObject {
 	status: boolean;
@@ -103,73 +104,79 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 	return (
 		<>
 			{user?.preference && (
-				<StyledForm onSubmit={handleSubmit}>
-					<StyledDiv>
-						<ProfileImage />
-						<StyledContainer>
-							{error.status && <ErrorMsg msg={error.msg} />}
-							<StyledField className={handleError('name') ? 'error' : ''}>
-								<label>Name: </label>
+				<>
+					<StyledForm onSubmit={handleSubmit}>
+						<StyledDiv>
+							<ProfileImage />
+							<StyledContainer>
+								{error.status && <ErrorMsg msg={error.msg} />}
+								<StyledField className={handleError('name') ? 'error' : ''}>
+									<label>Name: </label>
+									<FormInput
+										state={name}
+										setState={setName}
+										placeholder={'add a name'}
+									/>
+								</StyledField>
+								<StyledFieldTextArea
+									className={handleError('experience') ? 'error' : ''}
+								>
+									<label>Past Experience:</label>
+									<textarea
+										name='Experience'
+										value={experience}
+										placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
+										onChange={(e) => {
+											setExperience(e.target.value);
+										}}
+									/>
+								</StyledFieldTextArea>
+								<StyledFieldTextArea
+									className={handleError('personality') ? 'error' : ''}
+								>
+									<label>Personality:</label>
+									<textarea
+										name='Personality'
+										value={personality}
+										placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
+										onChange={(e) => {
+											setPersonality(e.target.value);
+										}}
+									/>
+								</StyledFieldTextArea>
+							</StyledContainer>
+						</StyledDiv>
+						<StyledLinkInfo>
+							<h3>Clipboard Links</h3>
+							<StyledLink className={handleError('github') ? 'error' : ''}>
+								<label>Github: </label>
 								<FormInput
-									state={name}
-									setState={setName}
-									placeholder={'add a name'}
+									state={github}
+									setState={setGithub}
+									placeholder={'add github profile'}
 								/>
-							</StyledField>
-							<StyledFieldTextArea
-								className={handleError('experience') ? 'error' : ''}
-							>
-								<label>Past Experience:</label>
-								<textarea
-									name='Experience'
-									value={experience}
-									placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
-									onChange={(e) => {
-										setExperience(e.target.value);
-									}}
+							</StyledLink>
+							<StyledLink className={handleError('linkedin') ? 'error' : ''}>
+								<label>Linkedin: </label>
+								<FormInput
+									state={linkedin}
+									setState={setLinkedin}
+									placeholder={'add linkedin profile'}
 								/>
-							</StyledFieldTextArea>
-							<StyledFieldTextArea
-								className={handleError('personality') ? 'error' : ''}
-							>
-								<label>Personality:</label>
-								<textarea
-									name='Personality'
-									value={personality}
-									placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
-									onChange={(e) => {
-										setPersonality(e.target.value);
-									}}
+							</StyledLink>
+							<StyledLink className={handleError('additional') ? 'error' : ''}>
+								<label>Additional: </label>
+								<FormInput
+									state={additional}
+									setState={setAdditional}
+									placeholder={'include additional site'}
 								/>
-							</StyledFieldTextArea>
-						</StyledContainer>
-					</StyledDiv>
-					<StyledLink className={handleError('github') ? 'error' : ''}>
-						<label>Github: </label>
-						<FormInput
-							state={github}
-							setState={setGithub}
-							placeholder={'add github profile'}
-						/>
-					</StyledLink>
-					<StyledLink className={handleError('linkedin') ? 'error' : ''}>
-						<label>Linkedin: </label>
-						<FormInput
-							state={linkedin}
-							setState={setLinkedin}
-							placeholder={'add linkedin profile'}
-						/>
-					</StyledLink>
-					<StyledLink className={handleError('additional') ? 'error' : ''}>
-						<label>Additional: </label>
-						<FormInput
-							state={additional}
-							setState={setAdditional}
-							placeholder={'include additional site'}
-						/>
-					</StyledLink>
-					<button type='submit'>Update</button>
-				</StyledForm>
+							</StyledLink>
+						</StyledLinkInfo>
+						<button type='submit'>Update</button>
+						<DeleteAccount />
+					</StyledForm>
+				</>
 			)}
 		</>
 	);
@@ -186,15 +193,19 @@ const StyledContainer = styled.div`
 const StyledDiv = styled.div`
 	display: flex;
 	width: 100%;
-	border: 1px solid red;
+	flex-wrap: wrap;
 `;
 
 const StyledForm = styled.form`
 	flex: 1;
 	display: flex;
 	flex-direction: column;
+	label {
+		font-size: 20px;
+	}
 	input,
 	textarea {
+		font-size: 18px;
 		padding: var(--sm-padding);
 	}
 	textarea {
@@ -223,14 +234,25 @@ const StyledLink = styled.div`
 	display: flex;
 	align-items: center;
 	gap: var(--sm-padding);
-	padding: var(--sm-padding);
+	padding: 8px 0;
+	h4 {
+		padding: var(--sm-padding);
+	}
 	label {
-		min-width: 72px;
+		min-width: 100px;
 	}
 	input {
 		width: 100%;
 	}
 `;
+const StyledLinkInfo = styled.div`
+	margin-top: var(--lg-padding);
+	h3 {
+		margin: var(--md-padding) var(--sm-padding);
+	}
+	width: 100%;
+`;
 const StyledFieldTextArea = styled(StyledField)`
 	height: 100%;
+	min-height: 180px;
 `;
