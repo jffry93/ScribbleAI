@@ -85,6 +85,7 @@ export default ClipBoard;
 
 const StyledClipBoard = styled.div`
 	position: fixed;
+	z-index: 1;
 	bottom: var(--md-padding);
 	right: var(--md-padding);
 `;

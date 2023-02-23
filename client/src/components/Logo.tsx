@@ -22,6 +22,24 @@ export default Logo;
 const StyledLogo = styled(Link)<MyLinkProps>`
 	display: flex;
 	align-items: center;
+	position: relative;
+
+	z-index: 200;
+
+	&:hover {
+		color: var(--text-color);
+		/* --secondary-text-color */
+		/* img {
+			filter: invert(35%) sepia(85%) saturate(561%) hue-rotate(201deg)
+				brightness(113%) contrast(108%);
+		} */
+	}
+	&:active {
+		img {
+			filter: invert(35%) sepia(85%) saturate(561%) hue-rotate(201deg)
+				brightness(113%) contrast(108%);
+		}
+	}
 	h1 {
 		font-size: ${(props) => {
 			return props.font + 'px';
@@ -31,8 +49,8 @@ const StyledLogo = styled(Link)<MyLinkProps>`
 		width: ${(props) => {
 			return props.width + 'px';
 		}};
-		filter: invert(35%) sepia(85%) saturate(561%) hue-rotate(201deg)
-			brightness(113%) contrast(108%);
+		filter: invert(98%) sepia(1%) saturate(143%) hue-rotate(354deg)
+			brightness(119%) contrast(78%);
 	}
 	@media ${device.mobile} {
 		h1 {

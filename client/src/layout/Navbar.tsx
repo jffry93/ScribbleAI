@@ -51,7 +51,9 @@ export default Navbar;
 const StyledSticky = styled.nav`
 	position: sticky;
 	top: 0;
-	background-color: var(--bg-color);
+	/* backdrop-filter: blur(10px); */
+	/* background-color: var(--bg-color); */
+	opacity: 0.9;
 	z-index: 1;
 `;
 

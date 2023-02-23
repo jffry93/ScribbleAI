@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import VideoBg from '../../components/VideoBg';
 import { StyledMain } from '../../GlobalStyles';
-// import Logo from '../components/Logo';
-// import { StyledMain } from '../GlobalStyles';
+import desktopVideo from '../../../public/penHome-Large-540p.mp4';
+import mobileVideo from '../../../public/penHomeMobile-540p.mp4';
 
 const Home = () => {
 	const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Home = () => {
 
 				<button onClick={() => navigate('/nsfw')}>Get Started</button>
 			</StyledContainer>
+			<VideoBg desktopVideo={desktopVideo} mobileVideo={mobileVideo} />
 		</StyledContent>
 	);
 };
@@ -25,6 +27,9 @@ const Home = () => {
 export default Home;
 
 const StyledContainer = styled.div`
+	pointer-events: none;
+	position: relative;
+	z-index: 1;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;

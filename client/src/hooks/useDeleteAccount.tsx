@@ -24,8 +24,7 @@ export const useDeleteAccount = () => {
 
 	const handleDelete = trpc.user.deleteUser.useMutation();
 
-	const deleteAccount = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+	const deleteAccount = async () => {
 		// const token = localStorage.getItem('token');
 		const { email, token } = JSON.parse(localStorage.getItem('user') || '{}');
 		console.log(user?.email);
