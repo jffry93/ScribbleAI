@@ -54,7 +54,7 @@ const StyledSticky = styled.nav`
 	/* backdrop-filter: blur(10px); */
 	/* background-color: var(--bg-color); */
 	opacity: 0.9;
-	z-index: 1;
+	z-index: 2;
 `;
 
 const StyledNav = styled.div`

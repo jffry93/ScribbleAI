@@ -33,4 +33,5 @@ const StyledLoadingModal = styled(StyledFlexCenter)`
 
 const StyledContent = styled(StyledFlexCenter)`
 	flex-direction: column;
+	gap: 24px;
 `;

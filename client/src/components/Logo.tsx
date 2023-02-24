@@ -36,8 +36,8 @@ const StyledLogo = styled(Link)<MyLinkProps>`
 	}
 	&:active {
 		img {
-			filter: invert(35%) sepia(85%) saturate(561%) hue-rotate(201deg)
-				brightness(113%) contrast(108%);
+			filter: invert(40%) sepia(0%) saturate(0%) hue-rotate(236deg)
+				brightness(100%) contrast(89%);
 		}
 	}
 	h1 {

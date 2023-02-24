@@ -88,7 +88,7 @@ const ConvertCoverLetter = ({
 		<StyledContainer>
 			<StyledConverter>
 				<h1>Cover Letter</h1>
-				<p>
+				<p className='description'>
 					Create customized cover letters in seconds with our powerful letter
 					generator.
 				</p>

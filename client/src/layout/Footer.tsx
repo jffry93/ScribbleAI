@@ -32,6 +32,9 @@ const StyledFooter = styled.footer`
 	gap: 16px;
 	padding: var(--layout-padding);
 	background-color: #2d2d2d;
+	h1:active {
+		color: var(--primary);
+	}
 	a {
 		color: var(--text-color);
 	}

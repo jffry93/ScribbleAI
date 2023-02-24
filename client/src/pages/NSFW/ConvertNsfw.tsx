@@ -104,7 +104,6 @@ export const StyledConverter = styled.div`
 	}
 	.description,
 	li {
-		/* padding-left: var(--sm-padding); */
 		color: var(--secondary-text-color);
 	}
 	h3 {

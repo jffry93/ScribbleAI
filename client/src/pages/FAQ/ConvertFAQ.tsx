@@ -122,7 +122,7 @@ const ConvertFAQ = ({
 		<StyledContainer>
 			<StyledConverter>
 				<h1>Frequently Asked Questions</h1>
-				<p>
+				<p className='description'>
 					Impress with your knowledge! Our tool helps you answer questions with
 					accuracy and ease in a snap.
 				</p>

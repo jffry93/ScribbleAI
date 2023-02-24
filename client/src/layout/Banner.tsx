@@ -7,7 +7,7 @@ import { StyledFlexCenter } from '../GlobalStyles';
 const Banner = () => {
 	return (
 		<StyledBanner>
-			<p>Stop by my</p>
+			<p>See more projects on </p>
 			<a href='https://github.com/jffry93' target='_blank'>
 				<FaGithubAlt />
 				Github
@@ -39,5 +39,9 @@ const StyledBanner = styled.div`
 		align-items: center;
 		gap: 4px;
 		cursor: pointer;
+		&:active,
+		&:hover {
+			color: rgb(110, 84, 148);
+		}
 	}
 `;

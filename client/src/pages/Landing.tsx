@@ -1,20 +1,22 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, Suspense } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { device, StyledFlexCenter, StyledPage } from '../GlobalStyles';
-import { useAuthContext } from '../hooks/useAuthContext';
-import landingVideo from '../../public/landing-Large 540p.mp4';
-import landingVideoMobile from '../../public/landingMobile-Large-540p.mp4';
 import VideoBg from '../components/VideoBg';
+import { device } from '../GlobalStyles';
+import { useAuthContext } from '../hooks/useAuthContext';
+import landingVideo from '/landing-Large 540p.mp4';
+import landingVideoMobile from '/landingMobile-Large-540p.mp4';
 
 const Landing = () => {
 	const {
 		state: { user },
 	} = useAuthContext();
 	const navigate = useNavigate();
+
 	return (
 		<StyledContent>
 			<VideoBg desktopVideo={landingVideo} mobileVideo={landingVideoMobile} />
+
 			<StyledLanding>
 				<h2>Instantly sound professional, no matter the situation</h2>
 				<StyledButtonContainer>

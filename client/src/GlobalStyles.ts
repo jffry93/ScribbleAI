@@ -9,12 +9,12 @@ const GlobalStyle = createGlobalStyle`
 }
 //DESKTOP
 :root {
-  --primary: #646cff;
-  --secondary:  #535bf2;
+  --primary: #696969;
+  --secondary:  #8ab6d6;
   --error: #e7195a;
   --bg-color:  #242424;;
-  --text-color: rgba(255, 255, 255, 0.87);
-  --secondary-text-color: #888;
+  --text-color: #F5F5F5;
+  --secondary-text-color: #BBBBBB;
   --sm-padding: 12px;
   --md-padding: 24px;
   --lg-padding: 32px;
@@ -71,7 +71,7 @@ a {
 }
 
 a:hover {
-	color: #535bf2;
+	color: var(--primary);
 }
 
 body{
@@ -99,7 +99,7 @@ button {
 	width: 100%;
 }
 button:hover {
-	border-color: #646cff;
+	border-color: var(--secondary);
 }
 button:focus,
 button:focus-visible {
@@ -119,6 +119,8 @@ button:focus-visible {
 	}
 }
 `;
+
+export default GlobalStyle;
 
 const size = {
 	// mobileS: '320px',
@@ -142,8 +144,6 @@ export const device = {
 	desktop: `(max-width: ${size.desktop})`,
 	// desktopL: `(min-width: ${size.desktop})`,
 };
-
-export default GlobalStyle;
 
 export const StyledFlexCenter = styled.div`
 	display: flex;

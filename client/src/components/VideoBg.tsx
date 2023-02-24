@@ -1,4 +1,4 @@
-import React from 'react';
+// import { LazyLoad } from 'react-lazyload';
 import styled from 'styled-components';
 import { device } from '../GlobalStyles';
 
@@ -11,6 +11,7 @@ const VideoBg = ({
 }) => {
 	return (
 		<StyledVideoBg>
+			{/* <LazyLoad> */}
 			<video autoPlay loop muted>
 				<source
 					src={
@@ -21,6 +22,7 @@ const VideoBg = ({
 					type='video/mp4'
 				/>
 			</video>
+			{/* </LazyLoad> */}
 		</StyledVideoBg>
 	);
 };
