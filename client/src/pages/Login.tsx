@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { EmailType } from '../App';
+import ErrorMsg from '../components/ErrorMsg';
 import { StyledForm, StyledPage } from '../GlobalStyles';
 import { useLogin } from '../hooks/useLogin';
 
-const Login = () => {
-	const [email, setEmail] = useState('');
+const Login = ({ email, setEmail }: EmailType) => {
 	const [password, setPassword] = useState('');
 	const { login, isLoading, error, errorMsg } = useLogin();
 
@@ -22,7 +23,7 @@ const Login = () => {
 					Let's pick up where we left off. Log in and let's make some magic.
 				</p>
 				<StyledForm onSubmit={handleSubmit}>
-					{error && <p>{errorMsg}</p>}
+					{error && <ErrorMsg msg={errorMsg} />}
 					<label>Email:</label>
 					<input
 						type='email'
@@ -74,4 +75,7 @@ export const StyledContent = styled.div`
 	min-height: var(--container-height);
 	align-items: center;
 	justify-content: center;
+	a:active {
+		color: var(--secondary);
+	}
 `;

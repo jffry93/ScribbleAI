@@ -15,16 +15,23 @@ import { trpc } from './trpc/trpc';
 import GetUser from './components/GetUser';
 import LoadingModal from './components/LoadingModal';
 
+export interface JobDescriptionType {
+	jobDescription: string;
+	setJobDescription: (value: string) => void;
+}
+
+export interface EmailType {
+	email: string;
+	setEmail: (value: string) => void;
+}
+
 function App() {
 	const {
 		state: { user },
 	} = useAuthContext();
 
-	interface jobDescriptionType {
-		jobDescription: string;
-		setJobDescription: (value: string) => void;
-	}
 	const [jobDescription, setJobDescription] = useState('');
+	const [email, setEmail] = useState('');
 
 	return (
 		<>
@@ -33,8 +40,14 @@ function App() {
 			<Layout>
 				<Routes>
 					<Route path='/' element={user ? <Home /> : <Landing />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/signup' element={<Signup />} />
+					<Route
+						path='/login'
+						element={<Login email={email} setEmail={setEmail} />}
+					/>
+					<Route
+						path='/signup'
+						element={<Signup email={email} setEmail={setEmail} />}
+					/>
 					<Route path='*' element={<p>404 error</p>} />
 					{user && (
 						<>

@@ -61,7 +61,7 @@ export const login = t.procedure
 			console.log((err as Error).message);
 			return {
 				status: 400,
-				msg: '❗️Issue with login oof...🤕 ' + (err as Error).message,
+				msg: (err as Error).message,
 			};
 		}
 	});

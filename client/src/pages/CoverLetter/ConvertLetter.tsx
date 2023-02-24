@@ -5,17 +5,15 @@ import { StyledContainer, StyledConverter } from '../NSFW/ConvertNsfw';
 import { useDebounceCallback } from '../../hooks/useDebounce';
 import ErrorMsg from '../../components/ErrorMsg';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { JobDescriptionType } from '../../App';
 
-interface NSFWResType {
+interface CoverLetterRes {
 	status: number;
 	msg: string;
 	data?: string;
 }
-interface JobDescriptionType {
-	jobDescription: string;
-	setJobDescription: (value: string) => void;
-}
-interface NSFWProps extends JobDescriptionType {
+
+interface CoverLetterProps extends JobDescriptionType {
 	setIsLoading: (value: boolean) => void;
 	setAppropriateMsg: (value: string | undefined) => void;
 }
@@ -25,7 +23,7 @@ const ConvertCoverLetter = ({
 	setAppropriateMsg,
 	jobDescription,
 	setJobDescription,
-}: NSFWProps) => {
+}: CoverLetterProps) => {
 	const {
 		state: { user },
 	} = useAuthContext();
@@ -52,7 +50,7 @@ const ConvertCoverLetter = ({
 				setIsSubmitting(true);
 				setIsLoading(true);
 				//send data to backend and wait for response
-				const response: NSFWResType = await handleMutate.mutateAsync({
+				const response: CoverLetterRes = await handleMutate.mutateAsync({
 					experience,
 					jobDescription,
 				});

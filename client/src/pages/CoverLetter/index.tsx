@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
+import { JobDescriptionType } from '../../App';
 import CopyContainer from '../../components/CopyContainer';
 import LoadingModal from '../../components/LoadingModal';
 import { StyledHelper } from '../NSFW';
 import ConvertCoverLetter from './ConvertLetter';
-interface JobDescriptionType {
-	jobDescription: string;
-	setJobDescription: (value: string) => void;
-}
+
 const CoverLetter = ({
 	jobDescription,
 	setJobDescription,

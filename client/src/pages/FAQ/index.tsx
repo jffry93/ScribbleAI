@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
+import { JobDescriptionType } from '../../App';
 import CopyContainer from '../../components/CopyContainer';
 import LoadingModal from '../../components/LoadingModal';
 import { StyledHelper } from '../NSFW';
 import ConvertFAQ from './ConvertFAQ';
-interface JobDescriptionType {
-	jobDescription: string;
-	setJobDescription: (value: string) => void;
-}
+
 const FAQ = ({ jobDescription, setJobDescription }: JobDescriptionType) => {
 	const [appropriateMsg, setAppropriateMsg] = useState<string | undefined>(
 		undefined

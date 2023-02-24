@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { EmailType } from '../App';
+import ErrorMsg from '../components/ErrorMsg';
 import { StyledForm } from '../GlobalStyles';
 import { useSignup } from '../hooks/useSignup';
 import { StyledContent, StyledMain } from './Login';
 
-const Signup = () => {
-	const [email, setEmail] = useState('');
+const Signup = ({ email, setEmail }: EmailType) => {
 	const [password, setPassword] = useState('');
 	const { signup, isLoading, error, errorMsg } = useSignup();
 
@@ -24,7 +24,7 @@ const Signup = () => {
 					community.
 				</p>
 				<StyledForm onSubmit={handleSubmit}>
-					{error && <p>{errorMsg}</p>}
+					{error && <ErrorMsg msg={errorMsg} />}
 					<label>Email:</label>
 					<input
 						type='email'
