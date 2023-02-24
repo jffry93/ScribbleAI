@@ -10,7 +10,7 @@ const DeleteAccount = () => {
 			<button
 				onClick={(e) => {
 					e.preventDefault();
-					deleteAccount;
+					deleteAccount();
 				}}
 			>
 				Delete Account

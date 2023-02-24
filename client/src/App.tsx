@@ -13,6 +13,7 @@ import Profile from './pages/Profile';
 import { useEffect, useState } from 'react';
 import { trpc } from './trpc/trpc';
 import GetUser from './components/GetUser';
+import LoadingModal from './components/LoadingModal';
 
 function App() {
 	const {
@@ -38,29 +39,29 @@ function App() {
 					{user && (
 						<>
 							<Route path='/nsfw' element={<NSFW />} />
-							{user.preference && (
-								<>
-									<Route
-										path='/faq'
-										element={
-											<FAQ
-												jobDescription={jobDescription}
-												setJobDescription={setJobDescription}
-											/>
-										}
-									/>
-									<Route
-										path='/coverletter'
-										element={
-											<CoverLetter
-												jobDescription={jobDescription}
-												setJobDescription={setJobDescription}
-											/>
-										}
-									/>
-									<Route path='/profile' element={<Profile />} />
-								</>
-							)}
+							<Route
+								path='/faq'
+								element={
+									user.preference && (
+										<FAQ
+											jobDescription={jobDescription}
+											setJobDescription={setJobDescription}
+										/>
+									)
+								}
+							/>
+							<Route
+								path='/coverletter'
+								element={
+									user.preference && (
+										<CoverLetter
+											jobDescription={jobDescription}
+											setJobDescription={setJobDescription}
+										/>
+									)
+								}
+							/>
+							<Route path='/profile' element={user.preference && <Profile />} />
 						</>
 					)}
 				</Routes>

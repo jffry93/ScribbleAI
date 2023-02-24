@@ -37,14 +37,16 @@ const createWSContext = (): {
 	req: Request;
 	res: Response;
 	isAdmin: boolean;
-	pokemon: number;
+	secretUsers: string[];
+	// pokemon: number;
 } => {
 	// Here, you can create and return an object with the required properties
 	return {
 		req: {} as Request,
 		res: {} as Response,
 		isAdmin: false,
-		pokemon: 0,
+		secretUsers: ['jay.zalischi@gmail.com', 'asd@asd.asd'],
+		// pokemon: 0,
 	};
 };
 applyWSSHandler({
