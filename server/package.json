@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && cp package.json dist/package.json",
-    "start": "node index.js",
+    "start": "node /var/task/index.js",
     "dev": "nodemon index.ts"
   },
   "dependencies": {
