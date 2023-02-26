@@ -11,6 +11,6 @@
     "moduleResolution": "node",
     "resolveJsonModule": true
   },
-  "include": ["/**/*"],
+  "include": ["./**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
