@@ -1,8 +1,0 @@
-version: 1
-build:
-  steps:
-    - run: npm install
-    - run: npm run build
-deploy:
-  steps:
-    - run: cyclic deploy
