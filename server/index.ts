@@ -7,19 +7,25 @@ import { applyWSSHandler } from '@trpc/server/adapters/ws';
 import { appRouter } from './routers';
 import { createContext } from './context';
 import ws from 'ws';
-
+require('dotenv').config();
+interface CustomEnv extends NodeJS.ProcessEnv {
+	API_ORIGINS: string;
+	SECRET_USERS: string;
+	PORT: string;
+	// Add other environment variables here as needed
+}
+const { API_ORIGINS, SECRET_USERS, PORT }: CustomEnv =
+	process.env as unknown as CustomEnv;
+console.log(typeof PORT);
 const app = express();
-
+console.log(SECRET_USERS.split(','));
 // MIDDLEWARE
 app.use(
 	cors({
-		origin: [
-			'https://future.website',
-			'http://localhost:5173',
-			'http://127.0.0.1:5173',
-		],
+		origin: API_ORIGINS.split(','),
 	})
 );
+app.use(cors());
 app.use(morgan('tiny'));
 
 app.use('/trpc', createExpressMiddleware({ router: appRouter, createContext }));
@@ -32,7 +38,7 @@ app.use('*', (req, res) => {
 	});
 });
 
-const server = app.listen(3000);
+const server = app.listen(PORT);
 const createWSContext = (): {
 	req: Request;
 	res: Response;
@@ -45,7 +51,7 @@ const createWSContext = (): {
 		req: {} as Request,
 		res: {} as Response,
 		isAdmin: false,
-		secretUsers: ['jay.zalischi@gmail.com', 'asd@asd.asd'],
+		secretUsers: SECRET_USERS.split(','),
 		// pokemon: 0,
 	};
 };

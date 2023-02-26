@@ -1,71 +1,35 @@
-# TRPC 👾
+# Scribble AI ✍🏽
 
 ## 📙 Summary
 
-This is a short example of how to use TRPC with Express as the adapter with a websocket server.
+This is an app using the PERN stack
 
-You can visit the documentation by clicking [here](https://trpc.io)
+Searching for the perfect job can be overwhelming, so I developed a platform to streamline the application process, ensuring a swift and enjoyable experience for all job seekers, regardless of their writing skills.
 
 ## 🍱 Features
 
-- 👀 Connects to localhost:3000
-- 📄 100% typesafe
-- 🎨 Websocket listening for changes
-- 👓 Context to see if user is signed in
+- Create an account to unlock personalized results based on your saved information.
+- Effortlessly store and access links for sharing with our integrated clipboard feature.
+- Maximize engagement with our cutting-edge text transformation services.
+- Get personalized feedback at lightning speed for enhanced productivity.
+- Deliver accurate answers to any question with our intelligent response system.
+- Create a tailored cover letter that showcases your skills and experience for each job application.
+- Simplify your research process by clicking on search results to copy important text.
 
 ## 🖥 Technologies
 
+- [Vite](https://www.typescriptlang.org)
 - [TypeScript](https://www.typescriptlang.org)
-- [Cors](https://www.npmjs.com/package/@types/cors)
+- [React Query](https://www.typescriptlang.org)
+- [Styled Components](https://www.typescriptlang.org)
+- [Node.js](https://www.npmjs.com/package/@types/express)
 - [Express](https://www.npmjs.com/package/@types/express)
-- [Morgan](https://www.npmjs.com/package/@types/morgan)
+- [openAI](https://www.typescriptlang.org)
+- [Prisma](https://www.typescriptlang.org)
+- [Postgres](https://www.typescriptlang.org)
+- [JWT](https://www.typescriptlang.org)
 - [TRPC](https://trpc.io)
 - [zod](https://zod.dev)
-- [Nodemon](https://blog.logrocket.com/configuring-nodemon-with-typescript/)
-
-## 🧱 Initial Setup
-
-## 📜 Available Scripts
-
-## 📜 Frontend
-
-After you have cloned the repo you will want to run the following commands
-
-> Step 1:
->
-> #### `cd client`
->
-> Step 2:
->
-> #### `yarn install`
->
-> Step 3:
->
-> #### `yarn dev`
-
-Runs the app in the development mode.\
-Open [http://localhost:5173](http://localhost:5173) to view it in your browser.
-
-## Backend
-
-## 📜 Available Scripts
-
-After you have cloned the repo you will want to run the following commands
-
-> Step 1:
->
-> #### `cd server`
->
-> Step 2:
->
-> #### `yarn install`
->
-> Step 3:
-> this will start nodemon and get it to watch the server
->
-> #### `yarn start`
-
-## 🧠 Learn More
 
 <h3 align="center">Connect with me:</h3>
 <p align="center">

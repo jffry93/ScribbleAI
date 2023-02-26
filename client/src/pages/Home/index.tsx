@@ -14,8 +14,9 @@ const Home = () => {
 			<StyledContainer>
 				<h1>Save Time and Apply to More Jobs</h1>
 				<p>
-					Searching for the perfect job can be overwhelming, so we designed a
-					platform that not only simplifies the application process.
+					Searching for the perfect job can be overwhelming, so I developed a
+					platform that streamlines the application process, allowing for a
+					quick and effortless experience.
 				</p>
 				<p>Say goodbye to tedious job applications.</p>
 

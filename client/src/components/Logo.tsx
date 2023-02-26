@@ -12,7 +12,7 @@ const Logo = ({ size, font = 51.2 }: { size: number; font?: number }) => {
 	return (
 		<StyledLogo to={`/`} width={size} font={font}>
 			<img src='/feather.png' />
-			<h1>ProfessionalPen</h1>
+			<h1>Scribble AI</h1>
 		</StyledLogo>
 	);
 };

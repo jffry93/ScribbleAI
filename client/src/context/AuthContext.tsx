@@ -60,7 +60,7 @@ export const authReducer = (state: ReducerState, action: ReducerAction) => {
 
 export const AuthContextProvider = ({ children }: AuthProvProps) => {
 	const [state, dispatch] = useReducer(authReducer, initialValue);
-	console.log(state.user);
+
 	useEffect(() => {
 		// update context if localStorage has user key
 		const userData = localStorage.getItem('user');

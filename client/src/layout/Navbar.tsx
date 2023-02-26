@@ -51,9 +51,6 @@ export default Navbar;
 const StyledSticky = styled.nav`
 	position: sticky;
 	top: 0;
-	/* backdrop-filter: blur(10px); */
-	/* background-color: var(--bg-color); */
-	opacity: 0.9;
 	z-index: 2;
 `;
 
@@ -133,8 +130,6 @@ const StyledDropDown = styled.div`
 		left: 0;
 		top: 100%;
 		overflow: hidden;
-
-		background-color: rgba(0, 0, 0, 0.2);
 		border-radius: 4px;
 	}
 	a {

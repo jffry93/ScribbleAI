@@ -3,6 +3,7 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
+	"main": "index.js",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
@@ -13,23 +14,24 @@
 		"@trpc/client": "^10.11.0",
 		"@trpc/react-query": "^10.11.0",
 		"@trpc/server": "^10.11.0",
-		"@types/date-fns": "^2.6.0",
-		"@types/react-router-dom": "^5.3.3",
 		"date-fns": "^2.29.3",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-icons": "^4.7.1",
 		"react-query": "^3.39.2",
 		"react-router-dom": "^6.8.1",
-		"server": "1.0.0",
 		"styled-components": "^5.3.6"
 	},
 	"devDependencies": {
+		"@types/date-fns": "^2.6.0",
 		"@types/react": "^18.0.27",
 		"@types/react-dom": "^18.0.10",
+		"@types/react-router-dom": "^5.3.3",
 		"@types/styled-components": "^5.1.26",
 		"@vitejs/plugin-react": "^3.1.0",
 		"react-is": "^18.2.0",
+		"rollup-plugin-copy": "^3.4.0",
+		"server": "1.0.0",
 		"typescript": "^4.9.3",
 		"vite": "^4.1.0"
 	}

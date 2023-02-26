@@ -10,10 +10,8 @@ import NSFW from './pages/NSFW';
 import FAQ from './pages/FAQ';
 import CoverLetter from './pages/CoverLetter';
 import Profile from './pages/Profile';
-import { useEffect, useState } from 'react';
-import { trpc } from './trpc/trpc';
+import { useState } from 'react';
 import GetUser from './components/GetUser';
-import LoadingModal from './components/LoadingModal';
 
 export interface JobDescriptionType {
 	jobDescription: string;

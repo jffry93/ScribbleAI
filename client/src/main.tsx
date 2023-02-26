@@ -4,7 +4,7 @@ import App from './App';
 import FetchProvider from './trpc/FetchProvider';
 import './index.css';
 import { ThemeProvider } from './context/ThemeContext';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
@@ -12,9 +12,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<ThemeProvider>
 		<AuthContextProvider>
 			<FetchProvider>
-				<BrowserRouter>
+				<HashRouter>
 					<App />
-				</BrowserRouter>
+				</HashRouter>
 			</FetchProvider>
 		</AuthContextProvider>
 	</ThemeProvider>

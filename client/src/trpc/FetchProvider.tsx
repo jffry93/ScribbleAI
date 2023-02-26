@@ -3,6 +3,8 @@ import { createWSClient, httpBatchLink, splitLink, wsLink } from '@trpc/client';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { trpc } from './trpc';
+const { VITE_API_URL, VITE_API_WSURL } = import.meta.env;
+
 const FetchProvider = ({ children }: { children: ReactNode }) => {
 	const {
 		state: { user },
@@ -11,12 +13,12 @@ const FetchProvider = ({ children }: { children: ReactNode }) => {
 	const [queryClient] = useState(() => new QueryClient());
 	const [wsClient] = useState(() =>
 		createWSClient({
-			url: 'ws://localhost:3000/trpc',
+			url: VITE_API_WSURL + '/trpc',
 		})
 	);
 	const httpBatchLinkConfig = useMemo(() => {
 		const headers = { authorization: `Bearer ${user?.token}` };
-		return { url: 'http://localhost:3000/trpc', headers };
+		return { url: VITE_API_URL + '/trpc', headers };
 	}, [user?.token]);
 
 	const trpcClient = useMemo(() => {
