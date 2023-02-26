@@ -1,10 +1,15 @@
 {
-	"compilerOptions": {
-		"target": "es6",
-		"module": "commonjs",
-		"outDir": "dist",
-		"strict": true,
-		"esModuleInterop": true
-	},
-	"include": ["/**/*"]
+  "compilerOptions": {
+    "lib": ["es6", "dom"],
+    "target": "es6",
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "strict": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true
+  },
+  "include": ["./**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
 }
