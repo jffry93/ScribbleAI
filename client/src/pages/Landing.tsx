@@ -50,7 +50,6 @@ const StyledContent = styled.div`
 	max-width: var(--width-limit);
 	position: relative;
 	flex-direction: row;
-	border: 1px solid blue;
 	h2 {
 		font-size: 40px;
 	}

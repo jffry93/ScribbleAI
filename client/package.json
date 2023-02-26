@@ -3,10 +3,10 @@
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
-	"main": "index.js",
+	"main": "index.ts",
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc --project ./tsconfig.json && vite build",
+		"build": "tsc && vite build",
 		"preview": "vite preview"
 	},
 	"dependencies": {
