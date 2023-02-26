@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import express from 'express';
-import morgan from 'morgan';
 import cors from 'cors';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { applyWSSHandler } from '@trpc/server/adapters/ws';
@@ -16,9 +15,10 @@ interface CustomEnv extends NodeJS.ProcessEnv {
 }
 const { API_ORIGINS, SECRET_USERS, PORT }: CustomEnv =
 	process.env as unknown as CustomEnv;
-console.log(typeof PORT);
+
+const port = PORT || 3000;
 const app = express();
-console.log(SECRET_USERS.split(','));
+
 // MIDDLEWARE
 app.use(
 	cors({
@@ -26,8 +26,6 @@ app.use(
 	})
 );
 app.use(cors());
-app.use(morgan('tiny'));
-
 app.use('/trpc', createExpressMiddleware({ router: appRouter, createContext }));
 
 // 404 ERROR
@@ -38,7 +36,7 @@ app.use('*', (req, res) => {
 	});
 });
 
-const server = app.listen(PORT);
+const server = app.listen(port);
 const createWSContext = (): {
 	req: Request;
 	res: Response;
