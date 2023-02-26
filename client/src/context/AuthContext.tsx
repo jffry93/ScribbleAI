@@ -1,5 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
-import { trpc } from '../trpc/trpc';
+import React, { useEffect, useReducer } from 'react';
 
 interface AuthProvProps {
 	children: React.ReactNode;
