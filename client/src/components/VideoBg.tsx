@@ -31,10 +31,10 @@ export default VideoBg;
 
 const StyledVideoBg = styled.div`
 	/* border: 1px solid pink; */
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
-	min-height: 100vh;
+	min-height: 101vh;
 	width: 100%;
 	overflow: hidden;
 	video {
@@ -42,7 +42,7 @@ const StyledVideoBg = styled.div`
 		min-height: 100%;
 		width: auto;
 		height: auto;
-		z-index: -100;
+		z-index: 0;
 		position: absolute;
 		top: 50%;
 		left: 50%;

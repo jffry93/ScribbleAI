@@ -15,8 +15,6 @@ const Landing = () => {
 
 	return (
 		<StyledContent>
-			<VideoBg desktopVideo={landingVideo} mobileVideo={landingVideoMobile} />
-
 			<StyledLanding>
 				<h2>Instantly sound professional, no matter the situation</h2>
 				<StyledButtonContainer>

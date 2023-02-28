@@ -31,7 +31,7 @@ const StyledFooter = styled.footer`
 	align-items: center;
 	gap: 16px;
 	padding: var(--layout-padding);
-	background-color: #2d2d2d;
+	background-color: #121212;
 	h1:active {
 		color: var(--primary);
 	}

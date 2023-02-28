@@ -7,6 +7,10 @@ const GlobalStyle = createGlobalStyle`
     padding: 0 ;
     box-sizing: border-box ;
 }
+border-style,html{
+  height:100%;
+  background-color:#121212;
+}
 //DESKTOP
 :root {
   --primary: #696969;

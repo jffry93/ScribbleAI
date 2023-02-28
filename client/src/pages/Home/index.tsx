@@ -22,8 +22,6 @@ const Home = () => {
 
 				<button onClick={() => navigate('/nsfw')}>Get Started</button>
 			</StyledContainer>
-
-			<VideoBg desktopVideo={desktopVideo} mobileVideo={mobileVideo} />
 		</StyledContent>
 	);
 };

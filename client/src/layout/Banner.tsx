@@ -21,8 +21,8 @@ export default Banner;
 const StyledBanner = styled.div`
 	position: relative;
 	z-index: 1;
-	backdrop-filter: blur(5px);
-	background-color: #1a1a1a;
+	backdrop-filter: blur(15px);
+	background-color: rgba(0, 0, 0, 0.5);
 	padding: 4.6px var(--md-padding) 3px;
 	text-align: center;
 	display: flex;
