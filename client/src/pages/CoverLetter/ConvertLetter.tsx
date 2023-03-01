@@ -6,6 +6,8 @@ import { useDebounceCallback } from '../../hooks/useDebounce';
 import ErrorMsg from '../../components/ErrorMsg';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { JobDescriptionType } from '../../App';
+import TitleDescription from '../../components/TitleDescription';
+import helperData from '../../data/helperContent.json';
 
 interface CoverLetterRes {
 	status: number;
@@ -32,6 +34,7 @@ const ConvertCoverLetter = ({
 	const [experience, setExperience] = useState(
 		user?.preference.experience || ''
 	);
+	const { coverLetter } = helperData;
 
 	const handleMutate = trpc.jarvis.coverLetter.useMutation();
 	const debouncedSubmit = useDebounceCallback(
@@ -85,18 +88,10 @@ const ConvertCoverLetter = ({
 	return (
 		<StyledContainer>
 			<StyledConverter>
-				<h1>Cover Letter</h1>
-				<p className='description'>
-					Create customized cover letters in seconds with our powerful letter
-					generator.
-				</p>
-				<h3>Instructions:</h3>
-				<ul>
-					<li>Provide experience</li>
-					<li>Provide job posting</li>
-					<li>click submit when done</li>
-					<li>Copy text generated below</li>
-				</ul>
+				<TitleDescription
+					title={coverLetter.title}
+					description={coverLetter.description}
+				/>
 				<StyledForm onSubmit={handleSubmit}>
 					{error.value && <ErrorMsg msg={error.message} />}
 					<label>Past Experience:</label>

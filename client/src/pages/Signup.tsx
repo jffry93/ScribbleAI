@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EmailType } from '../App';
 import ErrorMsg from '../components/ErrorMsg';
+import LoadingModal from '../components/LoadingModal';
 import { StyledForm } from '../GlobalStyles';
 import { useSignup } from '../hooks/useSignup';
 import { StyledContent, StyledMain } from './Login';
@@ -53,6 +54,7 @@ const Signup = ({ email, setEmail }: EmailType) => {
 					</p>
 				</StyledForm>
 			</StyledMain>
+			{isLoading && <LoadingModal />}
 		</StyledContent>
 	);
 };

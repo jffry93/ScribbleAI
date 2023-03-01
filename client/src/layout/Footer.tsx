@@ -6,6 +6,9 @@ const Footer = () => {
 	return (
 		<StyledFooter>
 			<Logo size={100} />
+			<p>CONTACT</p>
+			<p>ABOUT</p>
+			<p>PROJECTS</p>
 			<StyledIconContainer>
 				<StyledLink>
 					<a href='https://github.com/jffry93' target='_blank'>

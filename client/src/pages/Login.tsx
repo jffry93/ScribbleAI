@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { EmailType } from '../App';
 import ErrorMsg from '../components/ErrorMsg';
+import LoadingModal from '../components/LoadingModal';
 import { StyledForm, StyledPage } from '../GlobalStyles';
 import { useLogin } from '../hooks/useLogin';
 
@@ -26,7 +27,7 @@ const Login = ({ email, setEmail }: EmailType) => {
 					{error && <ErrorMsg msg={errorMsg} />}
 					<label>Email:</label>
 					<input
-						type='email'
+						// type='email'
 						value={email}
 						onChange={(e) => {
 							setEmail(e.target.value);
@@ -52,6 +53,7 @@ const Login = ({ email, setEmail }: EmailType) => {
 					</p>
 				</StyledForm>
 			</StyledMain>
+			{isLoading && <LoadingModal />}
 		</StyledContent>
 	);
 };

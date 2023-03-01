@@ -4,6 +4,7 @@ import validator from 'validator';
 import bcrypt from 'bcrypt';
 import { prisma } from '../../db';
 import { createToken } from '../users';
+import { delayAsync } from '../../delayAsync';
 
 export const login = t.procedure
 	.input(z.object({ email: z.string(), password: z.string() }))
@@ -12,9 +13,11 @@ export const login = t.procedure
 		try {
 			// validation
 			if (!email || !password) {
+				await delayAsync();
 				throw Error('😳 All fields must be filled 😭');
 			}
 			if (!validator.isEmail(email)) {
+				await delayAsync();
 				throw Error('😳 Email not valid 😭');
 			}
 			// check database
@@ -24,11 +27,13 @@ export const login = t.procedure
 			});
 
 			if (!user) {
+				await delayAsync();
 				throw Error('❌ Email already has an account 😑');
 			}
 			// check if password matches hashed password
 			const match = await bcrypt.compare(password, user.password);
 			if (!match) {
+				await delayAsync();
 				throw Error('❌ Incorrect password 😑');
 			}
 			const token = createToken(user.id);

@@ -6,6 +6,8 @@ import { useDebounceCallback } from '../../hooks/useDebounce';
 import ErrorMsg from '../../components/ErrorMsg';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { JobDescriptionType } from '../../App';
+import TitleDescription from '../../components/TitleDescription';
+import helperData from '../../data/helperContent.json';
 
 interface FAQRes {
 	status: number;
@@ -33,6 +35,7 @@ const ConvertFAQ = ({
 	const [experience, setExperience] = useState(
 		user?.preference.experience || ''
 	);
+	const { faq } = helperData;
 
 	const handleMutate = trpc.jarvis.questionAnswer.useMutation();
 
@@ -91,19 +94,7 @@ const ConvertFAQ = ({
 	return (
 		<StyledContainer>
 			<StyledConverter>
-				<h1>Frequently Asked Questions</h1>
-				<p className='description'>
-					Impress with your knowledge! Our tool helps you answer questions with
-					accuracy and ease in a snap.
-				</p>
-				<h3>Instructions:</h3>
-				<ul>
-					<li>Type a question in the field</li>
-					<li>Provide experience</li>
-					<li>Provide job posting</li>
-					<li>click submit when done</li>
-					<li>Copy text generated below</li>
-				</ul>
+				<TitleDescription title={faq.title} description={faq.description} />
 				<StyledForm onSubmit={handleSubmit}>
 					{error.value && <ErrorMsg msg={error.message} />}
 					<label>Question:</label>

@@ -16,7 +16,7 @@ border-style,html{
   --primary: #696969;
   --secondary:  #8ab6d6;
   --error: #e7195a;
-  --bg-color:  #242424;;
+  --bg-color:  #242424;
   --text-color: #F5F5F5;
   --secondary-text-color: #BBBBBB;
   --sm-padding: 12px;

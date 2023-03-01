@@ -4,6 +4,7 @@ import validator from 'validator';
 import bcrypt from 'bcrypt';
 import { prisma } from '../../db';
 import { createToken } from '../users';
+import { delayAsync } from '../../delayAsync';
 
 export const signUp = t.procedure
 	.input(z.object({ email: z.string(), password: z.string() }))
@@ -12,20 +13,24 @@ export const signUp = t.procedure
 		try {
 			// validation
 			if (!email || !password) {
+				await delayAsync();
 				throw Error('😳 All fields must be filled 😭');
 			}
 			if (!validator.isEmail(email)) {
+				await delayAsync();
 				throw Error('😳 Email not valid 😭');
-			}
-			if (!validator.isStrongPassword(password)) {
-				throw Error(
-					'😳 Password must include at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long 😭'
-				);
 			}
 			// check database
 			const legitCheck = await prisma.user.findFirst({ where: { email } });
 			if (legitCheck) {
+				await delayAsync();
 				throw Error('❌ Email is already in use 😑');
+			}
+			if (!validator.isStrongPassword(password)) {
+				await delayAsync();
+				throw Error(
+					'😳 Password must include at least one lowercase letter, one uppercase letter, one number, one special character, and be at least 8 characters long 😭'
+				);
 			}
 			// hash password
 			const salt = await bcrypt.genSalt(10);

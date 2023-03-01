@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import ErrorMsg from '../../components/ErrorMsg';
+import TitleDescription from '../../components/TitleDescription';
 import { useDebounceCallback } from '../../hooks/useDebounce';
 import { trpc } from '../../trpc/trpc';
 
@@ -56,17 +57,11 @@ const ConvertNsfw = ({ setAppropriateMsg, setIsLoading }: NSFWProps) => {
 	return (
 		<StyledContainer>
 			<StyledConverter>
-				<h2>Sophisticated Generator</h2>
-				<p className='description'>
-					Elevate your writing to a confident and professional level with our
-					innovative tool.
-				</p>
-				<h3>Instructions:</h3>
-				<ul>
-					<li>Type anything in the field below</li>
-					<li>Click submit when done</li>
-					<li>Copy professional text generated</li>
-				</ul>
+				<TitleDescription
+					title='Sophisticated Generator'
+					description='Elevate your writing to a confident and professional level with our
+					innovative tool.'
+				/>
 				<form onSubmit={handleSubmit}>
 					{error.value && <ErrorMsg msg={error.message} />}
 					<label>Original text:</label>
@@ -98,27 +93,15 @@ export const StyledConverter = styled.div`
 	flex-direction: column;
 	gap: 12px;
 	padding-bottom: var(--shift-padding);
-	h3,
-	ul {
-		display: none;
-	}
-	.description,
-	li {
+
+	.description {
 		color: var(--secondary-text-color);
-	}
-	h3 {
-		margin-top: 24px;
-	}
-	ul {
-		padding-left: var(--md-padding);
 	}
 	form {
 		display: flex;
 		flex-direction: column;
 		gap: 12px;
 		padding: 12px 0;
-	}
-	button {
 	}
 `;
 

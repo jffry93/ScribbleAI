@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { StyledFlexCenter } from '../GlobalStyles';
 
@@ -8,6 +9,14 @@ const LoadingModal = ({
 	title?: string;
 	subtitle?: string;
 }) => {
+	useEffect(() => {
+		// Add the scroll lock when the component mounts
+		document.body.style.overflow = 'hidden';
+		// Remove the scroll lock when the component unmounts
+		return () => {
+			document.body.style.overflow = 'auto';
+		};
+	}, []);
 	return (
 		<StyledLoadingModal>
 			<StyledContent>
@@ -34,4 +43,8 @@ const StyledLoadingModal = styled(StyledFlexCenter)`
 const StyledContent = styled(StyledFlexCenter)`
 	flex-direction: column;
 	gap: 24px;
+	padding: var(--lg-padding);
+	p {
+		text-align: center;
+	}
 `;
