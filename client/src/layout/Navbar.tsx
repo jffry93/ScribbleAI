@@ -44,6 +44,9 @@ const Navbar = () => {
 									<li onClick={() => navigate('/coverletter')}>
 										<span>Cover Letter</span>
 									</li>
+									<li onClick={() => navigate('/gratitude')}>
+										<span>Gratitude</span>
+									</li>
 									<li onClick={() => navigate('/faq')}>
 										<span>Q&A</span>
 									</li>

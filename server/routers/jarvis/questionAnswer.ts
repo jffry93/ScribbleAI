@@ -11,18 +11,25 @@ export const questionAnswer = secretUserProcedure
 			jobDescription: z.string(),
 		})
 	)
-	.mutation(async ({ input }) => {
+	.mutation(async ({ ctx, input }) => {
 		const { question, experience, jobDescription } = input;
 		try {
-			// validation
+			// validation;
 			if (!question || !experience || !jobDescription) {
 				await new Promise((resolve) => setTimeout(resolve, 1000));
 				throw Error('😳 Please enter all fields 😭');
 			}
 			const jarvisPrompt =
-				`Can you help me answer the following question in a short professional, conversational and friendly way? ${question} Please use the past job experience of when ${experience}. Also, please user this job posting information aswell.${jobDescription}
+				`Can you help me answer the following question in a short professional, conversational and friendly way? ${question} Please use the past job experience of when ${experience} ${
+					ctx.user.Preference?.personality &&
+					'Let me tell you a bit about my self so you can personalize the response. ' +
+						ctx.user.Preference.personality
+				} Also, please user this job posting information aswell.${jobDescription.replace(
+					/\s+$/,
+					''
+				)}
         `.replace(/\s+$/, '');
-
+			console.log(jarvisPrompt);
 			const response = await openai.createCompletion({
 				model: 'text-davinci-003',
 				prompt: jarvisPrompt,

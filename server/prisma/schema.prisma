@@ -22,6 +22,7 @@ model User {
   // Preference   Preference?   @relation(fields: [preferenceId], references: [id])
   // preferenceId String?       @unique
   Preference  Preference?
+  Gratitude   Gratitude[]
 
   @@index([email])
 }
@@ -59,6 +60,16 @@ model Answer {
 }
 
 model CoverLetter {
+  id        String   @id @default(uuid())
+  prompt    String
+  response  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model Gratitude {
   id        String   @id @default(uuid())
   prompt    String
   response  String

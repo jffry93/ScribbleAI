@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { device } from '../../GlobalStyles';
 
 const LabelTitle = ({
 	label,
@@ -29,6 +30,7 @@ const StyledLabelTitle = styled.div`
 	justify-content: space-between;
 	gap: 8px;
 	padding: var(--sm-padding);
+	min-width: 400px;
 	h4 {
 		font-size: 20px;
 		min-width: 110px;
@@ -36,5 +38,12 @@ const StyledLabelTitle = styled.div`
 	p {
 		width: 100%;
 		color: var(--secondary-text-color);
+	}
+	@media ${device.mobile} {
+		& {
+			display: flex;
+			flex-direction: column;
+			min-width: 200px;
+		}
 	}
 `;

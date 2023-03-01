@@ -12,6 +12,7 @@ import CoverLetter from './pages/CoverLetter';
 import Profile from './pages/Profile';
 import { useState } from 'react';
 import GetUser from './components/GetUser';
+import Gratitude from './pages/Gratitude';
 
 export interface JobDescriptionType {
 	jobDescription: string;
@@ -66,6 +67,17 @@ function App() {
 								element={
 									user.preference && (
 										<CoverLetter
+											jobDescription={jobDescription}
+											setJobDescription={setJobDescription}
+										/>
+									)
+								}
+							/>
+							<Route
+								path='/gratitude'
+								element={
+									user.preference && (
+										<Gratitude
 											jobDescription={jobDescription}
 											setJobDescription={setJobDescription}
 										/>

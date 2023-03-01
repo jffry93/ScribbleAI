@@ -50,4 +50,5 @@ const StyledDiv = styled.div`
 	display: flex;
 	width: 100%;
 	max-width: 800px;
+	padding-bottom: var(--lg-padding);
 `;

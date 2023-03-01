@@ -32,7 +32,6 @@ interface Preference {
 export interface MyContext {
 	isAdmin: boolean;
 	secretUsers?: string[];
-	// pokemon: number;
 	user?: User;
 }
 export const SECRET = process.env.SECRET || 'default-secret-value';
