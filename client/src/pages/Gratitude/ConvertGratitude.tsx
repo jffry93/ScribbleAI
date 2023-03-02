@@ -100,24 +100,30 @@ const ConvertGratitude = ({
 				/>
 				<StyledForm onSubmit={handleSubmit}>
 					{error.value && <ErrorMsg msg={error.message} />}
-					<label>Name:</label>
-					<input
-						name='Name'
-						value={formData.name}
-						placeholder={'Example... Why do you want to work here? '}
-						onChange={(e) => {
-							setFormData({ ...formData, name: e.target.value });
-						}}
-					/>
-					<label>Interviewer:</label>
-					<input
-						name='Interviewer'
-						value={formData.interviewer}
-						placeholder={'Example... Why do you want to work here? '}
-						onChange={(e) => {
-							setFormData({ ...formData, interviewer: e.target.value });
-						}}
-					/>
+					<StyledNameContainer>
+						<div>
+							<label>Name:</label>
+							<input
+								name='Name'
+								value={formData.name}
+								placeholder={'Example... Why do you want to work here? '}
+								onChange={(e) => {
+									setFormData({ ...formData, name: e.target.value });
+								}}
+							/>
+						</div>
+						<div>
+							<label>Interviewer:</label>
+							<input
+								name='Interviewer'
+								value={formData.interviewer}
+								placeholder={'Hiring managers name'}
+								onChange={(e) => {
+									setFormData({ ...formData, interviewer: e.target.value });
+								}}
+							/>
+						</div>
+					</StyledNameContainer>
 					<label>Your Perspective:</label>
 					<input
 						name='Experience'
@@ -144,6 +150,20 @@ const ConvertGratitude = ({
 };
 
 export default ConvertGratitude;
+
+const StyledNameContainer = styled.div`
+	display: flex;
+	gap: 16px;
+	flex-wrap: wrap;
+	input {
+		width: 100%;
+		margin-top: 8px;
+	}
+	div {
+		flex: 1;
+		/* min-width: 250px; */
+	}
+`;
 
 const StyledForm = styled.form`
 	display: flex;

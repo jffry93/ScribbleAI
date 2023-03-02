@@ -23,7 +23,7 @@ border-style,html{
   --md-padding: 24px;
   --lg-padding: 32px;
   --shift-padding: 63px;
-  --layout-padding: 48px 32px 64px;
+  --layout-padding: 48px 32px 80px;
   --container-width-limit: 470px;
   --width-limit: 1280px;
 	--navbar-height: 60px;
@@ -36,7 +36,7 @@ ${({ theme }) => css`
 			--sm-padding: 8px;
 			--md-padding: 16px;
 			--lg-padding: 24px;
-			--layout-padding: 32px 24px 40px;
+			--layout-padding: 32px 24px 64px;
 			--container-width-limit: 400px;
 			--shift-padding: 43px;
 		}
@@ -44,7 +44,7 @@ ${({ theme }) => css`
 `}
 
 h1 {
-	font-size: 3.8em;
+	font-size: 3.6em;
 	line-height: 1.1;
 }
 h2{
