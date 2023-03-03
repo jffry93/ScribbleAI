@@ -93,11 +93,11 @@ select,
 input,
 textarea{
   padding: 8px;
-  color:rgba(0,0,0,.5);
   font-family:unset;
   background-color: #ddd;
   border-radius: 4px;
 }
+
 button {
 	border-radius: 4px;
 	border: 0px ;

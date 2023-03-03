@@ -4,6 +4,7 @@ import ErrorMsg from '../../components/ErrorMsg';
 import TitleDescription from '../../components/TitleDescription';
 import { useDebounceCallback } from '../../hooks/useDebounce';
 import { trpc } from '../../trpc/trpc';
+import helperData from '../../data/helperContent.json';
 
 interface NSFWResType {
 	status: number;
@@ -53,14 +54,14 @@ const ConvertNsfw = ({ setAppropriateMsg, setIsLoading }: NSFWProps) => {
 		e.preventDefault();
 		debouncedSubmit(nsfw);
 	};
+	const { nsfw: nsfwData } = helperData;
 
 	return (
 		<StyledContainer>
 			<StyledConverter>
 				<TitleDescription
-					title='Sophisticated Generator'
-					description='Elevate your writing to a confident and professional level with our
-					innovative tool.'
+					title={nsfwData.title}
+					description={nsfwData.description}
 				/>
 				<form onSubmit={handleSubmit}>
 					{error.value && <ErrorMsg msg={error.message} />}

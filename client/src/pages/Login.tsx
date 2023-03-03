@@ -47,9 +47,9 @@ const Login = ({ email, setEmail }: EmailType) => {
 					>
 						LOG IN
 					</button>
-					<p>
-						Unlock your access. Click here to{' '}
-						<Link to={'/signup'}>sign up</Link>
+					<p className='footer'>
+						Unlock your access.
+						<Link to={'/signup'}> Click here to sign up</Link>
 					</p>
 				</StyledForm>
 			</StyledMain>
@@ -79,5 +79,8 @@ export const StyledContent = styled.div`
 	justify-content: center;
 	a:active {
 		color: var(--secondary);
+	}
+	.footer {
+		text-align: center;
 	}
 `;

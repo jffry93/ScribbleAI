@@ -1,18 +1,26 @@
 {
 	"coverLetter": {
-		"title": "Cover Letter",
+		"title": "Qualification Letter 💌",
 		"description": "Elevate your writing to a confident and professional level with our innovative tool."
 	},
 	"nsfw": {
-		"title": "Sophisticated Generator",
+		"title": "Sophisticated Generator 🎩",
 		"description": "Elevate your writing to a confident and professional level with our innovative tool."
 	},
 	"faq": {
-		"title": "Frequently Asked Questions",
+		"title": "Frequently Asked Questions ⁉️",
 		"description": "Impress with your knowledge! Our tool helps you answer questions with accuracy and ease in a snap."
 	},
 	"gratitude": {
-		"title": "Show Appreciation",
+		"title": "Appreciation Toolkit 🙏🏽",
 		"description": "Spread a little gratitude today - it's a simple yet powerful way to brighten someone's day!"
+	},
+	"thesaurus": {
+		"title": "ThesaurusRex 🦖",
+		"description": "Not your average thesaurus. You can generate a list of words or phrases."
+	},
+	"grammar": {
+		"title": "Grammar Police 🚔",
+		"description": "Don't sweat the small stuff - we've got you covered when it comes to typos!"
 	}
 }

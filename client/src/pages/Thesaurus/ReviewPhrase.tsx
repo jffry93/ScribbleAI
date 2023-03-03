@@ -5,6 +5,7 @@ import ErrorMsg from '../../components/ErrorMsg';
 import TitleDescription from '../../components/TitleDescription';
 import { useDebounceCallback } from '../../hooks/useDebounce';
 import { trpc } from '../../trpc/trpc';
+import helperData from '../../data/helperContent.json';
 
 export interface Option {
 	value: string;
@@ -33,6 +34,7 @@ const ReviewPhrase = ({ setAppropriateMsg, setIsLoading }: NSFWProps) => {
 	const [selectedOption, setSelectedOption] = useState<Option>(
 		dropDownOptions[0]
 	);
+	const { thesaurus } = helperData;
 	const debouncedSubmit = useDebounceCallback(async (text: string) => {
 		try {
 			if (isSubmitting) {
@@ -74,8 +76,8 @@ const ReviewPhrase = ({ setAppropriateMsg, setIsLoading }: NSFWProps) => {
 		<StyledContainer>
 			<StyledConverter>
 				<TitleDescription
-					title='ThesaurusRex 🦖'
-					description='Not your average thesaurus. You can generate a list of words or phrases.'
+					title={thesaurus.title}
+					description={thesaurus.description}
 				/>
 				<form onSubmit={handleSubmit}>
 					{error.value && <ErrorMsg msg={error.message} />}

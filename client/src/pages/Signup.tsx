@@ -48,9 +48,9 @@ const SignUp = ({ email, setEmail }: EmailType) => {
 					>
 						SIGN UP
 					</button>
-					<p>
-						Already have an account? Click here to{' '}
-						<Link to={'/login'}>login</Link>
+					<p className='footer'>
+						Already have an account?
+						<Link to={'/login'}> Click here to login</Link>
 					</p>
 				</StyledForm>
 			</StyledMain>
