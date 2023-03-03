@@ -12,6 +12,7 @@ import GetUser from './components/GetUser';
 import Gratitude from './pages/Gratitude';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
+import Grammar from './pages/Grammar';
 
 export interface JobDescriptionType {
 	jobDescription: string;
@@ -82,6 +83,7 @@ function App() {
 									)
 								}
 							/>
+							<Route path='/grammar' element={user.preference && <Grammar />} />
 							<Route path='/profile' element={user.preference && <Profile />} />
 						</>
 					)}

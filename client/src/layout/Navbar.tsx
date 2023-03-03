@@ -47,6 +47,12 @@ const Navbar = () => {
 									<li onClick={() => navigate('/gratitude')}>
 										<span>Gratitude</span>
 									</li>
+									<li onClick={() => navigate('/grammar')}>
+										<span>Grammar Machine</span>
+									</li>
+									<li onClick={() => navigate('/thesaurus')}>
+										<span>ThesaurusRex</span>
+									</li>
 									<li onClick={() => navigate('/faq')}>
 										<span>Q&A</span>
 									</li>

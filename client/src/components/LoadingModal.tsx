@@ -22,12 +22,19 @@ const LoadingModal = ({
 			<StyledContent>
 				<h1>{title}</h1>
 				<p>{subtitle}</p>
+				<StyledLoadingDots>
+					<span></span>
+					<span></span>
+					<span></span>
+				</StyledLoadingDots>
 			</StyledContent>
 		</StyledLoadingModal>
 	);
 };
 
 export default LoadingModal;
+
+const StyledLoadingDots = styled.div``;
 
 const StyledLoadingModal = styled(StyledFlexCenter)`
 	backdrop-filter: blur(5px);
