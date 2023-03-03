@@ -1,4 +1,21 @@
-# Scribble AI ✍🏽
+<h1 align="center">Scribble AI ✍🏽</h1>
+</br>
+
+ <p align="center">
+    <a href="https://vitejs.dev/" target="_blank" rel="noreferrer">
+  <img width="48px" height='48px' src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1677805370/readme-icons/d8rqn0pdw2cdyozbp6ky.svg"/></a>
+  <a href="https://www.typescriptlang.org" target="_blank" rel="noreferrer"><img width="48px" height='48px' src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1673462820/readme-icons/taqm1ibv0fjdjknazzqs.svg"/></a>
+  <a href="https://reactjs.org/" target="_blank" rel="noreferrer"><img width="48px" height='48px' src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1673462819/readme-icons/mgyv3zsxcgkaxh26h5m3.svg"/></a><a href="https://tanstack.com/query/latest" target="_blank" rel="noreferrer"><img width="48px" height='48px' src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1677805404/readme-icons/qd5vi6m7fcakgx6sux2k.svg"/></a>
+  <a href="https://nodejs.org" target="_blank" rel="noreferrer"><img width="48px" height='48px' src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1673462818/readme-icons/yvwzjpvrqnybeh6xev66.svg"/></a>
+  <a href="https://www.postgresql.org/ftp/pgadmin/pgadmin4/v6.19/macos/" target="_blank" rel="noreferrer"><img width="48px" height='48px' src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1677805585/readme-icons/zanixjcbed7fwhvkihjh.svg"/></a>
+  <a href="https://trpc.io/docs/" target="_blank" rel="noreferrer"><img width="48px" height='48px' src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1677805746/readme-icons/wimabhpv6xnwyvl7lw6y.svg"/></a>
+  <a href="https://www.prisma.io/docs" target="_blank" rel="noreferrer"><img width="48px" height='48px' src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1677806805/readme-icons/i37q1ptwpm2lsi7wjmus.svg"/></a>
+  <a href="https://zod.dev/" target="_blank" rel="noreferrer"><img width="48px" src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1677806998/readme-icons/n77edmmrda3e8aswvkry.svg"/></a>
+  <a href="https://www.postgresql.org/ftp/pgadmin/pgadmin4/v6.19/macos/" target="_blank" rel="noreferrer"><img width="48px" src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1677807147/readme-icons/n15qkzti8cfppj46oykc.svg"/></a>
+  <a href="https://platform.openai.com/overview" target="_blank" rel="noreferrer"><img width="48px" src="https://res.cloudinary.com/dcfqlsnzh/image/upload/v1677807245/readme-icons/s5kibroinxutkxqr4cf1.svg"/></a>
+  </p>
+
+</br>
 
 ## 📙 Summary
 
@@ -16,20 +33,7 @@ Searching for the perfect job can be overwhelming, so I developed a platform to 
 - Create a tailored cover letter that showcases your skills and experience for each job application.
 - Simplify your research process by clicking on search results to copy important text.
 
-## 🖥 Technologies
-
-- [Vite](https://www.typescriptlang.org)
-- [TypeScript](https://www.typescriptlang.org)
-- [React Query](https://www.typescriptlang.org)
-- [Styled Components](https://www.typescriptlang.org)
-- [Node.js](https://www.npmjs.com/package/@types/express)
-- [Express](https://www.npmjs.com/package/@types/express)
-- [openAI](https://www.typescriptlang.org)
-- [Prisma](https://www.typescriptlang.org)
-- [Postgres](https://www.typescriptlang.org)
-- [JWT](https://www.typescriptlang.org)
-- [TRPC](https://trpc.io)
-- [zod](https://zod.dev)
+##
 
 <h3 align="center">Connect with me:</h3>
 <p align="center">
