@@ -45,13 +45,13 @@ const Navbar = () => {
 										<span>Cover Letter</span>
 									</li>
 									<li onClick={() => navigate('/gratitude')}>
-										<span>Gratitude</span>
+										<span>Appreciation</span>
 									</li>
 									<li onClick={() => navigate('/grammar')}>
-										<span>Grammar Machine</span>
+										<span>Grammar</span>
 									</li>
 									<li onClick={() => navigate('/thesaurus')}>
-										<span>ThesaurusRex</span>
+										<span>Thesaurus</span>
 									</li>
 									<li onClick={() => navigate('/faq')}>
 										<span>Q&A</span>

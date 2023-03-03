@@ -89,8 +89,11 @@ img{
   width: 100%;
 }
 
+select,
 input,
 textarea{
+  padding: 8px;
+  color:rgba(0,0,0,.5);
   font-family:unset;
   background-color: #ddd;
   border-radius: 4px;
@@ -111,6 +114,10 @@ button:hover {
   outline: 1px solid var(--secondary);
   box-shadow: 0 0 10px #719ECE;
 }
+
+
+select:focus,
+select:focus-visible,
 input:focus,
 input:focus-visible,
 textarea:focus,

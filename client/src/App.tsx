@@ -13,6 +13,8 @@ import Gratitude from './pages/Gratitude';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Grammar from './pages/Grammar';
+import LoadingModal from './components/LoadingModal';
+import Thesaurus from './pages/Thesaurus';
 
 export interface JobDescriptionType {
 	jobDescription: string;
@@ -53,38 +55,54 @@ function App() {
 							<Route
 								path='/faq'
 								element={
-									user.preference && (
+									user.preference ? (
 										<FAQ
 											jobDescription={jobDescription}
 											setJobDescription={setJobDescription}
 										/>
+									) : (
+										<LoadingModal />
 									)
 								}
 							/>
 							<Route
 								path='/coverletter'
 								element={
-									user.preference && (
+									user.preference ? (
 										<CoverLetter
 											jobDescription={jobDescription}
 											setJobDescription={setJobDescription}
 										/>
+									) : (
+										<LoadingModal />
 									)
 								}
 							/>
 							<Route
 								path='/gratitude'
 								element={
-									user.preference && (
+									user.preference ? (
 										<Gratitude
 											jobDescription={jobDescription}
 											setJobDescription={setJobDescription}
 										/>
+									) : (
+										<LoadingModal />
 									)
 								}
 							/>
-							<Route path='/grammar' element={user.preference && <Grammar />} />
-							<Route path='/profile' element={user.preference && <Profile />} />
+							<Route
+								path='/grammar'
+								element={user.preference ? <Grammar /> : <LoadingModal />}
+							/>
+							<Route
+								path='/thesaurus'
+								element={user.preference ? <Thesaurus /> : <LoadingModal />}
+							/>
+							<Route
+								path='/profile'
+								element={user.preference ? <Profile /> : <LoadingModal />}
+							/>
 						</>
 					)}
 				</Routes>
