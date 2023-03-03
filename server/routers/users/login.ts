@@ -28,7 +28,7 @@ export const login = t.procedure
 
 			if (!user) {
 				await delayAsync();
-				throw Error('❌ Email already has an account 😑');
+				throw Error("❌ Email doesn't have an account 😑");
 			}
 			// check if password matches hashed password
 			const match = await bcrypt.compare(password, user.password);

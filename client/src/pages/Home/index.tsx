@@ -1,14 +1,24 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import VideoBg from '../../components/VideoBg';
 import { StyledMain } from '../../GlobalStyles';
+import { useAuthContext } from '../../hooks/useAuthContext';
 import desktopVideo from '/penHome-Large-540p.mp4';
 import mobileVideo from '/penHomeMobile-540p.mp4';
 
 const Home = () => {
 	const navigate = useNavigate();
-	// const VideoBg = React.lazy(() => import('../../components/VideoBg'));
+	const {
+		state: { user },
+	} = useAuthContext();
+	const [startRoute, setStartRoute] = useState(() => {
+		if (user?.preference?.experience) {
+			return '/nsfw';
+		} else {
+			return '/profile';
+		}
+	});
 	return (
 		<StyledContent>
 			<StyledContainer>
@@ -20,7 +30,7 @@ const Home = () => {
 				</p>
 				<p>Say goodbye to tedious job applications.</p>
 
-				<button onClick={() => navigate('/nsfw')}>Get Started</button>
+				<button onClick={() => navigate(startRoute)}>Get Started</button>
 			</StyledContainer>
 		</StyledContent>
 	);

@@ -4,6 +4,7 @@ import Lock from '../../components/Lock';
 import { useAuthContext } from '../../hooks/useAuthContext';
 
 import DeleteAccount from './DeleteAccount';
+import DisplayInfo from './DisplayInfo';
 import LabelTitle from './LabelTitle';
 import ProfileImage from './ProfileImage';
 import UpdateUser from './UpdateUser';
@@ -22,7 +23,11 @@ const Profile = () => {
 					<Lock lockIcon={lockIcon} setLockIcon={setLockIcon} />
 					<h2>User Information</h2>
 					<StyledDiv>
-						{lockIcon ? <UserInfo /> : <UpdateUser setLockIcon={setLockIcon} />}
+						{lockIcon ? (
+							<DisplayInfo />
+						) : (
+							<UpdateUser setLockIcon={setLockIcon} />
+						)}
 					</StyledDiv>
 				</>
 			)}
