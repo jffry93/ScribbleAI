@@ -44,7 +44,7 @@ export const questionAnswer = secretUserProcedure
 			if (response.data.choices[0].text) {
 				const answer = response.data.choices[0].text.trim();
 				const createEntry = await prisma.answer.create({
-					data: { question, answer },
+					data: { question, answer, userId: ctx.user.id },
 				});
 				return {
 					status: 200,

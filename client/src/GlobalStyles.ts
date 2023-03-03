@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
 }
 border-style,html{
   height:100%;
-  background-color:#121212;
+  
 }
 //DESKTOP
 :root {
@@ -17,7 +17,7 @@ border-style,html{
   --secondary:  #8ab6d6;
   --error: #e7195a;
   --bg-color:  #242424;
-  --text-color: #F5F5F5;
+  --text-color: #ddd;
   --secondary-text-color: #BBBBBB;
   --sm-padding: 12px;
   --md-padding: 24px;
@@ -28,6 +28,8 @@ border-style,html{
   --width-limit: 1280px;
 	--navbar-height: 60px;
 	--container-height: calc(100vh - var(--navbar-height) - 25.59px );
+  background-color:#121212;
+  
 }
 //MOBILE
 ${({ theme }) => css`
@@ -79,41 +81,64 @@ a:hover {
 }
 
 body{
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
 	color: var(--text-color);
-	background-color: var(--bg-color)
+	/* background-color: var(--bg-color) */
 }
 img{
   width: 100%;
 }
 
+input,
 textarea{
-  font-family:unset
+  font-family:unset;
+  background-color: #ddd;
+  border-radius: 4px;
 }
 button {
 	border-radius: 4px;
-	border: 1px solid #1a1a1a;
+	border: 0px ;
 	padding: 0.6em 1.2em;
 	font-size: 1.2em;
 	font-weight: 500;
 	font-family: inherit;
-	background-color: #1a1a1a;
+  color: #ccc;
+	background-color: var(--primary);
 	cursor: pointer;
-	transition: border-color 0.25s;
 	width: 100%;
 }
 button:hover {
-	border-color: var(--secondary);
+  outline: 1px solid var(--secondary);
+  box-shadow: 0 0 10px #719ECE;
 }
-button:focus,
-button:focus-visible {
-	outline: 4px auto -webkit-focus-ring-color;
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible{
+  outline: none !important;
+    border:1px solid var(--secondary);
+    box-shadow: 0 0 10px #719ECE;
 }
 
+
+button:focus,
+button:focus-visible {
+	outline: 2px solid #a2d8ff;
+  /* border:1px solid var(--secondary); */
+  
+}
+/* 
 @media (prefers-color-scheme: light) {
 	:root {
-		color: #213547;
-		background-color: #ffffff;
+    --primary: #696969;
+  --secondary:  #8ab6d6;
+  --error: #e7195a;
+  --bg-color:  #242424;
+  --text-color: #F5F5F5;
+  --secondary-text-color: #58627c;
+    --text-color: #3f4654;
+		color: #353B47;
+		background-color: #eee;
 	}
 	a:hover {
 		color: #747bff;
@@ -121,7 +146,7 @@ button:focus-visible {
 	button {
 		background-color: #f9f9f9;
 	}
-}
+} */
 `;
 
 export default GlobalStyle;

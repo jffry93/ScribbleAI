@@ -33,6 +33,7 @@ export const makeFancy = secretUserProcedure
 				// send to Database
 				await prisma.nSFW.create({
 					data: {
+						userId: ctx.user.id,
 						prompt: jarvisRequest,
 						response: response.data.choices[0].text,
 					},

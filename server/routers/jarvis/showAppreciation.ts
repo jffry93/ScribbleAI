@@ -63,7 +63,7 @@ export const showAppreciation = secretUserProcedure
 					const cover2 = response2.data.choices[0].text.trim();
 					//add to database
 					await prisma.gratitude.create({
-						data: { prompt: prompt2, response: cover2 },
+						data: { userId: ctx.user.id, prompt: prompt2, response: cover2 },
 					});
 					return {
 						status: 200,

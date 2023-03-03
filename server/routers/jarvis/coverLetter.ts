@@ -60,7 +60,11 @@ export const coverLetter = secretUserProcedure
 					//add to database
 					console.log(`${cover1} ${cover2}`);
 					await prisma.coverLetter.create({
-						data: { prompt: prompt2, response: `${cover1} ${cover2}` },
+						data: {
+							userId: ctx.user.id,
+							prompt: prompt2,
+							response: `${cover1} ${cover2}`,
+						},
 					});
 					return {
 						status: 200,
