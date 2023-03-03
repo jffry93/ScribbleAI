@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
 
-const SignUp = () => {
+const LoginButton = () => {
 	const {
 		state: { user },
 	} = useAuthContext();
@@ -25,7 +25,7 @@ const SignUp = () => {
 	);
 };
 
-export default SignUp;
+export default LoginButton;
 
 const StyledText = styled.a`
 	cursor: pointer;

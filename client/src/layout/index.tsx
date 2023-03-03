@@ -23,9 +23,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
 			<StyledLayout>
 				<Banner />
 				<Navbar />
-				{pathname == '/' && (
-					<VideoBg desktopVideo={desktopVideo} mobileVideo={mobileVideo} />
-				)}
 				<StyledMain>{children}</StyledMain>
 			</StyledLayout>
 			{user?.preference && <ClipBoard />}

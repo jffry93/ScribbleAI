@@ -7,7 +7,7 @@ import { StyledForm } from '../GlobalStyles';
 import { useSignup } from '../hooks/useSignup';
 import { StyledContent, StyledMain } from './Login';
 
-const Signup = ({ email, setEmail }: EmailType) => {
+const SignUp = ({ email, setEmail }: EmailType) => {
 	const [password, setPassword] = useState('');
 	const { signup, isLoading, error, errorMsg } = useSignup();
 
@@ -59,4 +59,4 @@ const Signup = ({ email, setEmail }: EmailType) => {
 	);
 };
 
-export default Signup;
+export default SignUp;

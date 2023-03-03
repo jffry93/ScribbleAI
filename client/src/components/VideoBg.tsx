@@ -12,7 +12,7 @@ const VideoBg = ({
 	return (
 		<StyledVideoBg>
 			{/* <LazyLoad> */}
-			<video autoPlay loop muted>
+			<video playsInline autoPlay loop muted>
 				<source
 					src={
 						window.matchMedia(`(max-width: 650px)`).matches
@@ -35,7 +35,7 @@ const StyledVideoBg = styled.div`
 	top: 0;
 	left: 0;
 	min-height: 101vh;
-	width: 100%;
+	width: 100vw;
 	overflow: hidden;
 	video {
 		min-width: 100%;
@@ -47,6 +47,7 @@ const StyledVideoBg = styled.div`
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
+		object-fit: cover;
 	}
 
 	&:after {
@@ -57,6 +58,7 @@ const StyledVideoBg = styled.div`
 		left: 0;
 		width: 100%;
 		height: 100%;
+		object-fit: cover;
 		background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
 	}
 	@media ${device.mobile} {

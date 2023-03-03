@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../components/Logo';
-import SignUp from '../components/SignUp';
+import LoginButton from '../components/LoginButton';
 import { device, StyledFlexCenter } from '../GlobalStyles';
 import { useAuthContext } from '../hooks/useAuthContext';
 
@@ -57,7 +57,7 @@ const Navbar = () => {
 							</Link>
 						</>
 					)}
-					<SignUp />
+					<LoginButton />
 				</StyledLinkContainer>
 			</StyledNav>
 		</StyledSticky>
