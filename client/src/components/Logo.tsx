@@ -24,7 +24,7 @@ const StyledLogo = styled(Link)<MyLinkProps>`
 	align-items: center;
 	position: relative;
 
-	z-index: 200;
+	/* z-index: 200; */
 
 	&:hover {
 		color: var(--text-color);

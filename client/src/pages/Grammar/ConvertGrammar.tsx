@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import ErrorMsg from '../../components/ErrorMsg';
-import TitleDescription from '../../components/TitleDescription';
-import { useDebounceCallback } from '../../hooks/useDebounce';
+import helperData from '../../data/helperContent.json';
 import { JarvisProps, useMutateJarvis } from '../../hooks/useMutateJarvis';
 import { trpc } from '../../trpc/trpc';
-
-const ConvertGrammar = ({ setAppropriateMsg, setIsLoading }: JarvisProps) => {
+import Form from '../../components/Form';
+import { StyledJarvisForm } from '../../GlobalStyles';
+const { grammar } = helperData;
+const ConvertGrammar = ({ setAppropriateMsg }: JarvisProps) => {
 	const [uglyText, setUglyText] = useState('');
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const handleJarvis = trpc.jarvis.grammarPolice.useMutation();
 	const { debouncedSubmit, error } = useMutateJarvis({
 		handleMutate: () => handleJarvis.mutateAsync({ text: uglyText }),
@@ -22,57 +22,27 @@ const ConvertGrammar = ({ setAppropriateMsg, setIsLoading }: JarvisProps) => {
 	};
 
 	return (
-		<StyledContainer>
-			<StyledConverter>
-				<TitleDescription
-					title='Grammar Police 🚔'
-					description="Don't sweat the small stuff - we've got you covered when it comes to typos!"
+		<StyledJarvisForm>
+			<Form
+				data={{
+					handleSubmit,
+					isLoading,
+					errorData: { msg: error.message, status: error.value },
+					content: grammar,
+				}}
+			>
+				<label>Original text:</label>
+				<textarea
+					name='convertNsfw'
+					placeholder='Please enter the text you want reviewed! Ex."Your the best person i have ever met"'
+					onChange={(e) => {
+						setUglyText(e.target.value);
+					}}
 				/>
-				<form onSubmit={handleSubmit}>
-					{error.value && <ErrorMsg msg={error.message} />}
-					<label>Original text:</label>
-					<StyledTextarea
-						name='convertNsfw'
-						placeholder='Please enter the text you want reviewed! Ex."Your the best person i have ever met"'
-						onChange={(e) => {
-							setUglyText(e.target.value);
-						}}
-					/>
-					<button type='submit'>Refine Text</button>
-				</form>
-			</StyledConverter>
-		</StyledContainer>
+				<button type='submit'>Refine Text</button>
+			</Form>
+		</StyledJarvisForm>
 	);
 };
 
 export default ConvertGrammar;
-export const StyledContainer = styled.div`
-	flex: 1;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	max-width: 500px;
-	margin: auto;
-`;
-export const StyledConverter = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 12px;
-	padding-bottom: var(--shift-padding);
-
-	.description {
-		color: var(--secondary-text-color);
-	}
-	form {
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		padding: 12px 0;
-	}
-`;
-
-const StyledTextarea = styled.textarea`
-	width: 100%;
-	min-height: 100px;
-	padding: 12px;
-`;

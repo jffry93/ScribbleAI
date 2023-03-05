@@ -112,7 +112,7 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 						<StyledDiv>
 							<ProfileImage />
 							<StyledContainer>
-								{error.status && <ErrorMsg msg={error.msg} />}
+								<ErrorMsg data={{ msg: error.msg, status: error.status }} />
 								<StyledField className={handleError('name') ? 'error' : ''}>
 									<label>Name: </label>
 									<FormInput

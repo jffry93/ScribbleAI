@@ -1,11 +1,20 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const ErrorMsg = ({ msg }: { msg: string }) => {
+export interface ErrorProps {
+	msg: string;
+	status: null | boolean;
+}
+
+const ErrorMsg = ({ data }: { data: ErrorProps }) => {
+	const { msg, status } = data;
 	return (
-		<StyledError>
-			<span>{msg}</span>
-		</StyledError>
+		<>
+			{status && (
+				<StyledError>
+					<span>{msg}</span>
+				</StyledError>
+			)}
+		</>
 	);
 };
 

@@ -1,73 +1,72 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { ThemeContext } from '../context/ThemeContext';
-import FormInput from './FormInput';
-interface User {
-	name?: string;
-	email?: string;
-	[key: string]: any;
+import ErrorMsg, { ErrorProps } from './ErrorMsg';
+import LoadingModal from './LoadingModal';
+import TitleDescription, { TitleDescProps } from './TitleDescription';
+
+interface FormData {
+	handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+	isLoading: boolean | null;
+	errorData: ErrorProps;
+	content: TitleDescProps;
 }
-const Form = () => {
-	const [name, setName] = useState('');
-	const [email, setEmail] = useState('');
-	const { formData, setFormData } = useContext(ThemeContext) || {
-		formData: null,
-		setFormData: () => {},
-	};
-	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		const data: User = { name, email };
-		Object.keys(data).map((item: string) => {
-			if (data[item] === '') {
-				delete data[item];
-			}
-		});
-		setFormData(data);
-	};
+
+interface FormProps {
+	children: React.ReactNode;
+	data: FormData;
+}
+
+const Form = ({ children, data }: FormProps) => {
+	const { handleSubmit, isLoading, errorData, content } = data;
+	const { msg, status } = errorData;
+	const { title, description } = content;
+
 	return (
-		<StyledForm onSubmit={handleSubmit}>
-			<StyledCurrentValues>
-				<h2>Current Values</h2>
-				<p>
-					email:<strong>{formData?.email}</strong>
-				</p>
-				<p>
-					name:<strong>{formData?.name}</strong>
-				</p>
-			</StyledCurrentValues>
-			<FormInput state={email} setState={setEmail} placeholder={'email'} />
-			<FormInput state={name} setState={setName} placeholder={'name'} />
-			<button type='submit'>Submit</button>
-		</StyledForm>
+		<StyledMain>
+			<TitleDescription title={title} description={description} />
+			<StyledForm onSubmit={handleSubmit}>
+				{isLoading && <LoadingModal />}
+				<ErrorMsg data={{ msg, status }} />
+				{children}
+			</StyledForm>
+		</StyledMain>
 	);
 };
 
 export default Form;
 
-const StyledForm = styled.form`
+export const StyledMain = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	max-width: var(--width-limit);
-	margin: auto;
-	input {
-		flex: 1;
+	/* max-width: 420px; */
+	gap: var(--sm-padding);
+	padding-bottom: var(--shift-padding);
+	p {
+		color: var(--secondary-text-color);
 	}
 `;
-const StyledCurrentValues = styled.div`
+
+const StyledForm = styled.form`
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
-	h2 {
+	gap: 8px;
+
+	label {
+		margin: 0 8px;
+	}
+	input {
+		border-radius: 4px;
 		width: 100%;
-		text-align: center;
+		padding: 8px;
+		font-size: 20px;
 	}
-	h2,
-	p {
-		margin: 8px 0;
+	textarea {
+		width: 100%;
+		min-height: 100px;
 	}
-	strong {
-		border-bottom: 1px solid #888;
+	button {
+		margin: 4px 0 12px;
+		padding: var(--sm-padding);
 	}
-	padding: 32px 0;
 `;

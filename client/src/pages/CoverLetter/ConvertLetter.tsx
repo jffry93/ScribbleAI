@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { trpc } from '../../trpc/trpc';
-import { StyledContainer, StyledConverter } from '../NSFW/ConvertNsfw';
-import ErrorMsg from '../../components/ErrorMsg';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { JobDescriptionType } from '../../App';
-import TitleDescription from '../../components/TitleDescription';
 import helperData from '../../data/helperContent.json';
 import { useMutateJarvis, JarvisProps } from '../../hooks/useMutateJarvis';
+import Form from '../../components/Form';
+import { StyledJarvisForm } from '../../GlobalStyles';
 
 const { coverLetter } = helperData;
 const ConvertCoverLetter = ({
-	setIsLoading,
 	setAppropriateMsg,
 	jobDescription,
 	setJobDescription,
@@ -19,10 +16,10 @@ const ConvertCoverLetter = ({
 	const {
 		state: { user },
 	} = useAuthContext();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [experience, setExperience] = useState(
 		user?.preference.experience || ''
 	);
-
 	const handleJarvis = trpc.jarvis.coverLetter.useMutation();
 	const { debouncedSubmit, error } = useMutateJarvis({
 		handleMutate: () =>
@@ -43,50 +40,37 @@ const ConvertCoverLetter = ({
 	};
 
 	return (
-		<StyledContainer>
-			<StyledConverter>
-				<TitleDescription
-					title={coverLetter.title}
-					description={coverLetter.description}
+		<StyledJarvisForm>
+			<Form
+				data={{
+					handleSubmit,
+					isLoading,
+					errorData: { msg: error.message, status: error.value },
+					content: coverLetter,
+				}}
+			>
+				<label>Past Experience:</label>
+				<input
+					name='Experience'
+					value={experience}
+					placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
+					onChange={(e) => {
+						setExperience(e.target.value);
+					}}
 				/>
-				<StyledForm onSubmit={handleSubmit}>
-					{error.value && <ErrorMsg msg={error.message} />}
-					<label>Past Experience:</label>
-					<input
-						name='Experience'
-						value={experience}
-						placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
-						onChange={(e) => {
-							setExperience(e.target.value);
-						}}
-					/>
-					<label>Job Posting:</label>
-					<textarea
-						name='Job'
-						value={jobDescription}
-						placeholder='Enter job posting'
-						onChange={(e) => {
-							setJobDescription(e.target.value);
-						}}
-					/>
-					<button type='submit'>Generate Letter</button>
-				</StyledForm>
-			</StyledConverter>
-		</StyledContainer>
+				<label>Job Posting:</label>
+				<textarea
+					name='Job'
+					value={jobDescription}
+					placeholder='Enter job posting'
+					onChange={(e) => {
+						setJobDescription(e.target.value);
+					}}
+				/>
+				<button type='submit'>Generate Letter</button>
+			</Form>
+		</StyledJarvisForm>
 	);
 };
 
 export default ConvertCoverLetter;
-
-const StyledForm = styled.form`
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-	input,
-	textarea {
-		padding: 12px;
-	}
-	textarea {
-		min-height: 100px;
-	}
-`;

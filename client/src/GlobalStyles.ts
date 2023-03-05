@@ -224,3 +224,18 @@ export const StyledMain = styled.div`
 	display: flex;
 	flex-direction: column;
 `;
+export const StyledHelperPage = styled(StyledMain)`
+	padding: var(--layout-padding);
+	flex-direction: row;
+	gap: 32px;
+	min-height: var(--container-height);
+
+	@media (max-width: 900px) {
+		flex-direction: column;
+	}
+`;
+export const StyledJarvisForm = styled.div`
+	flex: 1;
+	max-width: 500px;
+	margin: auto;
+`;

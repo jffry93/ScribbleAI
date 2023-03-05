@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback, useRef } from 'react';
 import { useDebounceCallback } from './useDebounce';
 
 export interface JarvisProps {
-	setIsLoading: (value: boolean) => void;
+	// setIsLoading?: (value: boolean) => void;
 	setAppropriateMsg: (value: string | undefined) => void;
 }
 

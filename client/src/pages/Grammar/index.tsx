@@ -1,26 +1,18 @@
-import React, { useState } from 'react';
-import { JobDescriptionType } from '../../App';
+import { useState } from 'react';
 import CopyContainer from '../../components/CopyContainer';
-import LoadingModal from '../../components/LoadingModal';
-import { StyledHelper } from '../NSFW';
+import { StyledHelperPage } from '../../GlobalStyles';
 import ConvertGrammar from './ConvertGrammar';
 
 const Grammar = () => {
 	const [appropriateMsg, setAppropriateMsg] = useState<string | undefined>(
 		undefined
 	);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	return (
-		<>
-			<StyledHelper>
-				<ConvertGrammar
-					setIsLoading={setIsLoading}
-					setAppropriateMsg={setAppropriateMsg}
-				/>
-				<CopyContainer appropriateMsg={appropriateMsg} />
-			</StyledHelper>
-			{isLoading && <LoadingModal />}
-		</>
+		<StyledHelperPage>
+			<ConvertGrammar setAppropriateMsg={setAppropriateMsg} />
+			<CopyContainer appropriateMsg={appropriateMsg} />
+		</StyledHelperPage>
 	);
 };
 

@@ -2,58 +2,59 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { EmailType } from '../App';
-import ErrorMsg from '../components/ErrorMsg';
-import LoadingModal from '../components/LoadingModal';
-import { StyledForm, StyledPage } from '../GlobalStyles';
+import Form from '../components/Form';
+import { useDebounceCallback } from '../hooks/useDebounce';
 import { useLogin } from '../hooks/useLogin';
 
 const Login = ({ email, setEmail }: EmailType) => {
 	const [password, setPassword] = useState('');
 	const { login, isLoading, error, errorMsg } = useLogin();
 
+	const debouncedSubmit = useDebounceCallback(async (email, password) => {
+		await login(email, password);
+	}, 250);
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		await login(email, password);
+		debouncedSubmit(email, password);
 	};
-
+	const formContent = {
+		title: 'Login',
+		description:
+			"Let's pick up where we left off. Log in and let's make some magic.",
+	};
 	return (
 		<StyledContent>
-			<StyledMain>
-				<h1>Login</h1>
-				<p>
-					Let's pick up where we left off. Log in and let's make some magic.
+			<Form
+				data={{
+					handleSubmit,
+					isLoading,
+					errorData: { msg: errorMsg, status: error },
+					content: formContent,
+				}}
+			>
+				<label>Email:</label>
+				<input
+					value={email}
+					onChange={(e) => {
+						setEmail(e.target.value);
+					}}
+				/>
+				<label>Password:</label>
+				<input
+					type='password'
+					value={password}
+					onChange={(e) => {
+						setPassword(e.target.value);
+					}}
+				/>
+				<button type='submit' disabled={isLoading === null ? false : isLoading}>
+					LOG IN
+				</button>
+				<p className='footer'>
+					Unlock your access.
+					<Link to={'/signup'}> Click here to sign up</Link>
 				</p>
-				<StyledForm onSubmit={handleSubmit}>
-					{error && <ErrorMsg msg={errorMsg} />}
-					<label>Email:</label>
-					<input
-						// type='email'
-						value={email}
-						onChange={(e) => {
-							setEmail(e.target.value);
-						}}
-					/>
-					<label>Password:</label>
-					<input
-						type='password'
-						value={password}
-						onChange={(e) => {
-							setPassword(e.target.value);
-						}}
-					/>
-					<button
-						type='submit'
-						disabled={isLoading === null ? false : isLoading}
-					>
-						LOG IN
-					</button>
-					<p className='footer'>
-						Unlock your access.
-						<Link to={'/signup'}> Click here to sign up</Link>
-					</p>
-				</StyledForm>
-			</StyledMain>
-			{isLoading && <LoadingModal />}
+			</Form>
 		</StyledContent>
 	);
 };
