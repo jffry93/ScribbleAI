@@ -52,7 +52,7 @@ const StyledFooter = styled.footer`
 	flex-direction: column;
 	align-items: center;
 	gap: 16px;
-	background-color: #121212;
+	background-color: #000;
 	h1:active {
 		color: var(--primary);
 	}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import styled from 'styled-components';
-import { StyledIconContainer } from '../GlobalStyles';
+import { device, StyledIconContainer } from '../GlobalStyles';
 
 interface LockProps {
 	lockIcon: boolean;
@@ -25,4 +25,10 @@ const StyledLock = styled(StyledIconContainer)`
 	right: var(--md-padding);
 	background-color: unset;
 	border: unset;
+
+	@media ${device.mobile} {
+		& {
+			top: 0;
+		}
+	}
 `;

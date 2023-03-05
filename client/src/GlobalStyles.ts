@@ -16,7 +16,7 @@ border-style,html{
   --primary: #696969;
   --secondary:  #8ab6d6;
   --error: #e7195a;
-  --bg-color:  #242424;
+  --bg-color:  #121212;
   --text-color: #ddd;
   --secondary-text-color: #BBBBBB;
   --sm-padding: 12px;
@@ -28,7 +28,7 @@ border-style,html{
   --width-limit: 1280px;
 	--navbar-height: 60px;
 	--container-height: calc(100vh - var(--navbar-height) - 25.59px );
-  background-color:#121212;
+  background-color:#000;
   
 }
 //MOBILE
@@ -83,7 +83,7 @@ a:hover {
 body{
   /* color-scheme: light dark; */
 	color: var(--text-color);
-	/* background-color: var(--bg-color) */
+	background-color: var(--bg-color)
 }
 img{
   width: 100%;

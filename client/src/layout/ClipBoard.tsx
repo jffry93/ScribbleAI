@@ -10,27 +10,12 @@ import { useNavigate } from 'react-router-dom';
 
 const ClipBoard = () => {
 	const [isVisible, setIsVisible] = useState(false);
+
 	const {
 		state: { user },
 	} = useAuthContext();
 	const navigate = useNavigate();
-	const linksArray = [
-		{
-			title: 'Github',
-			icon: () => <FaGithubAlt size={25} />,
-			address: 'https://github.com/jffry93',
-		},
-		{
-			title: 'Linkedin',
-			icon: () => <FaLinkedinIn size={25} />,
-			address: 'https://www.linkedin.com/in/jffry93/',
-		},
-		{
-			title: 'additional',
-			icon: () => <AiOutlineLink size={25} />,
-			address: 'https://jffry93.github.io/react-portfolio/',
-		},
-	];
+
 	return (
 		<StyledClipBoard>
 			{isVisible && (
