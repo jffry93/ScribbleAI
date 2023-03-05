@@ -13,11 +13,7 @@ export const makeFancy = secretUserProcedure
 				await new Promise((resolve) => setTimeout(resolve, 1000));
 				throw Error('😳 Please enter something to convert 😭');
 			}
-			const jarvisRequest = `Can you help me sound more professional and conversational?  ${
-				ctx.user.Preference?.personality &&
-				'Let me tell you a bit about my self so you can personalize the response. ' +
-					ctx.user.Preference.personality
-			} I'd like help converting the phrase "${text}"`;
+			const jarvisRequest = `Can you help me sound more professional and conversational? I'd like help converting the phrase "${text}"`;
 			// convert it AI
 			const response = await openai.createCompletion({
 				model: 'text-davinci-003',

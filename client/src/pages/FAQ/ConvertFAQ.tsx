@@ -8,79 +8,34 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { JobDescriptionType } from '../../App';
 import TitleDescription from '../../components/TitleDescription';
 import helperData from '../../data/helperContent.json';
-
-interface FAQRes {
-	status: number;
-	msg: string;
-	data?: string;
-}
-
-interface NSFWProps extends JobDescriptionType {
-	setIsLoading: (value: boolean) => void;
-	setAppropriateMsg: (value: string | undefined) => void;
-}
+import { JarvisProps, useMutateJarvis } from '../../hooks/useMutateJarvis';
 
 const ConvertFAQ = ({
 	setIsLoading,
 	setAppropriateMsg,
 	jobDescription,
 	setJobDescription,
-}: NSFWProps) => {
+}: JarvisProps & JobDescriptionType) => {
 	const {
 		state: { user },
 	} = useAuthContext();
-	const [error, setError] = useState({ value: false, message: '' });
-	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [question, setQuestion] = useState('Why do you want to work here?');
 	const [experience, setExperience] = useState(
 		user?.preference.experience || ''
 	);
 	const { faq } = helperData;
 
-	const handleMutate = trpc.jarvis.questionAnswer.useMutation();
-
-	const debouncedSubmit = useDebounceCallback(
-		async ({
-			question,
-			experience,
-			jobDescription,
-		}: {
-			question: string;
-			experience: string;
-			jobDescription: string;
-		}) => {
-			try {
-				if (isSubmitting) {
-					return; // don't make multiple requests
-				}
-				//disable multiple requests and open loading modal
-				setIsSubmitting(true);
-				setIsLoading(true);
-				//send data to backend and wait for response
-				const response: FAQRes = await handleMutate.mutateAsync({
-					question,
-					experience,
-					jobDescription,
-				});
-				if (response.status < 300) {
-					//store data, end loading and remove error message
-					setAppropriateMsg(response.data);
-					setIsLoading(false);
-					setError({ value: false, message: '' });
-				} else {
-					//end loading and display error message
-					setIsLoading(false);
-					setError({ value: true, message: response.msg });
-				}
-				setIsSubmitting(false); // allow for more submissions
-			} catch (error) {
-				const errorMessage = (error as { message: string }).message;
-				setError({ value: true, message: errorMessage });
-				setIsLoading(false);
-			}
-		},
-		250
-	);
+	const handleJarvis = trpc.jarvis.questionAnswer.useMutation();
+	const { debouncedSubmit, error } = useMutateJarvis({
+		handleMutate: () =>
+			handleJarvis.mutateAsync({
+				question,
+				experience,
+				jobDescription,
+			}),
+		setIsLoading,
+		setAppropriateMsg,
+	});
 
 	//must debounce function called inside submit event
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

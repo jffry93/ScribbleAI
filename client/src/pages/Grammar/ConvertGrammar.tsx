@@ -3,50 +3,17 @@ import styled from 'styled-components';
 import ErrorMsg from '../../components/ErrorMsg';
 import TitleDescription from '../../components/TitleDescription';
 import { useDebounceCallback } from '../../hooks/useDebounce';
+import { JarvisProps, useMutateJarvis } from '../../hooks/useMutateJarvis';
 import { trpc } from '../../trpc/trpc';
 
-interface NSFWResType {
-	status: number;
-	msg: string;
-	data?: string;
-}
-interface NSFWProps {
-	setIsLoading: (value: boolean) => void;
-	setBeautifulText: (value: string | undefined) => void;
-}
-const ConvertGrammar = ({ setBeautifulText, setIsLoading }: NSFWProps) => {
+const ConvertGrammar = ({ setAppropriateMsg, setIsLoading }: JarvisProps) => {
 	const [uglyText, setUglyText] = useState('');
-	const [error, setError] = useState({ value: false, message: '' });
-	const handleMutate = trpc.jarvis.grammarPolice.useMutation();
-	const [isSubmitting, setIsSubmitting] = useState(false);
-
-	const debouncedSubmit = useDebounceCallback(async (text: string) => {
-		try {
-			if (isSubmitting) {
-				return; // don't make multiple requests
-			}
-			//disable multiple requests and open loading modal
-			setIsSubmitting(true);
-			setIsLoading(true);
-			//send data to backend and wait for response
-			const response: NSFWResType = await handleMutate.mutateAsync({ text });
-			if (response.status < 300) {
-				//store data, end loading and remove error message
-				setBeautifulText(response.data);
-				setIsLoading(false);
-				setError({ value: false, message: '' });
-			} else {
-				//end loading and display error message
-				setIsLoading(false);
-				setError({ value: true, message: response.msg });
-			}
-			setIsSubmitting(false); // allow for more submissions
-		} catch (error) {
-			const errorMessage = (error as { message: string }).message;
-			setError({ value: true, message: errorMessage });
-			setIsLoading(false);
-		}
-	}, 250);
+	const handleJarvis = trpc.jarvis.grammarPolice.useMutation();
+	const { debouncedSubmit, error } = useMutateJarvis({
+		handleMutate: () => handleJarvis.mutateAsync({ text: uglyText }),
+		setIsLoading,
+		setAppropriateMsg,
+	});
 
 	//must debounce function called inside submit event
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

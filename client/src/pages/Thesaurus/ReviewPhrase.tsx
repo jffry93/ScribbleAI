@@ -3,69 +3,24 @@ import styled from 'styled-components';
 import Dropdown from '../../components/Dropdown';
 import ErrorMsg from '../../components/ErrorMsg';
 import TitleDescription from '../../components/TitleDescription';
-import { useDebounceCallback } from '../../hooks/useDebounce';
 import { trpc } from '../../trpc/trpc';
 import helperData from '../../data/helperContent.json';
-
-export interface Option {
-	value: string;
-	label: string;
-}
-
-interface NSFWResType {
-	status: number;
-	msg: string;
-	data?: string;
-}
-interface NSFWProps {
-	setIsLoading: (value: boolean) => void;
-	setAppropriateMsg: (value: string | undefined) => void;
-}
-const ReviewPhrase = ({ setAppropriateMsg, setIsLoading }: NSFWProps) => {
-	const dropDownOptions = [
-		{ value: 'Professional', label: 'Professional' },
-		{ value: 'Exciting', label: 'Exciting' },
-		{ value: 'Funny', label: 'Funny' },
-	];
+import { JarvisProps, useMutateJarvis } from '../../hooks/useMutateJarvis';
+import {
+	dropDownOptions,
+	useCategoryDropdown,
+} from './hook/useCategoryDropdown';
+const { thesaurus } = helperData;
+const ReviewPhrase = ({ setAppropriateMsg, setIsLoading }: JarvisProps) => {
 	const [nsfw, setNsfw] = useState('');
-	const [error, setError] = useState({ value: false, message: '' });
-	const handleMutate = trpc.jarvis.thesaurusRex.useMutation();
-	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [selectedOption, setSelectedOption] = useState<Option>(
-		dropDownOptions[0]
-	);
-	const { thesaurus } = helperData;
-	const debouncedSubmit = useDebounceCallback(async (text: string) => {
-		try {
-			if (isSubmitting) {
-				return; // don't make multiple requests
-			}
-			//disable multiple requests and open loading modal
-			setIsSubmitting(true);
-			setIsLoading(true);
-			//send data to backend and wait for response
-			const response: NSFWResType = await handleMutate.mutateAsync({
-				text,
-				category: selectedOption.value,
-			});
-			if (response.status < 300) {
-				//store data, end loading and remove error message
-				setAppropriateMsg(response.data);
-				setIsLoading(false);
-				setError({ value: false, message: '' });
-			} else {
-				//end loading and display error message
-				setIsLoading(false);
-				setError({ value: true, message: response.msg });
-			}
-			setIsSubmitting(false); // allow for more submissions
-		} catch (error) {
-			const errorMessage = (error as { message: string }).message;
-			setError({ value: true, message: errorMessage });
-			setIsLoading(false);
-		}
-	}, 250);
-
+	const handleJarvis = trpc.jarvis.thesaurusRex.useMutation();
+	const { selectedOption, setSelectedOption } = useCategoryDropdown();
+	const { debouncedSubmit, error } = useMutateJarvis({
+		handleMutate: () =>
+			handleJarvis.mutateAsync({ text: nsfw, category: selectedOption.value }),
+		setIsLoading,
+		setAppropriateMsg,
+	});
 	//must debounce function called inside submit event
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

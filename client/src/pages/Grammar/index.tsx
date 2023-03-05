@@ -15,7 +15,7 @@ const Grammar = () => {
 			<StyledHelper>
 				<ConvertGrammar
 					setIsLoading={setIsLoading}
-					setBeautifulText={setAppropriateMsg}
+					setAppropriateMsg={setAppropriateMsg}
 				/>
 				<CopyContainer appropriateMsg={appropriateMsg} />
 			</StyledHelper>

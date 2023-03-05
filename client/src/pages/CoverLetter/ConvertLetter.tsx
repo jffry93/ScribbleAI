@@ -2,80 +2,37 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { trpc } from '../../trpc/trpc';
 import { StyledContainer, StyledConverter } from '../NSFW/ConvertNsfw';
-import { useDebounceCallback } from '../../hooks/useDebounce';
 import ErrorMsg from '../../components/ErrorMsg';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import { JobDescriptionType } from '../../App';
 import TitleDescription from '../../components/TitleDescription';
 import helperData from '../../data/helperContent.json';
+import { useMutateJarvis, JarvisProps } from '../../hooks/useMutateJarvis';
 
-interface CoverLetterRes {
-	status: number;
-	msg: string;
-	data?: string;
-}
-
-interface CoverLetterProps extends JobDescriptionType {
-	setIsLoading: (value: boolean) => void;
-	setAppropriateMsg: (value: string | undefined) => void;
-}
-
+const { coverLetter } = helperData;
 const ConvertCoverLetter = ({
 	setIsLoading,
 	setAppropriateMsg,
 	jobDescription,
 	setJobDescription,
-}: CoverLetterProps) => {
+}: JarvisProps & JobDescriptionType) => {
 	const {
 		state: { user },
 	} = useAuthContext();
-	const [error, setError] = useState({ value: false, message: '' });
-	const [isSubmitting, setIsSubmitting] = useState(false);
 	const [experience, setExperience] = useState(
 		user?.preference.experience || ''
 	);
-	const { coverLetter } = helperData;
 
-	const handleMutate = trpc.jarvis.coverLetter.useMutation();
-	const debouncedSubmit = useDebounceCallback(
-		async ({
-			experience,
-			jobDescription,
-		}: {
-			experience: string;
-			jobDescription: string;
-		}) => {
-			try {
-				if (isSubmitting) {
-					return; // don't make multiple requests
-				}
-				//disable multiple requests and open loading modal
-				setIsSubmitting(true);
-				setIsLoading(true);
-				//send data to backend and wait for response
-				const response: CoverLetterRes = await handleMutate.mutateAsync({
-					experience,
-					jobDescription,
-				});
-				if (response.status < 300) {
-					//store data, end loading and remove error message
-					setAppropriateMsg(response.data);
-					setIsLoading(false);
-					setError({ value: false, message: '' });
-				} else {
-					//end loading and display error message
-					setIsLoading(false);
-					setError({ value: true, message: response.msg });
-				}
-				setIsSubmitting(false); // allow for more submissions
-			} catch (error) {
-				const errorMessage = (error as { message: string }).message;
-				setError({ value: true, message: errorMessage });
-				setIsLoading(false);
-			}
-		},
-		250
-	);
+	const handleJarvis = trpc.jarvis.coverLetter.useMutation();
+	const { debouncedSubmit, error } = useMutateJarvis({
+		handleMutate: () =>
+			handleJarvis.mutateAsync({
+				experience,
+				jobDescription,
+			}),
+		setIsLoading,
+		setAppropriateMsg,
+	});
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
