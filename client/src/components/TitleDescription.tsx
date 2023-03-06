@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import { Typography } from '@mui/material';
+import { LabelProps } from './Form';
 
 export interface TitleDescProps {
 	title: string;
@@ -8,14 +9,10 @@ export interface TitleDescProps {
 const TitleDescription = ({ title, description }: TitleDescProps) => {
 	return (
 		<>
-			<h1>{title}</h1>
-			<StyledP>{description}</StyledP>
+			<Typography variant='h2'>{title}</Typography>
+			<Typography variant='h6'>{description}</Typography>
 		</>
 	);
 };
 
 export default TitleDescription;
-
-const StyledP = styled.p`
-	color: var(--secondary-text-color);
-`;

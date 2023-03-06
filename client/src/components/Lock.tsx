@@ -1,3 +1,4 @@
+import { IconButton } from '@mui/material';
 import React, { useState } from 'react';
 import { FaLock, FaUnlock } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -9,9 +10,9 @@ interface LockProps {
 }
 const Lock = ({ lockIcon, setLockIcon }: LockProps) => {
 	return (
-		<StyledLock onClick={() => setLockIcon(!lockIcon)}>
+		<IconButton onClick={() => setLockIcon(!lockIcon)}>
 			{lockIcon ? <FaLock size={'20'} /> : <FaUnlock size={'20'} />}
-		</StyledLock>
+		</IconButton>
 	);
 };
 

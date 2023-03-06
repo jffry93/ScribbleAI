@@ -7,8 +7,9 @@ import {
 	dropDownOptions,
 	useCategoryDropdown,
 } from './hook/useCategoryDropdown';
-import Form from '../../components/Form';
+import Form, { LabelProps } from '../../components/Form';
 import { StyledJarvisForm } from '../../GlobalStyles';
+import { Button, TextField, Typography } from '@mui/material';
 const { thesaurus } = helperData;
 const ReviewPhrase = ({ setAppropriateMsg }: JarvisProps) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -17,7 +18,7 @@ const ReviewPhrase = ({ setAppropriateMsg }: JarvisProps) => {
 	const { selectedOption, setSelectedOption } = useCategoryDropdown();
 	const { debouncedSubmit, error } = useMutateJarvis({
 		handleMutate: () =>
-			handleJarvis.mutateAsync({ text: nsfw, category: selectedOption.value }),
+			handleJarvis.mutateAsync({ text: nsfw, category: selectedOption }),
 		setIsLoading,
 		setAppropriateMsg,
 	});
@@ -37,21 +38,21 @@ const ReviewPhrase = ({ setAppropriateMsg }: JarvisProps) => {
 					content: thesaurus,
 				}}
 			>
-				<label>Phrase or word:</label>
+				<Typography {...LabelProps}>Genre:</Typography>
 				<Dropdown
 					selectedOption={selectedOption}
 					setSelectedOption={setSelectedOption}
 					options={dropDownOptions}
 				/>
-				<label>Phrase or word:</label>
-				<textarea
-					name='ReviewPhrase'
+				<Typography {...LabelProps}>Phrase or word:</Typography>
+				<TextField
+					multiline
 					placeholder='Please enter the text you want converted'
 					onChange={(e) => {
 						setNsfw(e.target.value);
 					}}
 				/>
-				<button type='submit'>Refine Text</button>
+				<Button type='submit'>Refine Text</Button>
 			</Form>
 		</StyledJarvisForm>
 	);

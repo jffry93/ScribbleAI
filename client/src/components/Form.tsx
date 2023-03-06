@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 import ErrorMsg, { ErrorProps } from './ErrorMsg';
@@ -20,7 +21,7 @@ const Form = ({ children, data }: FormProps) => {
 	const { handleSubmit, isLoading, errorData, content } = data;
 	const { msg, status } = errorData;
 	const { title, description } = content;
-
+	const theme = useTheme();
 	return (
 		<StyledMain>
 			<TitleDescription title={title} description={description} />
@@ -35,7 +36,7 @@ const Form = ({ children, data }: FormProps) => {
 
 export default Form;
 
-export const StyledMain = styled.div`
+const StyledMain = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -55,12 +56,20 @@ const StyledForm = styled.form`
 	label {
 		margin: 0 8px;
 	}
+
+	input,
+	textarea,
+	select {
+		padding: 4px 0px 2px;
+		width: 100%;
+	}
+
 	input {
 		border-radius: 4px;
-		width: 100%;
-		padding: 8px;
-		font-size: 20px;
+
+		/* font-size: 20px; */
 	}
+
 	textarea {
 		width: 100%;
 		min-height: 100px;
@@ -70,3 +79,9 @@ const StyledForm = styled.form`
 		padding: var(--sm-padding);
 	}
 `;
+
+export const LabelProps = {
+	sx: {
+		pl: 0.5,
+	},
+};

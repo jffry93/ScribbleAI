@@ -18,7 +18,7 @@ export const showAppreciation = secretUserProcedure
 		try {
 			// validation
 			if (!name || !jobDescription || !interviewer || !perspective) {
-				delayAsync();
+				await delayAsync();
 				throw Error('😳 Please enter all fields 😭');
 			}
 

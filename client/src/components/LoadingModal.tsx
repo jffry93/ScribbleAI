@@ -1,3 +1,4 @@
+import { CircularProgress, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { StyledFlexCenter } from '../GlobalStyles';
@@ -20,21 +21,15 @@ const LoadingModal = ({
 	return (
 		<StyledLoadingModal>
 			<StyledContent>
-				<h1>{title}</h1>
-				<p>{subtitle}</p>
-				<StyledLoadingDots>
-					<span></span>
-					<span></span>
-					<span></span>
-				</StyledLoadingDots>
+				<Typography variant='h2'>{title}</Typography>
+				<Typography>{subtitle}</Typography>
 			</StyledContent>
+			<CircularProgress />
 		</StyledLoadingModal>
 	);
 };
 
 export default LoadingModal;
-
-const StyledLoadingDots = styled.div``;
 
 const StyledLoadingModal = styled(StyledFlexCenter)`
 	backdrop-filter: blur(5px);
@@ -45,6 +40,10 @@ const StyledLoadingModal = styled(StyledFlexCenter)`
 	top: 0;
 	left: 0;
 	z-index: 2;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 `;
 
 const StyledContent = styled(StyledFlexCenter)`

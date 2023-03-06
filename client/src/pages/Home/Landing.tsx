@@ -1,3 +1,4 @@
+import { Button, Typography } from '@mui/material';
 import React, { useEffect, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,22 +17,24 @@ const Landing = () => {
 	return (
 		<StyledContent>
 			<StyledLanding>
-				<h2>Instantly sound professional, no matter the situation</h2>
+				<Typography variant='h4'>
+					Instantly sound professional, no matter the situation
+				</Typography>
 				<StyledButtonContainer>
-					<button
+					<Button
 						onClick={() => {
 							navigate('/signup');
 						}}
 					>
 						SIGN UP
-					</button>
-					<button
+					</Button>
+					<Button
 						onClick={() => {
 							navigate('/login');
 						}}
 					>
 						LOGIN
-					</button>
+					</Button>
 				</StyledButtonContainer>
 			</StyledLanding>
 		</StyledContent>
@@ -48,41 +51,7 @@ const StyledContent = styled.div`
 	max-width: var(--width-limit);
 	position: relative;
 	flex-direction: row;
-	h2 {
-		font-size: 40px;
-	}
-	/* background: url(${landingVideo}) no-repeat center center fixed;
-	background-size: cover; */
-	.video-background {
-		/* border: 1px solid pink; */
-		position: fixed;
-		top: 0;
-		left: 0;
-		min-height: 100vh;
-		width: 100%;
-		overflow: hidden;
-		video {
-			min-width: 100%;
-			min-height: 100%;
-			width: auto;
-			height: auto;
-			z-index: -100;
-			position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-		}
-	}
-	.video-background:after {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(0, 0, 0, 0.5); /* semi-transparent black */
-	}
+
 	@media ${device.mobile} {
 		flex-direction: column;
 	}
@@ -107,9 +76,13 @@ const StyledLanding = styled.div`
 export const StyledButtonContainer = styled.div`
 	margin: var(--md-padding) 0 31px;
 	display: flex;
+	flex-wrap: wrap;
 	gap: 8px;
 	button {
-		max-width: 200px;
+		flex: 1;
+		width: 100%;
+		max-width: 150px;
+		min-width: 130px;
 		border-radius: 30px;
 	}
 `;

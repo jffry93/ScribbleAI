@@ -1,3 +1,4 @@
+import { Button, Typography } from '@mui/material';
 import React, { Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -22,15 +23,17 @@ const Homepage = () => {
 	return (
 		<StyledContent>
 			<StyledContainer>
-				<h1>Save Time and Apply to More Jobs</h1>
-				<p>
+				<Typography variant='h3'>Save Time and Apply to More Jobs</Typography>
+				<Typography variant='h6' sx={{ pl: 0.5 }}>
 					Searching for the perfect job can be overwhelming, so I developed a
 					platform that streamlines the application process, allowing for a
 					quick and effortless experience.
-				</p>
-				<p>Say goodbye to tedious job applications.</p>
+				</Typography>
+				<Typography variant='h6' sx={{ pl: 0.5 }}>
+					Say goodbye to tedious job applications.
+				</Typography>
 
-				<button onClick={() => navigate(startRoute)}>Get Started</button>
+				<Button onClick={() => navigate(startRoute)}>Get Started</Button>
 			</StyledContainer>
 		</StyledContent>
 	);
@@ -48,14 +51,14 @@ const StyledContainer = styled.div`
 	gap: 16px;
 	padding: var(--layout-padding);
 	min-height: var(--container-height);
-	h1 {
-		margin-bottom: 24px;
+	h3 {
+		margin-bottom: 8px;
 	}
+
 	button {
 		margin-top: 24px;
 		max-width: 200px;
 		border-radius: 30px;
-		padding-left: var(--sm-padding);
 	}
 `;
 const StyledContent = styled(StyledMain)`

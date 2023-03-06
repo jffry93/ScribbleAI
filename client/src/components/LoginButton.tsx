@@ -1,5 +1,5 @@
+import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useLogout } from '../hooks/useLogout';
 
@@ -10,7 +10,7 @@ const LoginButton = () => {
 	const { logout } = useLogout();
 	const navigate = useNavigate();
 	return (
-		<StyledText
+		<Typography
 			className='title'
 			onClick={() => {
 				if (user?.token) {
@@ -21,12 +21,8 @@ const LoginButton = () => {
 			}}
 		>
 			{user?.token ? 'LOGOUT' : 'LOGIN'}
-		</StyledText>
+		</Typography>
 	);
 };
 
 export default LoginButton;
-
-const StyledText = styled.a`
-	cursor: pointer;
-`;

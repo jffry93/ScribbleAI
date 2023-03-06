@@ -23,21 +23,19 @@ const StyledLogo = styled(Link)<MyLinkProps>`
 	display: flex;
 	align-items: center;
 	position: relative;
-
-	/* z-index: 200; */
+	color: var(--text-color);
 
 	&:hover {
-		color: var(--text-color);
-		/* --secondary-text-color */
-		/* img {
-			filter: invert(35%) sepia(85%) saturate(561%) hue-rotate(201deg)
-				brightness(113%) contrast(108%);
-		} */
+		color: var(--primary);
+		img {
+			filter: invert(34%) sepia(52%) saturate(617%) hue-rotate(198deg)
+				brightness(94%) contrast(91%);
+		}
 	}
 	&:active {
 		img {
-			filter: invert(40%) sepia(0%) saturate(0%) hue-rotate(236deg)
-				brightness(100%) contrast(89%);
+			filter: invert(34%) sepia(52%) saturate(617%) hue-rotate(198deg)
+				brightness(94%) contrast(91%);
 		}
 	}
 	h1 {

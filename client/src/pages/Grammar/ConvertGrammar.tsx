@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import helperData from '../../data/helperContent.json';
 import { JarvisProps, useMutateJarvis } from '../../hooks/useMutateJarvis';
 import { trpc } from '../../trpc/trpc';
-import Form from '../../components/Form';
+import Form, { LabelProps } from '../../components/Form';
 import { StyledJarvisForm } from '../../GlobalStyles';
+import { Button, TextField, Typography } from '@mui/material';
 const { grammar } = helperData;
 const ConvertGrammar = ({ setAppropriateMsg }: JarvisProps) => {
 	const [uglyText, setUglyText] = useState('');
@@ -31,15 +32,15 @@ const ConvertGrammar = ({ setAppropriateMsg }: JarvisProps) => {
 					content: grammar,
 				}}
 			>
-				<label>Original text:</label>
-				<textarea
-					name='convertNsfw'
+				<Typography {...LabelProps}>Original text:</Typography>
+				<TextField
+					multiline
 					placeholder='Please enter the text you want reviewed! Ex."Your the best person i have ever met"'
 					onChange={(e) => {
 						setUglyText(e.target.value);
 					}}
 				/>
-				<button type='submit'>Refine Text</button>
+				<Button type='submit'>Refine Text</Button>
 			</Form>
 		</StyledJarvisForm>
 	);

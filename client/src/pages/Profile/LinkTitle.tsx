@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
@@ -34,8 +35,8 @@ const LinkTitle = ({
 
 	return (
 		<StyledLinkTitle>
-			<h4>{label}:</h4>
-			<p ref={textRef}>{text ? text : 'N/A'}</p>
+			<Typography variant='h6'>{label}:</Typography>
+			<Typography ref={textRef}>{text ? text : 'N/A'}</Typography>
 		</StyledLinkTitle>
 	);
 };
@@ -49,10 +50,15 @@ const StyledLinkTitle = styled.div`
 	gap: 8px;
 	padding: var(--sm-padding) var(--sm-padding) var(--sm-padding) 0;
 	width: 100%;
+	min-width: 60px;
+	h6 {
+		font-size: 18px;
+	}
 
 	p {
 		/* color: var(--secondary-text-color); */
 		white-space: nowrap;
+
 		overflow: hidden;
 		text-overflow: ellipsis;
 		max-width: 90%;

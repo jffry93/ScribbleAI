@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import FetchProvider from './trpc/FetchProvider';
-import { ThemeProvider } from './context/ThemeContext';
+import { ThemeContext } from './context/ThemeContext';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	// <React.StrictMode>
-	<ThemeProvider>
+	<ThemeContext>
 		<AuthContextProvider>
 			<FetchProvider>
 				<HashRouter>
@@ -16,6 +16,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 				</HashRouter>
 			</FetchProvider>
 		</AuthContextProvider>
-	</ThemeProvider>
+	</ThemeContext>
 	// </React.StrictMode>
 );

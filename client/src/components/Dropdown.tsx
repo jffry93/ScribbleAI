@@ -1,14 +1,17 @@
+import {
+	Box,
+	FormControl,
+	MenuItem,
+	Select,
+	SelectChangeEvent,
+} from '@mui/material';
 import React from 'react';
-
-export interface Option {
-	value: string;
-	label: string;
-}
+import styled from 'styled-components';
 
 interface DropdownProps {
-	options: Option[];
-	selectedOption?: Option;
-	setSelectedOption: (value: Option) => void;
+	options: string[];
+	selectedOption?: string;
+	setSelectedOption: (value: string) => void;
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -16,23 +19,39 @@ const Dropdown: React.FC<DropdownProps> = ({
 	selectedOption,
 	setSelectedOption,
 }) => {
-	const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-		const value = event.target.value;
-		const selected = options.find((option) => option.value === value);
-		if (selected) {
-			setSelectedOption(selected);
-		}
+	const handleChange = async (event: SelectChangeEvent) => {
+		console.log(event.target.value);
+		setSelectedOption(event.target.value);
 	};
 
 	return (
-		<select value={selectedOption?.value} onChange={handleSelectChange}>
-			{options.map((option) => (
-				<option key={option.value} value={option.value}>
-					{option.label}
-				</option>
-			))}
-		</select>
+		<StyledDiv>
+			<FormControl fullWidth>
+				<Select
+					fullWidth
+					value={selectedOption}
+					onChange={handleChange}
+					displayEmpty
+					inputProps={{ 'aria-label': 'Without label' }}
+				>
+					<MenuItem value=''>
+						<em>Select a category</em>
+					</MenuItem>
+					{options.map((option) => (
+						<MenuItem key={option} value={option}>
+							{option}
+						</MenuItem>
+					))}
+				</Select>
+			</FormControl>
+		</StyledDiv>
 	);
 };
 
 export default Dropdown;
+
+const StyledDiv = styled.div`
+	.MuiSelect-select.MuiSelect-filled.MuiInputBase-input.MuiFilledInput-input.css-fs87sd-MuiSelect-select-MuiInputBase-input-MuiFilledInput-input {
+		padding: 12px 8px 8px;
+	}
+`;

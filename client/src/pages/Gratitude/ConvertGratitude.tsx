@@ -5,8 +5,9 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { JobDescriptionType } from '../../App';
 import helperData from '../../data/helperContent.json';
 import { JarvisProps, useMutateJarvis } from '../../hooks/useMutateJarvis';
-import Form from '../../components/Form';
+import Form, { LabelProps } from '../../components/Form';
 import { StyledJarvisForm } from '../../GlobalStyles';
+import { Box, Button, TextField, Typography } from '@mui/material';
 const { gratitude } = helperData;
 const ConvertGratitude = ({
 	setAppropriateMsg,
@@ -47,48 +48,48 @@ const ConvertGratitude = ({
 				}}
 			>
 				<StyledNameContainer>
-					<div>
-						<label>Name:</label>
-						<input
-							name='Name'
+					<Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+						<Typography {...LabelProps}>Name:</Typography>
+						<TextField
+							fullWidth
 							value={formData.name}
 							placeholder={'Example... Why do you want to work here? '}
 							onChange={(e) => {
 								setFormData({ ...formData, name: e.target.value });
 							}}
 						/>
-					</div>
-					<div>
-						<label>Interviewer:</label>
-						<input
-							name='Interviewer'
+					</Box>
+					<Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+						<Typography {...LabelProps}>Interviewer:</Typography>
+						<TextField
+							fullWidth
 							value={formData.interviewer}
 							placeholder={'Hiring managers name'}
 							onChange={(e) => {
 								setFormData({ ...formData, interviewer: e.target.value });
 							}}
 						/>
-					</div>
+					</Box>
 				</StyledNameContainer>
-				<label>Your Perspective:</label>
-				<input
-					name='Experience'
+				<Typography {...LabelProps}>Your Perspective:</Typography>
+				<TextField
+					fullWidth
 					value={formData.perspective}
 					placeholder='I had a great time learning about How the ceo swam with sharks to support a charity at the last company event. Sounds like an exciting place to work.'
 					onChange={(e) => {
 						setFormData({ ...formData, perspective: e.target.value });
 					}}
 				/>
-				<label>Company & Role:</label>
-				<textarea
-					name='Job'
+				<Typography {...LabelProps}>Company & Role:</Typography>
+				<TextField
+					multiline
 					value={jobDescription}
 					placeholder='Enter job posting'
 					onChange={(e) => {
 						setJobDescription(e.target.value);
 					}}
 				/>
-				<button type='submit'>Spread Love</button>
+				<Button type='submit'>Spread Love</Button>
 			</Form>
 		</StyledJarvisForm>
 	);
@@ -102,7 +103,6 @@ const StyledNameContainer = styled.div`
 	flex-wrap: wrap;
 	input {
 		width: 100%;
-		margin-top: 8px;
 	}
 	div {
 		flex: 1;

@@ -1,11 +1,16 @@
+import { Typography } from '@mui/material';
 import React from 'react';
+import { FaLock } from 'react-icons/fa';
 import styled from 'styled-components';
 
 const Instructions = () => {
 	return (
 		<StyledInstructions>
-			<p>Click on the 🔒 and add information to get personalized responses</p>
-			<p>Update info when done.</p>
+			<Typography variant='h6'>
+				Click on the <FaLock size={'20'} /> and add information to get
+				personalized responses
+			</Typography>
+			<Typography variant='h6'>Update info when done.</Typography>
 		</StyledInstructions>
 	);
 };
@@ -17,9 +22,7 @@ const StyledInstructions = styled.div`
 	flex-direction: column;
 	gap: 16px;
 	text-align: center;
+	max-width: 600px;
 
 	margin: auto;
-	span {
-		color: var(--primary);
-	}
 `;

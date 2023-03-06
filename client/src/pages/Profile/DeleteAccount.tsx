@@ -1,3 +1,4 @@
+import { Button } from '@mui/material';
 import React from 'react';
 import LoadingModal from '../../components/LoadingModal';
 import { useDeleteAccount } from '../../hooks/useDeleteAccount';
@@ -7,14 +8,14 @@ const DeleteAccount = () => {
 	return (
 		<>
 			{status.error && <p>{status.errorMsg}</p>}
-			<button
+			<Button
 				onClick={(e) => {
 					e.preventDefault();
 					deleteAccount();
 				}}
 			>
 				Delete Account
-			</button>
+			</Button>
 			{status.isLoading && (
 				<LoadingModal
 					title={status.complete.title}

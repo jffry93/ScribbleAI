@@ -6,9 +6,9 @@ import { legitCheckProcedure } from '../../middleware/legitCheckMiddleware';
 export const updateUser = legitCheckProcedure
 	.input(
 		z.object({
-			name: z.string().min(1),
-			experience: z.string().min(1),
-			personality: z.string().min(1),
+			name: z.string(),
+			experience: z.string(),
+			personality: z.string(),
 			github: z.string(),
 			linkedin: z.string(),
 			additional: z.string(),

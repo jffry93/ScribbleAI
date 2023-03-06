@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { AiOutlineLink } from 'react-icons/ai';
 import { BsPlusLg } from 'react-icons/bs';
 import { FaGithubAlt, FaLinkedinIn } from 'react-icons/fa';
@@ -28,7 +29,7 @@ const UserInfo = () => {
 				</StyledContainer>
 			</StyledDiv>
 			<StyledLinkInfo>
-				<h3>Clipboard Links</h3>
+				<Typography variant='h4'>Clipboard Links</Typography>
 				<div className='row'>
 					<FaGithubAlt size={25} />
 					<LinkTitle text={user?.preference.links.github} label={'Github'} />
@@ -65,7 +66,7 @@ const StyledContainer = styled.div`
 		color: var(--secondary-text-color);
 	}
 	h4 {
-		font-size: 20px;
+		margin-bottom: 12px;
 		width: fit-content;
 	}
 `;
@@ -81,25 +82,27 @@ const StyledLinkInfo = styled.div`
 	.row {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		gap: 12px;
-		padding-left: var(--sm-padding);
+		/* padding-left: var(--sm-padding); */
+
 		svg {
 			min-width: 25px;
 		}
 	}
-	h3 {
-		padding: var(--md-padding) var(--sm-padding);
+	h4 {
+		padding: 32px 0;
 	}
 	width: 100%;
-	@media ${device.mobile} {
-		h4 {
+	/* @media ${device.mobile} {
+		h6 {
 			display: none;
 		}
-	}
+	} */
 `;
 const StyledLabelTitle = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: var(--sm-padding);
+	padding: var(--sm-padding) 0;
 `;

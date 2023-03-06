@@ -4,8 +4,9 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { JobDescriptionType } from '../../App';
 import helperData from '../../data/helperContent.json';
 import { useMutateJarvis, JarvisProps } from '../../hooks/useMutateJarvis';
-import Form from '../../components/Form';
+import Form, { LabelProps } from '../../components/Form';
 import { StyledJarvisForm } from '../../GlobalStyles';
+import { Button, TextField, Typography } from '@mui/material';
 
 const { coverLetter } = helperData;
 const ConvertCoverLetter = ({
@@ -49,25 +50,24 @@ const ConvertCoverLetter = ({
 					content: coverLetter,
 				}}
 			>
-				<label>Past Experience:</label>
-				<input
-					name='Experience'
+				<Typography {...LabelProps}>Past Experience:</Typography>
+				<TextField
 					value={experience}
 					placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
 					onChange={(e) => {
 						setExperience(e.target.value);
 					}}
 				/>
-				<label>Job Posting:</label>
-				<textarea
-					name='Job'
+				<Typography {...LabelProps}>Job Posting:</Typography>
+				<TextField
+					multiline
 					value={jobDescription}
 					placeholder='Enter job posting'
 					onChange={(e) => {
 						setJobDescription(e.target.value);
 					}}
 				/>
-				<button type='submit'>Generate Letter</button>
+				<Button type='submit'>Generate Letter</Button>
 			</Form>
 		</StyledJarvisForm>
 	);

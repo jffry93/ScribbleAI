@@ -8,6 +8,7 @@ import Banner from './Banner';
 import ClipBoard from './ClipBoard';
 import Footer from './Footer';
 import Navbar from './Navbar';
+
 import desktopVideo from '/penHome-Large-540p.mp4';
 import mobileVideo from '/penHomeMobile-540p.mp4';
 
@@ -42,6 +43,7 @@ const StyledLayout = styled.div`
 	width: 100%;
 	height: 100%;
 	min-height: 100vh;
+	background-color: var(--bg-color);
 `;
 const StyledMain = styled(StyledPage)`
 	width: 100%;

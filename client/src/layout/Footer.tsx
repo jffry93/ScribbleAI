@@ -1,3 +1,4 @@
+import { IconButton, Typography, useTheme } from '@mui/material';
 import { FaGithubAlt, FaLinkedinIn } from 'react-icons/fa';
 import styled from 'styled-components';
 import Logo from '../components/Logo';
@@ -10,33 +11,49 @@ const Footer = () => {
 			<StyledContent>
 				<StyledLeft>
 					<Logo size={60} font={40} />
-					<Mailto label='CONTACT' mailto='jay.zalischi@gmail.com' />
-					<a
-						className='link'
-						href='https://jffry-linktree.vercel.app/'
-						target='_blank'
-					>
-						PROJECTS
-					</a>
-					<a
-						className='link'
-						href='https://github.com/jffry93/ScribbleAI'
-						target='_blank'
-					>
-						ABOUT
-					</a>
+					<Typography>
+						<Mailto label='CONTACT' mailto='jay.zalischi@gmail.com' />
+					</Typography>
+					<Typography>
+						<a
+							className='link'
+							href='https://jffry-linktree.vercel.app/'
+							target='_blank'
+						>
+							PROJECTS
+						</a>
+					</Typography>
+					<Typography>
+						<a
+							className='link'
+							href='https://github.com/jffry93/ScribbleAI'
+							target='_blank'
+						>
+							ABOUT
+						</a>
+					</Typography>
 				</StyledLeft>
 				<StyledIconContainer>
-					<StyledLink>
-						<a href='https://github.com/jffry93' target='_blank'>
-							<FaGithubAlt size={25} />
-						</a>
-					</StyledLink>
-					<StyledLink>
-						<a href='https://www.linkedin.com/in/jffry93/' target='_blank'>
-							<FaLinkedinIn size={25} />
-						</a>
-					</StyledLink>
+					<IconButton
+						onClick={() => {
+							window.open('https://github.com/jffry93', '_blank');
+						}}
+						sx={{
+							p: 1.25,
+						}}
+					>
+						<FaGithubAlt size={25} />
+					</IconButton>
+					<IconButton
+						onClick={() => {
+							window.open('https://www.linkedin.com/in/jffry93/', '_blank');
+						}}
+						sx={{
+							p: 1.25,
+						}}
+					>
+						<FaLinkedinIn size={25} />
+					</IconButton>
 				</StyledIconContainer>
 			</StyledContent>
 			<CreatedBy />
@@ -57,7 +74,10 @@ const StyledFooter = styled.footer`
 		color: var(--primary);
 	}
 	a {
-		color: var(--text-color);
+		color: unset;
+	}
+	a:hover {
+		color: var(--primary);
 	}
 	.link {
 		margin-left: 8px;

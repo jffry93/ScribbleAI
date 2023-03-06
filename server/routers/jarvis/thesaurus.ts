@@ -9,6 +9,11 @@ export const thesaurusRex = secretUserProcedure
 		const { text, category } = input;
 		try {
 			// validation
+			console.log(category.length);
+			if (category.length < 1) {
+				await new Promise((resolve) => setTimeout(resolve, 1000));
+				throw Error('😳 Please select a category 😭');
+			}
 			if (!text || !category) {
 				await new Promise((resolve) => setTimeout(resolve, 1000));
 				throw Error('😳 Please enter something to convert 😭');

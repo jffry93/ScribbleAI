@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { trpc } from '../../trpc/trpc';
 import helperData from '../../data/helperContent.json';
 import { JarvisProps, useMutateJarvis } from '../../hooks/useMutateJarvis';
-import Form from '../../components/Form';
+import Form, { LabelProps } from '../../components/Form';
 import { StyledJarvisForm } from '../../GlobalStyles';
+import { Button, TextField, Typography } from '@mui/material';
 const { nsfw: nsfwData } = helperData;
 
 const ConvertNsfw = ({ setAppropriateMsg }: JarvisProps) => {
@@ -30,15 +31,16 @@ const ConvertNsfw = ({ setAppropriateMsg }: JarvisProps) => {
 					content: nsfwData,
 				}}
 			>
-				<label>Original text:</label>
-				<textarea
-					name='convertNsfw'
+				<Typography {...LabelProps}>Original text:</Typography>
+				<TextField
+					multiline
+					variant='filled'
 					placeholder='Please enter the text you want converted'
 					onChange={(e) => {
 						setNsfw(e.target.value);
 					}}
 				/>
-				<button type='submit'>Refine Text</button>
+				<Button type='submit'>Refine Text</Button>
 			</Form>
 		</StyledJarvisForm>
 	);

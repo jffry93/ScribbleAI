@@ -1,11 +1,16 @@
+import { Box, Button, Input, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { EmailType } from '../App';
-import Form from '../components/Form';
+import Form, { LabelProps } from '../components/Form';
 import { useDebounceCallback } from '../hooks/useDebounce';
 import { useLogin } from '../hooks/useLogin';
-
+const formContent = {
+	title: 'Login',
+	description:
+		"Let's pick up where we left off. Log in and let's make some magic.",
+};
 const Login = ({ email, setEmail }: EmailType) => {
 	const [password, setPassword] = useState('');
 	const { login, isLoading, error, errorMsg } = useLogin();
@@ -17,70 +22,70 @@ const Login = ({ email, setEmail }: EmailType) => {
 		e.preventDefault();
 		debouncedSubmit(email, password);
 	};
-	const formContent = {
-		title: 'Login',
-		description:
-			"Let's pick up where we left off. Log in and let's make some magic.",
-	};
+
 	return (
 		<StyledContent>
-			<Form
-				data={{
-					handleSubmit,
-					isLoading,
-					errorData: { msg: errorMsg, status: error },
-					content: formContent,
-				}}
-			>
-				<label>Email:</label>
-				<input
-					value={email}
-					onChange={(e) => {
-						setEmail(e.target.value);
+			<Box className='container'>
+				<Form
+					data={{
+						handleSubmit,
+						isLoading,
+						errorData: { msg: errorMsg, status: error },
+						content: formContent,
 					}}
-				/>
-				<label>Password:</label>
-				<input
-					type='password'
-					value={password}
-					onChange={(e) => {
-						setPassword(e.target.value);
-					}}
-				/>
-				<button type='submit' disabled={isLoading === null ? false : isLoading}>
-					LOG IN
-				</button>
-				<p className='footer'>
-					Unlock your access.
-					<Link to={'/signup'}> Click here to sign up</Link>
-				</p>
-			</Form>
+				>
+					<Typography {...LabelProps}>Required*</Typography>
+					<TextField
+						placeholder='Enter your email'
+						variant='filled'
+						value={email}
+						onChange={(e) => {
+							setEmail(e.target.value);
+						}}
+					/>
+					<Typography {...LabelProps}>Required*</Typography>
+					<TextField
+						placeholder='Enter your password'
+						variant='filled'
+						type='password'
+						value={password}
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}
+					/>
+
+					<Button
+						type='submit'
+						disabled={isLoading === null ? false : isLoading}
+					>
+						LOG IN
+					</Button>
+					<Typography className='footer'>
+						Unlock your access.
+						<Link to={'/signup'}> Click here to sign up</Link>
+					</Typography>
+				</Form>
+			</Box>
 		</StyledContent>
 	);
 };
 
 export default Login;
-export const StyledMain = styled.div`
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	max-width: 420px;
-	gap: var(--sm-padding);
-	padding-bottom: var(--shift-padding);
-	p {
-		color: var(--secondary-text-color);
-	}
-`;
 
 export const StyledContent = styled.div`
-	padding: var(--layout-padding);
-	display: flex;
+	height: 100%;
+	/* background-color: var(--bg-color); */
 	min-height: var(--container-height);
+
+	display: flex;
 	align-items: center;
 	justify-content: center;
-	a:active {
-		color: var(--secondary);
+	.container {
+		padding: var(--layout-padding);
+		max-width: 420px;
+		margin: auto;
 	}
+
 	.footer {
 		text-align: center;
 	}

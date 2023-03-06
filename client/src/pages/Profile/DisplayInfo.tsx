@@ -6,7 +6,7 @@ const DisplayInfo = () => {
 	const {
 		state: { user },
 	} = useAuthContext();
-	console.log(user?.preference?.experience);
+
 	return <>{user?.preference?.experience ? <UserInfo /> : <Instructions />}</>;
 };
 

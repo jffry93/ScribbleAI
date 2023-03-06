@@ -1,7 +1,8 @@
+import { Box, Button, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { EmailType } from '../App';
-import Form from '../components/Form';
+import Form, { LabelProps } from '../components/Form';
 import { useDebounceCallback } from '../hooks/useDebounce';
 import { useSignup } from '../hooks/useSignup';
 import { StyledContent } from './Login';
@@ -25,38 +26,47 @@ const SignUp = ({ email, setEmail }: EmailType) => {
 	};
 	return (
 		<StyledContent>
-			<Form
-				data={{
-					handleSubmit,
-					isLoading,
-					errorData: { msg: errorMsg, status: error },
-					content: formContent,
-				}}
-			>
-				<label>Email:</label>
-				<input
-					type='email'
-					value={email}
-					onChange={(e) => {
-						setEmail(e.target.value);
+			<Box className='container'>
+				<Form
+					data={{
+						handleSubmit,
+						isLoading,
+						errorData: { msg: errorMsg, status: error },
+						content: formContent,
 					}}
-				/>
-				<label>Password:</label>
-				<input
-					type='password'
-					value={password}
-					onChange={(e) => {
-						setPassword(e.target.value);
-					}}
-				/>
-				<button type='submit' disabled={isLoading === null ? false : isLoading}>
-					SIGN UP
-				</button>
-				<p className='footer'>
-					Already have an account?
-					<Link to={'/login'}> Click here to login</Link>
-				</p>
-			</Form>
+				>
+					<Typography {...LabelProps}>Required*</Typography>
+					<TextField
+						placeholder='Enter your email'
+						variant='filled'
+						value={email}
+						onChange={(e) => {
+							setEmail(e.target.value);
+						}}
+					/>
+					<Typography {...LabelProps}>Required*</Typography>
+					<TextField
+						placeholder='Create password'
+						variant='filled'
+						type='password'
+						value={password}
+						onChange={(e) => {
+							setPassword(e.target.value);
+						}}
+					/>
+
+					<Button
+						type='submit'
+						disabled={isLoading === null ? false : isLoading}
+					>
+						SIGN UP
+					</Button>
+					<Typography className='footer'>
+						Unlock your access.
+						<Link to={'/login'}> Click here to login</Link>
+					</Typography>
+				</Form>
+			</Box>
 		</StyledContent>
 	);
 };

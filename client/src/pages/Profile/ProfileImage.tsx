@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import styled from 'styled-components';
 import ConvertDate from '../../components/ConvertDate';
 import { StyledFlexCenter } from '../../GlobalStyles';
@@ -10,20 +11,20 @@ const ProfileImage = () => {
 	return (
 		<StyledImage>
 			<div className='image-container'>
-				<h1>
+				<Typography variant='h1'>
 					{user?.preference.name && user?.preference.name[0].toUpperCase()}
-				</h1>
+				</Typography>
 				<img />
 			</div>
 			<StyledLabelTitle>
-				<h4>Joined:</h4>
-				<p>
+				<Typography>Joined:</Typography>
+				<Typography variant='h6'>
 					{user?.preference.createdAt ? (
 						<ConvertDate text={user?.preference.createdAt} />
 					) : (
 						'N/A'
 					)}
-				</p>
+				</Typography>
 			</StyledLabelTitle>
 		</StyledImage>
 	);
@@ -43,16 +44,13 @@ const StyledImage = styled(StyledFlexCenter)`
 		justify-content: center;
 		background-color: rgba(0, 0, 0, 0.2);
 		border-radius: 50%;
-		width: 300px;
-		height: 300px;
+		min-width: 250px;
+		height: 250px;
 
 		h1 {
 			position: absolute;
 			font-size: 120px;
 		}
-		/* img {
-			height: 400px;
-		} */
 	}
 `;
 const StyledLabelTitle = styled.div`

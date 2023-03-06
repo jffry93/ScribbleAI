@@ -9,6 +9,8 @@ import DeleteAccount from './DeleteAccount';
 import { FaGithubAlt, FaLinkedinIn } from 'react-icons/fa';
 import { AiOutlineLink } from 'react-icons/ai';
 import { device } from '../../GlobalStyles';
+import { Button, TextField, Typography } from '@mui/material';
+import { LabelProps } from '../../components/Form';
 
 interface ErrorObject {
 	status: boolean;
@@ -109,26 +111,42 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 			{user?.preference && (
 				<>
 					<StyledForm onSubmit={handleSubmit}>
+						<ErrorMsg data={{ msg: error.msg, status: error.status }} />
 						<StyledDiv>
 							<ProfileImage />
 							<StyledContainer>
-								<ErrorMsg data={{ msg: error.msg, status: error.status }} />
 								<StyledField className={handleError('name') ? 'error' : ''}>
-									<label>Name: </label>
+									<Typography
+										sx={{
+											pl: 1,
+											pb: 1,
+										}}
+									>
+										Name: <span>Required*</span>
+									</Typography>
 									<FormInput
 										state={name}
 										setState={setName}
-										placeholder={'add a name'}
+										placeholder={"What's your name?"}
 									/>
 								</StyledField>
 								<StyledFieldTextArea
 									className={handleError('experience') ? 'error' : ''}
 								>
-									<label>Past Experience:</label>
-									<textarea
+									<Typography
+										sx={{
+											pl: 1,
+											pb: 1,
+										}}
+									>
+										Experience: <span>Required*</span>
+									</Typography>
+									<TextField
+										multiline
 										name='Experience'
 										value={experience}
-										placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
+										placeholder='Include some past experience.
+Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
 										onChange={(e) => {
 											setExperience(e.target.value);
 										}}
@@ -137,11 +155,19 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 								<StyledFieldTextArea
 									className={handleError('personality') ? 'error' : ''}
 								>
-									<label>Personality:</label>
-									<textarea
-										name='Personality'
+									<Typography
+										sx={{
+											pl: 1,
+											pb: 1,
+										}}
+									>
+										Personality: <span>Required*</span>
+									</Typography>
+									<TextField
+										multiline
 										value={personality}
-										placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
+										placeholder='Tell us about yourself.
+Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
 										onChange={(e) => {
 											setPersonality(e.target.value);
 										}}
@@ -150,7 +176,9 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 							</StyledContainer>
 						</StyledDiv>
 						<StyledLinkInfo>
-							<h3>Clipboard Links</h3>
+							<Typography variant='h4' sx={{ my: '32px' }}>
+								Clipboard Links
+							</Typography>
 							<StyledLink className={handleError('github') ? 'error' : ''}>
 								<FaGithubAlt size={25} />
 								<label>Github: </label>
@@ -179,7 +207,7 @@ const UpdateUser = ({ setLockIcon }: Props) => {
 								/>
 							</StyledLink>
 						</StyledLinkInfo>
-						<button type='submit'>Update</button>
+						<Button type='submit'>Update</Button>
 						<DeleteAccount />
 					</StyledForm>
 				</>
@@ -195,9 +223,6 @@ const StyledContainer = styled.div`
 	flex-direction: column;
 	gap: 8px;
 	flex: 1;
-	label {
-		margin: 0 8px 8px;
-	}
 `;
 
 const StyledDiv = styled.div`
@@ -205,6 +230,7 @@ const StyledDiv = styled.div`
 	width: 100%;
 	flex-wrap: wrap;
 	gap: 32px;
+	margin-top: 16px;
 `;
 
 const StyledForm = styled.form`
@@ -213,22 +239,23 @@ const StyledForm = styled.form`
 	flex-direction: column;
 
 	label {
-		/* display: flex;
-		align-items: center;
-		gap: 8px; */
+		/* margin-top: 4px; */
 		font-size: 20px;
 		font-weight: 600;
 	}
 	input,
 	textarea {
-		font-size: 18px;
-		padding: var(--sm-padding);
+		min-width: 250px;
+		padding: 0;
 	}
 	textarea {
+		min-height: 120px;
 		height: 100%;
 	}
 	button {
-		margin-top: 8px;
+		padding: 12px;
+		/* padding: 16px 0 24px; */
+		margin-top: 16px;
 	}
 `;
 
@@ -250,7 +277,7 @@ const StyledLink = styled.div`
 	display: flex;
 	align-items: center;
 	gap: var(--sm-padding);
-	padding: 8px 0;
+	/* padding: 8px 0; */
 
 	h4 {
 		padding: var(--sm-padding);
@@ -271,13 +298,23 @@ const StyledLink = styled.div`
 	}
 `;
 const StyledLinkInfo = styled.div`
-	margin-top: var(--lg-padding);
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	/* margin-top: var(--lg-padding); */
 	h3 {
-		margin: var(--md-padding) var(--sm-padding);
+		/* margin: var(--md-padding) var(--sm-padding); */
 	}
 	width: 100%;
 `;
-const StyledFieldTextArea = styled(StyledField)`
+const StyledFieldTextArea = styled.div`
 	height: 100%;
-	min-height: 180px;
+	display: flex;
+	flex-direction: column;
+	textarea {
+		height: 100%;
+
+		border-radius: 4px;
+	}
+	/* min-height: 180px; */
 `;

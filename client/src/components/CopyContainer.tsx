@@ -1,4 +1,5 @@
-import React from 'react';
+import { Button, IconButton, Tooltip } from '@mui/material';
+import React, { useState } from 'react';
 import { FaCopy } from 'react-icons/fa';
 import styled from 'styled-components';
 import { StyledFlexCenter, StyledIconContainer } from '../GlobalStyles';
@@ -7,20 +8,28 @@ interface CopyProps {
 	appropriateMsg: string | undefined;
 }
 const CopyContainer = ({ appropriateMsg }: CopyProps) => {
+	const [isVisible, setIsVisible] = useState(false);
 	return (
 		<>
 			{appropriateMsg && (
 				<StyledCopy
-					onClick={() => {
+					onClick={async () => {
 						if (appropriateMsg) {
 							copyClipboard(appropriateMsg);
+							setIsVisible(true);
+							await new Promise((resolve) => setTimeout(resolve, 1000));
+							setIsVisible(false);
 						} else {
 							console.log('nothing to copy');
 						}
 					}}
 				>
 					<StyledCopyButton>
-						<FaCopy />
+						<Tooltip title='Copied' placement='left' open={isVisible}>
+							<IconButton>
+								<FaCopy />
+							</IconButton>
+						</Tooltip>
 					</StyledCopyButton>
 					<pre>{appropriateMsg}</pre>
 				</StyledCopy>
@@ -46,7 +55,7 @@ const StyledCopy = styled(StyledFlexCenter)`
 	}
 `;
 
-const StyledCopyButton = styled(StyledIconContainer)`
+const StyledCopyButton = styled.div`
 	position: absolute;
 	top: var(--sm-padding);
 	right: var(--sm-padding);

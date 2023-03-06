@@ -1,3 +1,4 @@
+import { Typography } from '@mui/material';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Lock from '../../components/Lock';
@@ -21,7 +22,7 @@ const Profile = () => {
 			{user?.preference && (
 				<>
 					<Lock lockIcon={lockIcon} setLockIcon={setLockIcon} />
-					<h2>User Information</h2>
+					<Typography variant='h4'>User Information</Typography>
 					<StyledDiv>
 						{lockIcon ? (
 							<DisplayInfo />

@@ -12,7 +12,6 @@ const LoadPage = ({
 	const {
 		state: { user },
 	} = useAuthContext();
-	console.log(user?.preference);
 
 	return <>{user?.preference ? <Component {...props} /> : <LoadingModal />}</>;
 };

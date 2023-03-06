@@ -4,8 +4,9 @@ import { useAuthContext } from '../../hooks/useAuthContext';
 import { JobDescriptionType } from '../../App';
 import helperData from '../../data/helperContent.json';
 import { JarvisProps, useMutateJarvis } from '../../hooks/useMutateJarvis';
-import Form from '../../components/Form';
+import Form, { LabelProps } from '../../components/Form';
 import { StyledJarvisForm } from '../../GlobalStyles';
+import { Button, TextField, Typography } from '@mui/material';
 
 const ConvertFAQ = ({
 	setAppropriateMsg,
@@ -52,34 +53,32 @@ const ConvertFAQ = ({
 					content: faq,
 				}}
 			>
-				<label>Question:</label>
-				<input
-					name='Question'
+				<Typography {...LabelProps}>Question:</Typography>
+				<TextField
 					value={question}
 					placeholder={'Example... Why do you want to work here? '}
 					onChange={(e) => {
 						setQuestion(e.target.value);
 					}}
 				/>
-				<label>Past Experience:</label>
-				<input
-					name='Experience'
+				<Typography {...LabelProps}>Past Experience:</Typography>
+				<TextField
 					value={experience}
 					placeholder='Example... I taught a full stack web development course for Concordia University which taught React Express Node and MongoDb. '
 					onChange={(e) => {
 						setExperience(e.target.value);
 					}}
 				/>
-				<label>Job Posting:</label>
-				<textarea
-					name='Job'
+				<Typography {...LabelProps}>Job Posting:</Typography>
+				<TextField
+					multiline
 					value={jobDescription}
 					placeholder='Enter job posting'
 					onChange={(e) => {
 						setJobDescription(e.target.value);
 					}}
 				/>
-				<button type='submit'>Answer Question</button>
+				<Button type='submit'>Answer Question</Button>
 			</Form>
 		</StyledJarvisForm>
 	);

@@ -1,10 +1,38 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Logo from '../components/Logo';
-import LoginButton from '../components/LoginButton';
-import { device, StyledFlexCenter } from '../GlobalStyles';
-import { useAuthContext } from '../hooks/useAuthContext';
+import Logo from '../../components/Logo';
+import LoginButton from '../../components/LoginButton';
+import { device, StyledFlexCenter } from '../../GlobalStyles';
+import { useAuthContext } from '../../hooks/useAuthContext';
+import { Typography, useTheme } from '@mui/material';
+
+const helperDropdown = [
+	{
+		path: '/nsfw',
+		title: 'To Professional',
+	},
+	{
+		path: '/coverletter',
+		title: 'Cover Letter',
+	},
+	{
+		path: '/gratitude',
+		title: 'Gratitude',
+	},
+	{
+		path: '/grammar',
+		title: 'Grammar',
+	},
+	{
+		path: '/thesaurus',
+		title: 'Thesaurus',
+	},
+	{
+		path: '/faq',
+		title: 'FAQ',
+	},
+];
 
 const Navbar = () => {
 	const navigate = useNavigate();
@@ -12,7 +40,7 @@ const Navbar = () => {
 		state: { user },
 	} = useAuthContext();
 	const [showBackground, setShowBackground] = useState(false);
-
+	const { palette } = useTheme();
 	useEffect(() => {
 		function handleScroll() {
 			const scrollTop =
@@ -32,35 +60,27 @@ const Navbar = () => {
 		<StyledSticky showBackground={showBackground}>
 			<StyledNav>
 				<Logo size={50} font={24} />
-				<StyledLinkContainer>
+				<StyledLinkContainer theme={palette}>
 					{user && (
 						<>
 							<StyledDropDown>
-								<p className='title'>HELPER</p>
+								<Typography className='title'>HELPER</Typography>
 								<ul>
-									<li onClick={() => navigate('/nsfw')}>
-										<span>To Professional</span>
-									</li>
-									<li onClick={() => navigate('/coverletter')}>
-										<span>Cover Letter</span>
-									</li>
-									<li onClick={() => navigate('/gratitude')}>
-										<span>Appreciation</span>
-									</li>
-									<li onClick={() => navigate('/grammar')}>
-										<span>Grammar</span>
-									</li>
-									<li onClick={() => navigate('/thesaurus')}>
-										<span>Thesaurus</span>
-									</li>
-									<li onClick={() => navigate('/faq')}>
-										<span>Q&A</span>
-									</li>
+									{helperDropdown.map((data) => (
+										<li key={data.title} onClick={() => navigate(data.path)}>
+											<Typography variant='body2'>{data.title}</Typography>
+										</li>
+									))}
 								</ul>
 							</StyledDropDown>
-							<Link to='profile' className='title'>
-								PROFILE
-							</Link>
+							<Typography
+								className='title'
+								onClick={() => {
+									navigate('/profile');
+								}}
+							>
+								<p>PROFILE</p>
+							</Typography>
 						</>
 					)}
 					<LoginButton />
@@ -78,6 +98,7 @@ interface MyStyledComponentProps {
 const StyledSticky = styled.nav<MyStyledComponentProps>`
 	position: sticky;
 	top: 0;
+
 	z-index: 2;
 	&::before {
 		content: '';
@@ -104,14 +125,12 @@ const StyledNav = styled.div`
 	ul {
 		list-style: none;
 	}
-	a,
+
 	.title {
 		position: relative;
-		color: var(--text-color);
+		color: #aaa;
+		/* color: var(--text-color); */
 		font-size: 12px;
-		&:active {
-			color: var(--primary);
-		}
 	}
 `;
 const StyledLinkContainer = styled(StyledFlexCenter)`
@@ -122,35 +141,38 @@ const StyledLinkContainer = styled(StyledFlexCenter)`
 		cursor: pointer;
 		li {
 			font-size: 14px;
-			background-color: #1d1d1e;
+			background-color: #2d2d2d;
 		}
 		&:hover {
-			background-color: #1d1d1e;
+			background-color: #2d2d2d;
+
 			ul {
 				display: block;
+				background-color: #2d2d2d;
 			}
 
 			li:hover {
 				position: relative;
-				background-color: var(--primary);
+				${(props) => {
+					return 'background-color: ' + props.theme.secondary.main;
+				}};
 				span {
 					position: relative;
 					z-index: 2;
 				}
 				cursor: pointer;
-				&:active::before {
-					content: '';
-					position: absolute;
-					top: 0;
-					left: 0;
-					width: 100%;
-					height: 100%;
-					background-color: rgba(0, 0, 0, 0.2);
-					z-index: 1;
-					border-radius: inherit;
+				&:active {
+					color: #aaa;
+					${(props) => {
+						return 'background-color: ' + props.theme.primary.main;
+					}};
+					border-radius: none;
 				}
 			}
 		}
+		/* &:active {
+			background-color: var(--primary);
+		} */
 	}
 `;
 

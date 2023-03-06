@@ -1,3 +1,5 @@
+import { TextField } from '@mui/material';
+
 const FormInput = ({
 	state,
 	setState,
@@ -8,7 +10,7 @@ const FormInput = ({
 	placeholder: string;
 }) => {
 	return (
-		<input
+		<TextField
 			placeholder={placeholder}
 			value={state}
 			onChange={(e) => {
