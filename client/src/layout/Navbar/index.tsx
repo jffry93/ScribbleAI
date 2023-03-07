@@ -154,7 +154,7 @@ const StyledLinkContainer = styled(StyledFlexCenter)`
 			li:hover {
 				position: relative;
 				${(props) => {
-					return 'background-color: ' + props.theme.secondary.main;
+					return 'background-color: ' + props.theme.primary.main;
 				}};
 				span {
 					position: relative;
@@ -164,15 +164,12 @@ const StyledLinkContainer = styled(StyledFlexCenter)`
 				&:active {
 					color: #aaa;
 					${(props) => {
-						return 'background-color: ' + props.theme.primary.main;
+						return 'background-color: ' + props.theme.secondary.main;
 					}};
 					border-radius: none;
 				}
 			}
 		}
-		/* &:active {
-			background-color: var(--primary);
-		} */
 	}
 `;
 

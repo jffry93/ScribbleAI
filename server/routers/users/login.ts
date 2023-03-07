@@ -22,7 +22,7 @@ export const login = t.procedure
 			}
 			// check database
 			const user = await prisma.user.findFirst({
-				where: { email },
+				where: { email: email.toLowerCase() },
 				include: { Preference: true },
 			});
 

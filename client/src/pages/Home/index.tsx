@@ -1,11 +1,10 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { useLocation } from 'react-router-dom';
+import LoadingModal from '../../components/LoadingModal';
 import VideoBg from '../../components/VideoBg';
 import { useAuthContext } from '../../hooks/useAuthContext';
 import Homepage from './Homepage';
 import Landing from './Landing';
-import desktopVideo from '/penHome-Large-540p.mp4';
-import mobileVideo from '/penHomeMobile-540p.mp4';
 
 const Home = () => {
 	const {
@@ -16,7 +15,9 @@ const Home = () => {
 	return (
 		<>
 			{pathname == '/' && (
-				<VideoBg desktopVideo={desktopVideo} mobileVideo={mobileVideo} />
+				<Suspense fallback={<LoadingModal />}>
+					<VideoBg />
+				</Suspense>
 			)}
 			{user ? <Homepage /> : <Landing />}{' '}
 		</>

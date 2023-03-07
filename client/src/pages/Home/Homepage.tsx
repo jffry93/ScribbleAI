@@ -13,6 +13,7 @@ const Homepage = () => {
 	const {
 		state: { user },
 	} = useAuthContext();
+
 	const [startRoute, setStartRoute] = useState(() => {
 		if (user?.preference?.experience) {
 			return '/nsfw';
@@ -70,9 +71,6 @@ const StyledContent = styled(StyledMain)`
 	li {
 		padding-left: var(--sm-padding);
 		color: var(--secondary-text-color);
-	}
-	span {
-		color: var(--primary);
 	}
 
 	ul {

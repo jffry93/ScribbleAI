@@ -4,11 +4,9 @@ import CoverLetter from '../pages/CoverLetter';
 import FAQ from '../pages/FAQ';
 import Grammar from '../pages/Grammar';
 import Gratitude from '../pages/Gratitude';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
 import NSFW from '../pages/NSFW';
 import Profile from '../pages/Profile';
-import SignUp from '../pages/SignUp';
+
 import Thesaurus from '../pages/Thesaurus';
 
 export const useUserRouteData = () => {

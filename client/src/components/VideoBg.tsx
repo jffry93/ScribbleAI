@@ -1,17 +1,11 @@
-// import { LazyLoad } from 'react-lazyload';
 import styled from 'styled-components';
 import { device } from '../GlobalStyles';
+import desktopVideo from '/bgVideo.mp4';
+import mobileVideo from '/bgVideoMobile.mp4';
 
-const VideoBg = ({
-	desktopVideo,
-	mobileVideo,
-}: {
-	desktopVideo: string;
-	mobileVideo: string;
-}) => {
+const VideoBg = () => {
 	return (
 		<StyledVideoBg>
-			{/* <LazyLoad> */}
 			<video playsInline autoPlay loop muted>
 				<source
 					src={
@@ -22,7 +16,6 @@ const VideoBg = ({
 					type='video/mp4'
 				/>
 			</video>
-			{/* </LazyLoad> */}
 		</StyledVideoBg>
 	);
 };
