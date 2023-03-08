@@ -1,4 +1,4 @@
-import { t } from '../../trpc';
+import { t } from '../../libs/trpc';
 import { coverLetter } from './../jarvis/coverLetter';
 import { questionAnswer } from './../jarvis/questionAnswer';
 import { makeFancy } from './../jarvis/makeFancy';

@@ -1,4 +1,4 @@
-import { t } from '../../trpc';
+import { t } from '../../libs/trpc';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import { signUp } from './../users/signUp';

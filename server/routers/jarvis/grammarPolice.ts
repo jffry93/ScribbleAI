@@ -1,7 +1,8 @@
 import { z } from 'zod';
 import { secretUserProcedure } from '../../middleware/secretUserMiddleware';
-import { openai } from '../../openAI';
-import { prisma } from '../../db';
+import { openai } from '../../libs/openAI';
+import { prisma } from '../../prisma/db';
+import { handleModel } from '../../libs/openAI/handleModel';
 
 export const grammarPolice = secretUserProcedure
 	.input(z.object({ text: z.string() }))
@@ -13,33 +14,18 @@ export const grammarPolice = secretUserProcedure
 				await new Promise((resolve) => setTimeout(resolve, 1000));
 				throw Error('😳 Please enter something to convert 😭');
 			}
-			const promptObject = {
-				model: 'text-davinci-003',
-				prompt: `Correct this to standard English:\n\n${text}`,
-				temperature: 0,
-				max_tokens: 60,
-				top_p: 1,
-				frequency_penalty: 0,
-				presence_penalty: 0,
-			};
-			// const jarvisRequest = `Can you help me sound more professional and conversational?  ${
-			// 	ctx.user.Preference?.personality &&
-			// 	'Let me tell you a bit about my self so you can personalize the response. ' +
-			// 		ctx.user.Preference.personality
-			// } I'd like help converting the phrase "${text}"`;
-			// convert it AI
-			const response = await openai.createCompletion(promptObject);
+			const prompt: string = `Correct this to standard English:\n\n${text}`;
+
+			const response = await handleModel(prompt, 60);
 			if (response.data.choices[0].text) {
 				// send to Database
-				console.log(response.data.choices[0].text);
-				console.log('send response to prisma');
-				// await prisma.nSFW.create({
-				// 	data: {
-				// 		userId: ctx.user.id,
-				// 		prompt: `Correct this to standard English:\n\n${text}`,
-				// 		response: response.data.choices[0].text,
-				// 	},
-				// });
+				await prisma.grammar.create({
+					data: {
+						prompt,
+						userId: ctx.user.id,
+						response: response.data.choices[0].text,
+					},
+				});
 			} else {
 				throw Error('😳 Unable to get response from AI Helper');
 			}

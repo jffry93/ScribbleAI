@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { prisma } from '../../db';
+import { prisma } from '../../prisma/db';
 import jwt from 'jsonwebtoken';
 import { SECRET } from '../users';
 import { legitCheckProcedure } from '../../middleware/legitCheckMiddleware';

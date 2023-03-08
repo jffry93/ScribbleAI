@@ -1,10 +1,10 @@
-import { t } from '../../trpc';
+import { t } from '../../libs/trpc';
 import { z } from 'zod';
 import validator from 'validator';
 import bcrypt from 'bcrypt';
-import { prisma } from '../../db';
+import { prisma } from '../../prisma/db';
 import { createToken } from '../users';
-import { delayAsync } from '../../delayAsync';
+import { delayAsync } from '../../utils/delayAsync';
 
 export const signUp = t.procedure
 	.input(z.object({ email: z.string(), password: z.string() }))

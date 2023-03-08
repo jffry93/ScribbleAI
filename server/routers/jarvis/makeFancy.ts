@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { secretUserProcedure } from '../../middleware/secretUserMiddleware';
-import { openai } from '../../openAI';
-import { prisma } from '../../db';
+import { prisma } from '../../prisma/db';
+import { handleModel } from '../../libs/openAI/handleModel';
 
 export const makeFancy = secretUserProcedure
 	.input(z.object({ text: z.string() }))
@@ -13,24 +13,15 @@ export const makeFancy = secretUserProcedure
 				await new Promise((resolve) => setTimeout(resolve, 1000));
 				throw Error('😳 Please enter something to convert 😭');
 			}
-			const jarvisRequest = `Can you help me sound more professional and conversational? I'd like help converting the phrase "${text}"`;
+			const prompt = `Can you help me sound more professional and conversational? I'd like help converting the phrase "${text}"`;
 			// convert it AI
-			const response = await openai.createCompletion({
-				model: 'text-davinci-003',
-				prompt: jarvisRequest,
-				temperature: 0.9,
-				max_tokens: 150,
-				top_p: 1,
-				frequency_penalty: 0,
-				presence_penalty: 0.6,
-				stop: [' Human:', ' AI:'],
-			});
+			const response = await handleModel(prompt);
 			if (response.data.choices[0].text) {
 				// send to Database
 				await prisma.nSFW.create({
 					data: {
 						userId: ctx.user.id,
-						prompt: jarvisRequest,
+						prompt,
 						response: response.data.choices[0].text,
 					},
 				});

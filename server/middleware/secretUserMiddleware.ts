@@ -1,8 +1,8 @@
 import { inferAsyncReturnType, initTRPC, TRPCError } from '@trpc/server';
-import { t } from '../trpc';
+import { t } from '../libs/trpc';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
-import { prisma } from '../db';
+import { prisma } from '../prisma/db';
 dotenv.config();
 
 const SECRET = process.env.SECRET || 'default-secret-value';

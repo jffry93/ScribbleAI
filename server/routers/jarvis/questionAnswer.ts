@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { secretUserProcedure } from '../../middleware/secretUserMiddleware';
-import { openai } from '../../openAI';
-import { prisma } from '../../db';
+import { prisma } from '../../prisma/db';
+import { handleModel } from '../../libs/openAI/handleModel';
 
 export const questionAnswer = secretUserProcedure
 	.input(
@@ -19,7 +19,7 @@ export const questionAnswer = secretUserProcedure
 				await new Promise((resolve) => setTimeout(resolve, 1000));
 				throw Error('😳 Please enter all fields 😭');
 			}
-			const jarvisPrompt =
+			const prompt =
 				`Can you help me answer the following question in a short professional, conversational and friendly way? ${question} Please use the past job experience of when ${experience} ${
 					ctx.user.Preference?.personality &&
 					'Let me tell you a bit about my self so you can personalize the response. ' +
@@ -29,21 +29,12 @@ export const questionAnswer = secretUserProcedure
 					''
 				)}
         `.replace(/\s+$/, '');
-			console.log(jarvisPrompt);
-			const response = await openai.createCompletion({
-				model: 'text-davinci-003',
-				prompt: jarvisPrompt,
-				temperature: 0.9,
-				max_tokens: 150,
-				top_p: 1,
-				frequency_penalty: 0,
-				presence_penalty: 0.6,
-				stop: [' Human:', ' AI:'],
-			});
+
+			const response = await handleModel(prompt);
 
 			if (response.data.choices[0].text) {
 				const answer = response.data.choices[0].text.trim();
-				const createEntry = await prisma.answer.create({
+				await prisma.answer.create({
 					data: { question, answer, userId: ctx.user.id },
 				});
 				return {

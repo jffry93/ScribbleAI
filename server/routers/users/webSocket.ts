@@ -1,4 +1,4 @@
-import { t } from '../../trpc';
+import { t } from '../../libs/trpc';
 import { z } from 'zod';
 import { observable } from '@trpc/server/observable';
 import { EventEmitter } from 'stream';

@@ -5,7 +5,7 @@ import cors from 'cors';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 import { applyWSSHandler } from '@trpc/server/adapters/ws';
 import { appRouter } from './routers';
-import { createContext } from './context';
+import { createContext } from './libs/trpc/context';
 import ws from 'ws';
 require('dotenv').config();
 interface CustomEnv extends NodeJS.ProcessEnv {

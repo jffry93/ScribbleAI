@@ -1,4 +1,4 @@
-import { adminProcedure, t } from '../trpc';
+import { adminProcedure, t } from '../libs/trpc';
 import { userRouter } from './users';
 import { jarvisRouter } from './jarvis';
 
